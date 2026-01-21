@@ -629,24 +629,51 @@
             editingIndex = index;
             const trade = trades[index];
             
+            console.log('Editing trade:', trade); // Debug
+            
             document.getElementById('luna').value = trade.luna || '';
             
             // Convertește data la formatul YYYY-MM-DD pentru input type="date"
-            let dateValue = trade.data || '';
-            if (dateValue && typeof dateValue === 'object' && dateValue.toISOString) {
-                // Dacă e un obiect Date
-                dateValue = dateValue.toISOString().split('T')[0];
-            } else if (dateValue && typeof dateValue === 'string') {
-                // Dacă e string, încearcă să-l convertești
-                const dateParts = dateValue.split('/');
-                if (dateParts.length === 3) {
-                    // Format DD/MM/YYYY sau MM/DD/YYYY
-                    const day = dateParts[0].padStart(2, '0');
-                    const month = dateParts[1].padStart(2, '0');
-                    const year = dateParts[2];
-                    dateValue = year + '-' + month + '-' + day;
+            let dateValue = '';
+            if (trade.data) {
+                const rawData = trade.data;
+                console.log('Raw date from sheet:', rawData, 'Type:', typeof rawData);
+                
+                if (typeof rawData === 'object' && rawData.toISOString) {
+                    // Dacă e un obiect Date
+                    dateValue = rawData.toISOString().split('T')[0];
+                } else if (typeof rawData === 'string') {
+                    // Dacă e string, verifică diferite formate
+                    if (rawData.includes('-') && rawData.match(/^\d{4}-\d{2}-\d{2}/)) {
+                        // Deja e în format YYYY-MM-DD
+                        dateValue = rawData.split('T')[0]; // Elimină timpul dacă există
+                    } else if (rawData.includes('/')) {
+                        // Format DD/MM/YYYY sau MM/DD/YYYY
+                        const parts = rawData.split('/');
+                        if (parts.length === 3) {
+                            // Presupunem DD/MM/YYYY (format European)
+                            const day = parts[0].padStart(2, '0');
+                            const month = parts[1].padStart(2, '0');
+                            const year = parts[2];
+                            dateValue = year + '-' + month + '-' + day;
+                        }
+                    } else {
+                        // Încearcă să parsezi data
+                        const parsedDate = new Date(rawData);
+                        if (!isNaN(parsedDate)) {
+                            dateValue = parsedDate.toISOString().split('T')[0];
+                        }
+                    }
+                } else if (typeof rawData === 'number') {
+                    // Poate fi un timestamp sau serial date de Excel
+                    const parsedDate = new Date(rawData);
+                    if (!isNaN(parsedDate)) {
+                        dateValue = parsedDate.toISOString().split('T')[0];
+                    }
                 }
             }
+            
+            console.log('Formatted date for input:', dateValue);
             document.getElementById('data').value = dateValue;
             
             document.getElementById('zi').value = trade.zi || '';
