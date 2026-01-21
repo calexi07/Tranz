@@ -519,8 +519,10 @@
                 pips: document.getElementById('pips').value
             };
 
-            if (editingIndex >= 0) {
+            // IMPORTANT: Dacă editezi, trebuie să adaugi ID-ul din tranzacția originală
+            if (editingIndex >= 0 && trades[editingIndex]) {
                 trade.id = trades[editingIndex].id;
+                console.log('Editing trade with ID:', trade.id); // Debug
                 updateTradeInSheet(trade);
             } else {
                 addTradeToSheet(trade);
@@ -689,6 +691,7 @@
                     saveBtn.disabled = false;
                     if (data.result === 'success') {
                         trades = data.data;
+                        console.log('Loaded trades:', trades); // Debug - verifică ID-urile
                         updateTable();
                     } else {
                         alert('Eroare la încărcarea datelor: ' + data.message);
