@@ -779,36 +779,42 @@
             // Verifică că ID-ul există
             if (!trade.id) {
                 alert('Eroare: ID-ul tranzacției lipsește. Nu se poate actualiza.');
+                console.error('Trade object:', trade);
                 return;
             }
+            
+            console.log('Updating trade with ID:', trade.id);
+            console.log('Full trade object:', trade);
             
             isLoading = true;
             saveBtn.disabled = true;
             saveBtn.textContent = 'Se actualizează...';
             
-            const params = new URLSearchParams();
-            params.append('action', 'update');
-            params.append('id', trade.id);
-            params.append('luna', trade.luna);
-            params.append('data', trade.data);
-            params.append('zi', trade.zi);
-            params.append('pereche', trade.pereche);
-            params.append('sesiune', trade.sesiune);
-            params.append('position', trade.position);
-            params.append('wl', trade.wl || '');
-            params.append('r', trade.r || '');
-            params.append('risk', trade.risk);
-            params.append('profit', trade.profit || '');
-            params.append('tv', trade.tv || '');
-            params.append('entry', trade.entry || '');
-            params.append('entryHour', trade.entryHour || '');
-            params.append('exitHour', trade.exitHour || '');
-            params.append('duration', trade.duration || '');
-            params.append('sl', trade.sl || '');
-            params.append('tp', trade.tp || '');
-            params.append('pips', trade.pips || '');
+            // Construiește URL-ul cu parametrii explicit
+            let url = GOOGLE_SCRIPT_URL + '?action=update';
+            url += '&id=' + encodeURIComponent(trade.id);
+            url += '&luna=' + encodeURIComponent(trade.luna);
+            url += '&data=' + encodeURIComponent(trade.data);
+            url += '&zi=' + encodeURIComponent(trade.zi);
+            url += '&pereche=' + encodeURIComponent(trade.pereche);
+            url += '&sesiune=' + encodeURIComponent(trade.sesiune);
+            url += '&position=' + encodeURIComponent(trade.position);
+            url += '&wl=' + encodeURIComponent(trade.wl || '');
+            url += '&r=' + encodeURIComponent(trade.r || '');
+            url += '&risk=' + encodeURIComponent(trade.risk);
+            url += '&profit=' + encodeURIComponent(trade.profit || '');
+            url += '&tv=' + encodeURIComponent(trade.tv || '');
+            url += '&entry=' + encodeURIComponent(trade.entry || '');
+            url += '&entryHour=' + encodeURIComponent(trade.entryHour || '');
+            url += '&exitHour=' + encodeURIComponent(trade.exitHour || '');
+            url += '&duration=' + encodeURIComponent(trade.duration || '');
+            url += '&sl=' + encodeURIComponent(trade.sl || '');
+            url += '&tp=' + encodeURIComponent(trade.tp || '');
+            url += '&pips=' + encodeURIComponent(trade.pips || '');
             
-            fetch(GOOGLE_SCRIPT_URL + '?' + params.toString())
+            console.log('Request URL:', url);
+            
+            fetch(url)
                 .then(function(response) {
                     return response.json();
                 })
@@ -816,6 +822,7 @@
                     isLoading = false;
                     saveBtn.disabled = false;
                     saveBtn.textContent = 'Salvează';
+                    console.log('Update response:', data);
                     if (data.result === 'success') {
                         alert('Tranzacția a fost actualizată cu succes!');
                         clearForm();
@@ -824,6 +831,9 @@
                         loadTradesFromSheet();
                     } else {
                         alert('Eroare la actualizare: ' + data.message + '\nID căutat: ' + trade.id);
+                        if (data.availableIds) {
+                            console.log('Available IDs in sheet:', data.availableIds);
+                        }
                     }
                 })
                 .catch(function(error) {
