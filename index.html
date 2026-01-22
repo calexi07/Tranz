@@ -433,7 +433,7 @@
     <div class="container">
         <div class="header">
             <h1>Jurnal de Tranzactionare</h1>
-            <p>Jurnal de Tranzactionare</p>
+            <p>Scoala de Tranzactionare</p>
         </div>
 
         <div class="nav-buttons">
@@ -550,17 +550,37 @@
                     <div class="stat-card" id="statProfit">
                         <div class="stat-label">Profit Total</div>
                         <div class="stat-value">$0.00</div>
-                        <div class="stat-subtext">Din celula D2</div>
+                        <div class="stat-subtext">Net P&L</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">Total Trades</div>
                         <div class="stat-value" id="statTotalTrades">0</div>
-                        <div class="stat-subtext">Din celula E2</div>
+                        <div class="stat-subtext">Tranzacții</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">Win Rate</div>
                         <div class="stat-value" id="statWinRate">0%</div>
-                        <div class="stat-subtext">Din celula G2</div>
+                        <div class="stat-subtext">Rata de succes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Profit Factor</div>
+                        <div class="stat-value" id="statProfitFactor">0.00</div>
+                        <div class="stat-subtext">Wins / Losses</div>
+                    </div>
+                    <div class="stat-card positive">
+                        <div class="stat-label">Wins</div>
+                        <div class="stat-value" id="statWins">0</div>
+                        <div class="stat-subtext">Tranzacții câștigătoare</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Break Even</div>
+                        <div class="stat-value" id="statBE">0</div>
+                        <div class="stat-subtext">Fără profit/pierdere</div>
+                    </div>
+                    <div class="stat-card negative">
+                        <div class="stat-label">Losses</div>
+                        <div class="stat-value" id="statLosses">0</div>
+                        <div class="stat-subtext">Tranzacții pierzătoare</div>
                     </div>
                 </div>
             </div>
@@ -604,18 +624,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
-        var GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgfjNnriUwOF_A3HFkfSHhpuO1cwHqArZE1hQVj536GPKlfw1bQAUkm4l6YeAROfhoYQ/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgfjNnriUwOF_A3HFkfSHhpuO1cwHqArZE1hQVj536GPKlfw1bQAUkm4l6YeAROfhoYQ/exec';
         
-        var trades = [];
-        var editingIndex = -1;
-        var isLoading = false;
+        let trades = [];
+        let editingIndex = -1;
+        let isLoading = false;
 
-        var formPage = document.getElementById('formPage');
-        var tablePage = document.getElementById('tablePage');
-        var btnForm = document.getElementById('btnForm');
-        var btnTable = document.getElementById('btnTable');
-        var saveBtn = document.getElementById('saveBtn');
-        var tradesBody = document.getElementById('tradesBody');
+        const formPage = document.getElementById('formPage');
+        const tablePage = document.getElementById('tablePage');
+        const btnForm = document.getElementById('btnForm');
+        const btnTable = document.getElementById('btnTable');
+        const saveBtn = document.getElementById('saveBtn');
+        const tradesBody = document.getElementById('tradesBody');
 
         btnForm.addEventListener('click', function() {
             showPage('form');
@@ -644,20 +664,20 @@
         saveBtn.addEventListener('click', function() {
             if (isLoading) return;
             
-            var luna = document.getElementById('luna').value;
-            var data = document.getElementById('data').value;
-            var zi = document.getElementById('zi').value;
-            var pereche = document.getElementById('pereche').value;
-            var sesiune = document.getElementById('sesiune').value;
-            var position = document.getElementById('position').value;
-            var risk = document.getElementById('risk').value;
+            const luna = document.getElementById('luna').value;
+            const data = document.getElementById('data').value;
+            const zi = document.getElementById('zi').value;
+            const pereche = document.getElementById('pereche').value;
+            const sesiune = document.getElementById('sesiune').value;
+            const position = document.getElementById('position').value;
+            const risk = document.getElementById('risk').value;
 
             if (!luna || !data || !zi || !pereche || !sesiune || !position || !risk) {
                 alert('Te rog completează toate câmpurile obligatorii marcate cu *');
                 return;
             }
 
-            var trade = {
+            const trade = {
                 luna: luna,
                 data: data,
                 zi: zi,
@@ -678,9 +698,10 @@
                 pips: document.getElementById('pips').value
             };
 
+            // IMPORTANT: Dacă editezi, trebuie să adaugi ID-ul din tranzacția originală
             if (editingIndex >= 0 && trades[editingIndex]) {
                 trade.id = trades[editingIndex].id;
-                console.log('Editing trade with ID:', trade.id);
+                console.log('Editing trade with ID:', trade.id); // Debug
                 updateTradeInSheet(trade);
             } else {
                 addTradeToSheet(trade);
@@ -711,27 +732,26 @@
         function updateTable() {
             if (trades.length === 0) {
                 tradesBody.innerHTML = '<tr><td colspan="19" class="no-data">Nu există tranzacții salvate</td></tr>';
-                updateDashboard();
                 return;
             }
 
             tradesBody.innerHTML = '';
             
-            for (var i = 0; i < trades.length; i++) {
-                var trade = trades[i];
-                var row = document.createElement('tr');
+            for (let i = 0; i < trades.length; i++) {
+                const trade = trades[i];
+                const row = document.createElement('tr');
                 
-                var positionClass = trade.position === 'Long' ? 'long' : 'short';
-                var wlClass = trade.wl === 'Win' ? 'win' : trade.wl === 'Loss' ? 'loss' : '';
+                const positionClass = trade.position === 'Long' ? 'long' : 'short';
+                const wlClass = trade.wl === 'Win' ? 'win' : trade.wl === 'Loss' ? 'loss' : '';
                 
-                var cells = [
+                const cells = [
                     trade.luna,
                     trade.data,
                     trade.zi,
                     trade.pereche,
                     trade.sesiune,
-                    { text: trade.position, className: positionClass },
-                    { text: trade.wl || '-', className: wlClass },
+                    { text: trade.position, class: positionClass },
+                    { text: trade.wl || '-', class: wlClass },
                     trade.r || '-',
                     trade.risk,
                     trade.profit || '-',
@@ -745,35 +765,36 @@
                     trade.pips || '-'
                 ];
                 
-                for (var j = 0; j < cells.length; j++) {
-                    var td = document.createElement('td');
-                    var cell = cells[j];
+                cells.forEach(function(cell) {
+                    const td = document.createElement('td');
                     if (typeof cell === 'object') {
                         td.textContent = cell.text;
-                        if (cell.className) td.className = cell.className;
+                        if (cell.class) td.className = cell.class;
                     } else {
                         td.textContent = cell;
                     }
                     row.appendChild(td);
-                }
+                });
                 
-                var tdActions = document.createElement('td');
+                const tdActions = document.createElement('td');
                 
-                var editBtn = document.createElement('button');
+                const editBtn = document.createElement('button');
                 editBtn.className = 'edit-btn';
                 editBtn.textContent = 'Editează';
-                editBtn.setAttribute('data-index', i);
-                editBtn.onclick = function() {
-                    editTrade(parseInt(this.getAttribute('data-index')));
-                };
+                editBtn.onclick = (function(idx) {
+                    return function() {
+                        editTrade(idx);
+                    };
+                })(i);
                 
-                var deleteBtn = document.createElement('button');
+                const deleteBtn = document.createElement('button');
                 deleteBtn.className = 'delete-btn';
                 deleteBtn.textContent = 'Șterge';
-                deleteBtn.setAttribute('data-index', i);
-                deleteBtn.onclick = function() {
-                    deleteTrade(parseInt(this.getAttribute('data-index')));
-                };
+                deleteBtn.onclick = (function(idx) {
+                    return function() {
+                        deleteTrade(idx);
+                    };
+                })(i);
                 
                 tdActions.appendChild(editBtn);
                 tdActions.appendChild(deleteBtn);
@@ -781,15 +802,464 @@
                 
                 tradesBody.appendChild(row);
             }
-            
-            updateDashboard();
         }
 
-        function updateDashboard() {
-            if (trades.length === 0) {
-                document.getElementById('statTotalTrades').textContent = '0';
-                document.getElementById('statWinRate').textContent = '0%';
-                document.getElementById('statProfitFactor').textContent = '0.00';
-                document.getElementById('statWins').textContent = '0';
-                document.getElementById('statBE').textContent = '0';
-                document.getElementById('statLosses').textContent = '0';
+        function editTrade(index) {
+            editingIndex = index;
+            const trade = trades[index];
+            
+            console.log('Editing trade:', trade); // Debug
+            
+            document.getElementById('luna').value = trade.luna || '';
+            
+            // Convertește data la formatul YYYY-MM-DD pentru input type="date"
+            let dateValue = '';
+            if (trade.data) {
+                const rawData = trade.data;
+                console.log('Raw date from sheet:', rawData, 'Type:', typeof rawData);
+                
+                if (typeof rawData === 'object' && rawData.toISOString) {
+                    // Dacă e un obiect Date
+                    dateValue = rawData.toISOString().split('T')[0];
+                } else if (typeof rawData === 'string') {
+                    // Dacă e string, verifică diferite formate
+                    if (rawData.includes('-') && rawData.match(/^\d{4}-\d{2}-\d{2}/)) {
+                        // Deja e în format YYYY-MM-DD
+                        dateValue = rawData.split('T')[0]; // Elimină timpul dacă există
+                    } else if (rawData.includes('/')) {
+                        // Format DD/MM/YYYY sau MM/DD/YYYY
+                        const parts = rawData.split('/');
+                        if (parts.length === 3) {
+                            // Presupunem DD/MM/YYYY (format European)
+                            const day = parts[0].padStart(2, '0');
+                            const month = parts[1].padStart(2, '0');
+                            const year = parts[2];
+                            dateValue = year + '-' + month + '-' + day;
+                        }
+                    } else {
+                        // Încearcă să parsezi data
+                        const parsedDate = new Date(rawData);
+                        if (!isNaN(parsedDate)) {
+                            dateValue = parsedDate.toISOString().split('T')[0];
+                        }
+                    }
+                } else if (typeof rawData === 'number') {
+                    // Poate fi un timestamp sau serial date de Excel
+                    const parsedDate = new Date(rawData);
+                    if (!isNaN(parsedDate)) {
+                        dateValue = parsedDate.toISOString().split('T')[0];
+                    }
+                }
+            }
+            
+            console.log('Formatted date for input:', dateValue);
+            document.getElementById('data').value = dateValue;
+            
+            document.getElementById('zi').value = trade.zi || '';
+            document.getElementById('pereche').value = trade.pereche || '';
+            document.getElementById('sesiune').value = trade.sesiune || '';
+            document.getElementById('position').value = trade.position || '';
+            document.getElementById('wl').value = trade.wl || '';
+            document.getElementById('r').value = trade.r || '';
+            document.getElementById('risk').value = trade.risk || '';
+            document.getElementById('profit').value = trade.profit || '';
+            document.getElementById('tv').value = trade.tv || '';
+            document.getElementById('entry').value = trade.entry || '';
+            document.getElementById('entryHour').value = trade.entryHour || '';
+            document.getElementById('exitHour').value = trade.exitHour || '';
+            document.getElementById('duration').value = trade.duration || '';
+            document.getElementById('sl').value = trade.sl || '';
+            document.getElementById('tp').value = trade.tp || '';
+            document.getElementById('pips').value = trade.pips || '';
+            
+            showPage('form');
+        }
+
+        function deleteTrade(index) {
+            if (confirm('Ești sigur că vrei să ștergi această tranzacție?')) {
+                deleteTradeFromSheet(trades[index].id);
+            }
+        }
+
+        function loadTradesFromSheet() {
+            if (isLoading) return;
+            isLoading = true;
+            saveBtn.disabled = true;
+            
+            tradesBody.innerHTML = '<tr><td colspan="19" class="loading">Se încarcă datele din Google Sheets...</td></tr>';
+            
+            fetch(GOOGLE_SCRIPT_URL + '?action=get')
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    isLoading = false;
+                    saveBtn.disabled = false;
+                    if (data.result === 'success') {
+                        trades = data.data;
+                        console.log('Loaded trades:', trades); // Debug - verifică ID-urile
+                        updateTable();
+                    } else {
+                        alert('Eroare la încărcarea datelor: ' + data.message);
+                        tradesBody.innerHTML = '<tr><td colspan="19" class="no-data">Eroare la încărcarea datelor</td></tr>';
+                    }
+                })
+                .catch(function(error) {
+                    isLoading = false;
+                    saveBtn.disabled = false;
+                    console.error('Error:', error);
+                    alert('Eroare la conexiunea cu Google Sheets. Verifică conexiunea la internet.');
+                    tradesBody.innerHTML = '<tr><td colspan="19" class="no-data">Eroare la conexiune</td></tr>';
+                });
+        }
+
+        function addTradeToSheet(trade) {
+            if (isLoading) return;
+            isLoading = true;
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Se salvează...';
+            
+            const params = new URLSearchParams();
+            params.append('action', 'add');
+            Object.keys(trade).forEach(function(key) {
+                params.append(key, trade[key]);
+            });
+            
+            fetch(GOOGLE_SCRIPT_URL + '?' + params.toString())
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    isLoading = false;
+                    saveBtn.disabled = false;
+                    saveBtn.textContent = 'Salvează';
+                    if (data.result === 'success') {
+                        alert('Tranzacția a fost salvată cu succes în Google Sheets!');
+                        clearForm();
+                        editingIndex = -1;
+                        showPage('table');
+                        loadTradesFromSheet();
+                    } else {
+                        alert('Eroare la salvare: ' + data.message);
+                    }
+                })
+                .catch(function(error) {
+                    isLoading = false;
+                    saveBtn.disabled = false;
+                    saveBtn.textContent = 'Salvează';
+                    console.error('Error:', error);
+                    alert('Eroare la salvarea datelor în Google Sheets.');
+                });
+        }
+
+        function updateTradeInSheet(trade) {
+            if (isLoading) return;
+            
+            // Verifică că ID-ul există
+            if (!trade.id) {
+                alert('Eroare: ID-ul tranzacției lipsește. Nu se poate actualiza.');
+                console.error('Trade object:', trade);
+                return;
+            }
+            
+            console.log('Updating trade with ID:', trade.id);
+            console.log('Full trade object:', trade);
+            
+            isLoading = true;
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Se actualizează...';
+            
+            // Construiește URL-ul cu parametrii explicit
+            let url = GOOGLE_SCRIPT_URL + '?action=update';
+            url += '&id=' + encodeURIComponent(trade.id);
+            url += '&luna=' + encodeURIComponent(trade.luna);
+            url += '&data=' + encodeURIComponent(trade.data);
+            url += '&zi=' + encodeURIComponent(trade.zi);
+            url += '&pereche=' + encodeURIComponent(trade.pereche);
+            url += '&sesiune=' + encodeURIComponent(trade.sesiune);
+            url += '&position=' + encodeURIComponent(trade.position);
+            url += '&wl=' + encodeURIComponent(trade.wl || '');
+            url += '&r=' + encodeURIComponent(trade.r || '');
+            url += '&risk=' + encodeURIComponent(trade.risk);
+            url += '&profit=' + encodeURIComponent(trade.profit || '');
+            url += '&tv=' + encodeURIComponent(trade.tv || '');
+            url += '&entry=' + encodeURIComponent(trade.entry || '');
+            url += '&entryHour=' + encodeURIComponent(trade.entryHour || '');
+            url += '&exitHour=' + encodeURIComponent(trade.exitHour || '');
+            url += '&duration=' + encodeURIComponent(trade.duration || '');
+            url += '&sl=' + encodeURIComponent(trade.sl || '');
+            url += '&tp=' + encodeURIComponent(trade.tp || '');
+            url += '&pips=' + encodeURIComponent(trade.pips || '');
+            
+            console.log('Request URL:', url);
+            
+            fetch(url)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    isLoading = false;
+                    saveBtn.disabled = false;
+                    saveBtn.textContent = 'Salvează';
+                    console.log('Update response:', data);
+                    if (data.result === 'success') {
+                        alert('Tranzacția a fost actualizată cu succes!');
+                        clearForm();
+                        editingIndex = -1;
+                        showPage('table');
+                        loadTradesFromSheet();
+                    } else {
+                        alert('Eroare la actualizare: ' + data.message + '\nID căutat: ' + trade.id);
+                        if (data.availableIds) {
+                            console.log('Available IDs in sheet:', data.availableIds);
+                        }
+                    }
+                })
+                .catch(function(error) {
+                    isLoading = false;
+                    saveBtn.disabled = false;
+                    saveBtn.textContent = 'Salvează';
+                    console.error('Error:', error);
+                    alert('Eroare la actualizarea datelor în Google Sheets.');
+                });
+        }
+
+        function deleteTradeFromSheet(id) {
+            if (isLoading) return;
+            isLoading = true;
+            
+            const params = new URLSearchParams();
+            params.append('action', 'delete');
+            params.append('id', id);
+            
+            fetch(GOOGLE_SCRIPT_URL + '?' + params.toString())
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    isLoading = false;
+                    if (data.result === 'success') {
+                        alert('Tranzacția a fost ștearsă cu succes din Google Sheets!');
+                        loadTradesFromSheet();
+                    } else {
+                        alert('Eroare la ștergere: ' + data.message);
+                    }
+                })
+                .catch(function(error) {
+                    isLoading = false;
+                    console.error('Error:', error);
+                    alert('Eroare la ștergerea datelor din Google Sheets.');
+                });
+        }
+
+        window.addEventListener('load', function() {
+            loadTradesFromSheet();
+        });
+
+        // Download Template Button
+        document.getElementById('btnDownloadTemplate').addEventListener('click', function() {
+            downloadTemplate();
+        });
+
+        function downloadTemplate() {
+            // Creează un template Excel cu headere și exemple
+            const templateData = [
+                // Headere
+                ['Month', 'Date', 'Day', 'Pair', 'Session', 'Long/Short', 'W/L', 'R', 'Risk', 'Profit', 'TV', 'Entry', 'Entry Hour', 'Exit Hour', 'Duration', 'SL', 'TP', 'Pips'],
+                // Exemple
+                ['January', '2026-01-15', 'Monday', 'EUR/USD', 'London', 'Long', 'Win', '2.5', '100', '250', '1000', '1.08500', '09:30', '11:45', '2h 15m', '1.08400', '1.08700', '25.5'],
+                ['January', '2026-01-16', 'Tuesday', 'GBP/USD', 'New York', 'Short', 'Loss', '1', '100', '-100', '900', '1.27300', '14:20', '15:30', '1h 10m', '1.27400', '1.27200', '-10'],
+                ['January', '2026-01-17', 'Wednesday', 'USD/JPY', 'Asia', 'Long', 'Win', '3', '100', '300', '1200', '149.500', '02:15', '05:30', '3h 15m', '149.200', '149.800', '30']
+            ];
+
+            // Creează workbook
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(templateData);
+
+            // Setează lățimea coloanelor
+            ws['!cols'] = [
+                { wch: 10 },  // Month
+                { wch: 12 },  // Date
+                { wch: 12 },  // Day
+                { wch: 10 },  // Pair
+                { wch: 12 },  // Session
+                { wch: 12 },  // Long/Short
+                { wch: 8 },   // W/L
+                { wch: 8 },   // R
+                { wch: 10 },  // Risk
+                { wch: 10 },  // Profit
+                { wch: 10 },  // TV
+                { wch: 12 },  // Entry
+                { wch: 12 },  // Entry Hour
+                { wch: 12 },  // Exit Hour
+                { wch: 12 },  // Duration
+                { wch: 12 },  // SL
+                { wch: 12 },  // TP
+                { wch: 10 }   // Pips
+            ];
+
+            // Adaugă worksheet la workbook
+            XLSX.utils.book_append_sheet(wb, ws, 'Trading Journal Template');
+
+            // Descarcă fișierul
+            XLSX.writeFile(wb, 'Trading_Journal_Template.xlsx');
+
+            alert('Template-ul a fost descărcat cu succes!\n\nFișierul conține:\n- Headere corecte\n- 3 exemple de tranzacții\n\nPoți șterge exemplele și adăuga datele tale.');
+        }
+
+        // File Upload Handler
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const fileName = file.name.toLowerCase();
+            
+            if (fileName.endsWith('.csv')) {
+                handleCSV(file);
+            } else if (fileName.endsWith('.xlsx') || fileName.endsWith('.xls')) {
+                handleExcel(file);
+            } else {
+                alert('Te rog încarcă un fișier CSV sau Excel (.xlsx, .xls)');
+            }
+            
+            // Reset input
+            e.target.value = '';
+        });
+
+        function handleCSV(file) {
+            Papa.parse(file, {
+                header: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    processParsedData(results.data);
+                },
+                error: function(error) {
+                    alert('Eroare la citirea fișierului CSV: ' + error.message);
+                }
+            });
+        }
+
+        function handleExcel(file) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+                    
+                    processParsedData(jsonData);
+                } catch (error) {
+                    alert('Eroare la citirea fișierului Excel: ' + error.message);
+                }
+            };
+            
+            reader.readAsArrayBuffer(file);
+        }
+
+        function processParsedData(data) {
+            if (!data || data.length === 0) {
+                alert('Fișierul este gol sau nu conține date valide.');
+                return;
+            }
+
+            console.log('Parsed data:', data);
+            
+            // Mapează coloanele din fișier la câmpurile noastre
+            const mappedTrades = data.map(function(row) {
+                return {
+                    luna: row.Month || row.Luna || row.month || '',
+                    data: row.Date || row.Data || row.date || '',
+                    zi: row.Day || row.Zi || row.day || '',
+                    pereche: row.Pair || row.Pereche || row.pair || '',
+                    sesiune: row.Session || row.Sesiune || row.session || '',
+                    position: row['Long/Short'] || row.Position || row.position || '',
+                    wl: row['W/L'] || row.WL || row.wl || '',
+                    r: row.R || row.r || '',
+                    risk: row.Risk || row.risk || '',
+                    profit: row.Profit || row.profit || '',
+                    tv: row.TV || row.tv || '',
+                    entry: row.Entry || row.entry || '',
+                    entryHour: row['Entry Hour'] || row.HourEntry || row.entryHour || '',
+                    exitHour: row['Exit Hour'] || row.HourExit || row.exitHour || '',
+                    duration: row.Duration || row.duration || '',
+                    sl: row.SL || row.sl || '',
+                    tp: row.TP || row.tp || '',
+                    pips: row.Pips || row.pips || ''
+                };
+            });
+
+            // Filtrează rândurile goale sau invalide
+            const validTrades = mappedTrades.filter(function(trade) {
+                return trade.luna && trade.data && trade.pereche;
+            });
+
+            if (validTrades.length === 0) {
+                alert('Nu s-au găsit tranzacții valide în fișier. Verifică că headerele sunt corecte.');
+                return;
+            }
+
+            // Confirmă înainte de încărcare
+            const confirmed = confirm(
+                'Ai găsit ' + validTrades.length + ' tranzacții în fișier.\n\n' +
+                'Sigur vrei să le adaugi în Google Sheets?'
+            );
+
+            if (confirmed) {
+                uploadMultipleTrades(validTrades);
+            }
+        }
+
+        function uploadMultipleTrades(trades) {
+            let successCount = 0;
+            let errorCount = 0;
+            const total = trades.length;
+
+            alert('Se încarcă ' + total + ' tranzacții...\nAceasta poate dura câteva secunde.');
+
+            function uploadNext(index) {
+                if (index >= total) {
+                    alert(
+                        'Încărcare completă!\n\n' +
+                        'Succes: ' + successCount + '\n' +
+                        'Erori: ' + errorCount
+                    );
+                    loadTradesFromSheet();
+                    return;
+                }
+
+                const trade = trades[index];
+                
+                const params = new URLSearchParams();
+                params.append('action', 'add');
+                Object.keys(trade).forEach(function(key) {
+                    params.append(key, trade[key] || '');
+                });
+
+                fetch(GOOGLE_SCRIPT_URL + '?' + params.toString())
+                    .then(function(response) {
+                        return response.json();
+                    })
+                    .then(function(data) {
+                        if (data.result === 'success') {
+                            successCount++;
+                        } else {
+                            errorCount++;
+                        }
+                        // Continuă cu următoarea tranzacție
+                        uploadNext(index + 1);
+                    })
+                    .catch(function(error) {
+                        errorCount++;
+                        console.error('Error uploading trade:', error);
+                        // Continuă cu următoarea tranzacție
+                        uploadNext(index + 1);
+                    });
+            }
+
+            uploadNext(0);
+        }
+    </script>
+</body>
+</html>
