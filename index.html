@@ -149,7 +149,7 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
         }
 
@@ -553,34 +553,9 @@
                         <div class="stat-subtext">Net P&L</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-label">Total Trades</div>
-                        <div class="stat-value" id="statTotalTrades">0</div>
-                        <div class="stat-subtext">Tranzacții</div>
-                    </div>
-                    <div class="stat-card">
                         <div class="stat-label">Win Rate</div>
                         <div class="stat-value" id="statWinRate">0%</div>
                         <div class="stat-subtext">Rata de succes</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Profit Factor</div>
-                        <div class="stat-value" id="statProfitFactor">0.00</div>
-                        <div class="stat-subtext">Wins / Losses</div>
-                    </div>
-                    <div class="stat-card positive">
-                        <div class="stat-label">Wins</div>
-                        <div class="stat-value" id="statWins">0</div>
-                        <div class="stat-subtext">Tranzacții câștigătoare</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Break Even</div>
-                        <div class="stat-value" id="statBE">0</div>
-                        <div class="stat-subtext">Fără profit/pierdere</div>
-                    </div>
-                    <div class="stat-card negative">
-                        <div class="stat-label">Losses</div>
-                        <div class="stat-value" id="statLosses">0</div>
-                        <div class="stat-subtext">Tranzacții pierzătoare</div>
                     </div>
                 </div>
             </div>
@@ -698,10 +673,9 @@
                 pips: document.getElementById('pips').value
             };
 
-            // IMPORTANT: Dacă editezi, trebuie să adaugi ID-ul din tranzacția originală
             if (editingIndex >= 0 && trades[editingIndex]) {
                 trade.id = trades[editingIndex].id;
-                console.log('Editing trade with ID:', trade.id); // Debug
+                console.log('Editing trade with ID:', trade.id);
                 updateTradeInSheet(trade);
             } else {
                 addTradeToSheet(trade);
@@ -808,43 +782,35 @@
             editingIndex = index;
             const trade = trades[index];
             
-            console.log('Editing trade:', trade); // Debug
+            console.log('Editing trade:', trade);
             
             document.getElementById('luna').value = trade.luna || '';
             
-            // Convertește data la formatul YYYY-MM-DD pentru input type="date"
             let dateValue = '';
             if (trade.data) {
                 const rawData = trade.data;
                 console.log('Raw date from sheet:', rawData, 'Type:', typeof rawData);
                 
                 if (typeof rawData === 'object' && rawData.toISOString) {
-                    // Dacă e un obiect Date
                     dateValue = rawData.toISOString().split('T')[0];
                 } else if (typeof rawData === 'string') {
-                    // Dacă e string, verifică diferite formate
                     if (rawData.includes('-') && rawData.match(/^\d{4}-\d{2}-\d{2}/)) {
-                        // Deja e în format YYYY-MM-DD
-                        dateValue = rawData.split('T')[0]; // Elimină timpul dacă există
+                        dateValue = rawData.split('T')[0];
                     } else if (rawData.includes('/')) {
-                        // Format DD/MM/YYYY sau MM/DD/YYYY
                         const parts = rawData.split('/');
                         if (parts.length === 3) {
-                            // Presupunem DD/MM/YYYY (format European)
                             const day = parts[0].padStart(2, '0');
                             const month = parts[1].padStart(2, '0');
                             const year = parts[2];
                             dateValue = year + '-' + month + '-' + day;
                         }
                     } else {
-                        // Încearcă să parsezi data
                         const parsedDate = new Date(rawData);
                         if (!isNaN(parsedDate)) {
                             dateValue = parsedDate.toISOString().split('T')[0];
                         }
                     }
                 } else if (typeof rawData === 'number') {
-                    // Poate fi un timestamp sau serial date de Excel
                     const parsedDate = new Date(rawData);
                     if (!isNaN(parsedDate)) {
                         dateValue = parsedDate.toISOString().split('T')[0];
@@ -897,8 +863,9 @@
                     saveBtn.disabled = false;
                     if (data.result === 'success') {
                         trades = data.data;
-                        console.log('Loaded trades:', trades); // Debug - verifică ID-urile
+                        console.log('Loaded trades:', trades);
                         updateTable();
+                        updateDashboard(data.profit, data.winrate);
                     } else {
                         alert('Eroare la încărcarea datelor: ' + data.message);
                         tradesBody.innerHTML = '<tr><td colspan="19" class="no-data">Eroare la încărcarea datelor</td></tr>';
@@ -911,6 +878,27 @@
                     alert('Eroare la conexiunea cu Google Sheets. Verifică conexiunea la internet.');
                     tradesBody.innerHTML = '<tr><td colspan="19" class="no-data">Eroare la conexiune</td></tr>';
                 });
+        }
+
+        function updateDashboard(profit, winrate) {
+            const profitCard = document.getElementById('statProfit');
+            const profitValue = profitCard.querySelector('.stat-value');
+            const profitNum = parseFloat(profit) || 0;
+            
+            profitValue.textContent = '
+             + profitNum.toFixed(2);
+            
+            if (profitNum > 0) {
+                profitCard.className = 'stat-card positive';
+            } else if (profitNum < 0) {
+                profitCard.className = 'stat-card negative';
+            } else {
+                profitCard.className = 'stat-card';
+            }
+            
+            const winrateValue = document.getElementById('statWinRate');
+            const winrateNum = parseFloat(winrate) || 0;
+            winrateValue.textContent = winrateNum.toFixed(2) + '%';
         }
 
         function addTradeToSheet(trade) {
@@ -955,7 +943,6 @@
         function updateTradeInSheet(trade) {
             if (isLoading) return;
             
-            // Verifică că ID-ul există
             if (!trade.id) {
                 alert('Eroare: ID-ul tranzacției lipsește. Nu se poate actualiza.');
                 console.error('Trade object:', trade);
@@ -969,7 +956,6 @@
             saveBtn.disabled = true;
             saveBtn.textContent = 'Se actualizează...';
             
-            // Construiește URL-ul cu parametrii explicit
             let url = GOOGLE_SCRIPT_URL + '?action=update';
             url += '&id=' + encodeURIComponent(trade.id);
             url += '&luna=' + encodeURIComponent(trade.luna);
@@ -1056,58 +1042,33 @@
             loadTradesFromSheet();
         });
 
-        // Download Template Button
         document.getElementById('btnDownloadTemplate').addEventListener('click', function() {
             downloadTemplate();
         });
 
         function downloadTemplate() {
-            // Creează un template Excel cu headere și exemple
             const templateData = [
-                // Headere
                 ['Month', 'Date', 'Day', 'Pair', 'Session', 'Long/Short', 'W/L', 'R', 'Risk', 'Profit', 'TV', 'Entry', 'Entry Hour', 'Exit Hour', 'Duration', 'SL', 'TP', 'Pips'],
-                // Exemple
                 ['January', '2026-01-15', 'Monday', 'EUR/USD', 'London', 'Long', 'Win', '2.5', '100', '250', '1000', '1.08500', '09:30', '11:45', '2h 15m', '1.08400', '1.08700', '25.5'],
                 ['January', '2026-01-16', 'Tuesday', 'GBP/USD', 'New York', 'Short', 'Loss', '1', '100', '-100', '900', '1.27300', '14:20', '15:30', '1h 10m', '1.27400', '1.27200', '-10'],
                 ['January', '2026-01-17', 'Wednesday', 'USD/JPY', 'Asia', 'Long', 'Win', '3', '100', '300', '1200', '149.500', '02:15', '05:30', '3h 15m', '149.200', '149.800', '30']
             ];
 
-            // Creează workbook
             const wb = XLSX.utils.book_new();
             const ws = XLSX.utils.aoa_to_sheet(templateData);
 
-            // Setează lățimea coloanelor
             ws['!cols'] = [
-                { wch: 10 },  // Month
-                { wch: 12 },  // Date
-                { wch: 12 },  // Day
-                { wch: 10 },  // Pair
-                { wch: 12 },  // Session
-                { wch: 12 },  // Long/Short
-                { wch: 8 },   // W/L
-                { wch: 8 },   // R
-                { wch: 10 },  // Risk
-                { wch: 10 },  // Profit
-                { wch: 10 },  // TV
-                { wch: 12 },  // Entry
-                { wch: 12 },  // Entry Hour
-                { wch: 12 },  // Exit Hour
-                { wch: 12 },  // Duration
-                { wch: 12 },  // SL
-                { wch: 12 },  // TP
-                { wch: 10 }   // Pips
+                { wch: 10 }, { wch: 12 }, { wch: 12 }, { wch: 10 }, { wch: 12 }, { wch: 12 },
+                { wch: 8 }, { wch: 8 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 12 },
+                { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 10 }
             ];
 
-            // Adaugă worksheet la workbook
             XLSX.utils.book_append_sheet(wb, ws, 'Trading Journal Template');
-
-            // Descarcă fișierul
             XLSX.writeFile(wb, 'Trading_Journal_Template.xlsx');
 
             alert('Template-ul a fost descărcat cu succes!\n\nFișierul conține:\n- Headere corecte\n- 3 exemple de tranzacții\n\nPoți șterge exemplele și adăuga datele tale.');
         }
 
-        // File Upload Handler
         document.getElementById('fileInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -1122,7 +1083,6 @@
                 alert('Te rog încarcă un fișier CSV sau Excel (.xlsx, .xls)');
             }
             
-            // Reset input
             e.target.value = '';
         });
 
@@ -1166,7 +1126,6 @@
 
             console.log('Parsed data:', data);
             
-            // Mapează coloanele din fișier la câmpurile noastre
             const mappedTrades = data.map(function(row) {
                 return {
                     luna: row.Month || row.Luna || row.month || '',
@@ -1190,7 +1149,6 @@
                 };
             });
 
-            // Filtrează rândurile goale sau invalide
             const validTrades = mappedTrades.filter(function(trade) {
                 return trade.luna && trade.data && trade.pereche;
             });
@@ -1200,7 +1158,6 @@
                 return;
             }
 
-            // Confirmă înainte de încărcare
             const confirmed = confirm(
                 'Ai găsit ' + validTrades.length + ' tranzacții în fișier.\n\n' +
                 'Sigur vrei să le adaugi în Google Sheets?'
@@ -1247,13 +1204,11 @@
                         } else {
                             errorCount++;
                         }
-                        // Continuă cu următoarea tranzacție
                         uploadNext(index + 1);
                     })
                     .catch(function(error) {
                         errorCount++;
                         console.error('Error uploading trade:', error);
-                        // Continuă cu următoarea tranzacție
                         uploadNext(index + 1);
                     });
             }
