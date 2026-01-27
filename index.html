@@ -443,12 +443,12 @@
         </div>
 
         <div class="nav-buttons">
-            <button class="nav-btn active" id="btnForm">Adaugă Tranzacție</button>
-            <button class="nav-btn" id="btnTable">Jurnal de Tranzacționare</button>
+            <button class="nav-btn active" id="btnTable">Jurnal de Tranzacționare</button>
+            <button class="nav-btn" id="btnForm">Adaugă Tranzacție</button>
         </div>
 
         <!-- Form Page -->
-        <div id="formPage" class="page active">
+        <div id="formPage" class="page">
             <div class="form-container">
                 <h2 style="margin-bottom: 25px; color: #4d9fff;">Completează detaliile tranzacției</h2>
                 <div class="form-grid">
@@ -612,7 +612,66 @@
         </div>
 
         <!-- Table Page -->
-        <div id="tablePage" class="page">
+        <div id="tablePage" class="page active">
+            <!-- Filters Section -->
+            <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(77, 159, 255, 0.2); border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);">
+                <h2 style="color: #4d9fff; margin-bottom: 20px; font-size: 1.5em;">🔍 Filtre</h2>
+                <div class="form-grid" style="margin-bottom: 15px;">
+                    <div class="form-group">
+                        <label for="filterMonth">Lună</label>
+                        <select id="filterMonth" onchange="applyFilters()">
+                            <option value="">Toate lunile</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filterDay">Zi</label>
+                        <select id="filterDay" onchange="applyFilters()">
+                            <option value="">Toate zilele</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filterSession">Sesiune</label>
+                        <select id="filterSession" onchange="applyFilters()">
+                            <option value="">Toate sesiunile</option>
+                            <option value="Asia">Asia</option>
+                            <option value="London">London</option>
+                            <option value="New York">New York</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filterPair">Pereche</label>
+                        <select id="filterPair" onchange="applyFilters()">
+                            <option value="">Toate perechile</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filterPosition">Long/Short</label>
+                        <select id="filterPosition" onchange="applyFilters()">
+                            <option value="">Toate pozițiile</option>
+                            <option value="Long">Long</option>
+                            <option value="Short">Short</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filterStatus">Status</label>
+                        <select id="filterStatus" onchange="applyFilters()">
+                            <option value="">Toate statusurile</option>
+                            <option value="Win">Win</option>
+                            <option value="Loss">Loss</option>
+                            <option value="Open">Open</option>
+                        </select>
+                    </div>
+                </div>
+                <button onclick="resetFilters()" style="background: linear-gradient(135deg, #ff4444, #cc0000); color: #fff; border: none; padding: 10px 25px; border-radius: 20px; cursor: pointer; font-size: 0.9em; font-weight: bold; transition: all 0.3s ease;">
+                    🔄 Resetează Filtre
+                </button>
+            </div>
+
             <!-- Dashboard Statistics -->
             <div class="dashboard">
                 <h2>📊 Statistici Trading</h2>
@@ -715,8 +774,19 @@
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgfjNnriUwOF_A3HFkfSHhpuO1cwHqArZE1hQVj536GPKlfw1bQAUkm4l6YeAROfhoYQ/exec';
 
 let trades = [];
+let filteredTrades = [];
 let editingIndex = -1;
 let isLoading = false;
+
+// Active filters
+let activeFilters = {
+    month: '',
+    day: '',
+    session: '',
+    pair: '',
+    position: '',
+    status: ''
+};
 
 // DOM
 const formPage = document.getElementById('formPage');
@@ -853,6 +923,81 @@ function calculateDuration() {
         return `${hours}h ${minutes}m`;
     }
     return '';
+}
+
+// FILTERS
+function populateFilterDropdowns() {
+    // Get unique months
+    const months = [...new Set(trades.map(t => t.luna))].filter(Boolean).sort();
+    const monthSelect = document.getElementById('filterMonth');
+    monthSelect.innerHTML = '<option value="">Toate lunile</option>';
+    months.forEach(month => {
+        const option = document.createElement('option');
+        option.value = month;
+        option.textContent = month;
+        monthSelect.appendChild(option);
+    });
+    
+    // Get unique pairs
+    const pairs = [...new Set(trades.map(t => t.pereche))].filter(Boolean).sort();
+    const pairSelect = document.getElementById('filterPair');
+    pairSelect.innerHTML = '<option value="">Toate perechile</option>';
+    pairs.forEach(pair => {
+        const option = document.createElement('option');
+        option.value = pair;
+        option.textContent = pair;
+        pairSelect.appendChild(option);
+    });
+}
+
+function applyFilters() {
+    // Get filter values
+    activeFilters.month = document.getElementById('filterMonth').value;
+    activeFilters.day = document.getElementById('filterDay').value;
+    activeFilters.session = document.getElementById('filterSession').value;
+    activeFilters.pair = document.getElementById('filterPair').value;
+    activeFilters.position = document.getElementById('filterPosition').value;
+    activeFilters.status = document.getElementById('filterStatus').value;
+    
+    // Filter trades
+    filteredTrades = trades.filter(trade => {
+        if (activeFilters.month && trade.luna !== activeFilters.month) return false;
+        if (activeFilters.day && trade.zi !== activeFilters.day) return false;
+        if (activeFilters.session && trade.sesiune !== activeFilters.session) return false;
+        if (activeFilters.pair && trade.pereche !== activeFilters.pair) return false;
+        if (activeFilters.position && trade.position !== activeFilters.position) return false;
+        if (activeFilters.status && trade.wl !== activeFilters.status) return false;
+        return true;
+    });
+    
+    // Update display
+    updateTable();
+    updateDashboard();
+}
+
+function resetFilters() {
+    // Reset all filter selects
+    document.getElementById('filterMonth').value = '';
+    document.getElementById('filterDay').value = '';
+    document.getElementById('filterSession').value = '';
+    document.getElementById('filterPair').value = '';
+    document.getElementById('filterPosition').value = '';
+    document.getElementById('filterStatus').value = '';
+    
+    // Reset active filters
+    activeFilters = {
+        month: '',
+        day: '',
+        session: '',
+        pair: '',
+        position: '',
+        status: ''
+    };
+    
+    // Show all trades
+    filteredTrades = [...trades];
+    updateTable();
+    updateDashboard();
 }
 
 // Determine pip value based on pair/instrument
@@ -1069,6 +1214,8 @@ function loadTradesFromSheet() {
             isLoading = false;
             if (res.result === 'success') {
                 trades = res.data || [];
+                filteredTrades = [...trades]; // Initialize filtered trades
+                populateFilterDropdowns(); // Populate filter dropdowns
                 updateTable();
                 updateDashboard();
             } else {
@@ -1079,17 +1226,17 @@ function loadTradesFromSheet() {
             console.error(err);
             isLoading = false;
             tradesBody.innerHTML =
-                '<tr><td colspan="19" class="no-data">Eroare la încărcare</td></tr>';
+                '<tr><td colspan="21" class="no-data">Eroare la încărcare</td></tr>';
         });
 }
 
 // DASHBOARD
 function updateDashboard() {
-    // Filter only closed trades (Win or Loss) for statistics
-    const closedTrades = trades.filter(t => t.wl === 'Win' || t.wl === 'Loss');
-    const wins = trades.filter(t => t.wl === 'Win');
-    const losses = trades.filter(t => t.wl === 'Loss');
-    const openTrades = trades.filter(t => t.wl === 'Open');
+    // Use filtered trades for statistics
+    const closedTrades = filteredTrades.filter(t => t.wl === 'Win' || t.wl === 'Loss');
+    const wins = filteredTrades.filter(t => t.wl === 'Win');
+    const losses = filteredTrades.filter(t => t.wl === 'Loss');
+    const openTrades = filteredTrades.filter(t => t.wl === 'Open');
     
     // Calculate total profit (sum of all profit values)
     const totalProfit = closedTrades.reduce((sum, t) => {
@@ -1151,7 +1298,7 @@ function updateDashboard() {
 
 // TABLE
 function updateTable() {
-    if (!trades.length) {
+    if (!filteredTrades.length) {
         tradesBody.innerHTML =
             '<tr><td colspan="21" class="no-data">Nu există tranzacții</td></tr>';
         return;
@@ -1159,7 +1306,7 @@ function updateTable() {
 
     tradesBody.innerHTML = '';
 
-    trades.forEach((t, i) => {
+    filteredTrades.forEach((t, i) => {
         const tr = document.createElement('tr');
         
         // Parse partial closes
@@ -1223,8 +1370,10 @@ function updateTable() {
             <button class="delete-btn">Șterge</button>
             <button class="edit-btn">Editează</button>
         `;
-        actions.children[0].onclick = () => deleteTrade(i);
-        actions.children[1].onclick = () => editTrade(i);
+        // Find original index in trades array
+        const originalIndex = trades.findIndex(trade => trade.id === t.id);
+        actions.children[0].onclick = () => deleteTrade(originalIndex);
+        actions.children[1].onclick = () => editTrade(originalIndex);
         tr.appendChild(actions);
 
         tradesBody.appendChild(tr);
