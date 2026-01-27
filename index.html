@@ -1339,9 +1339,21 @@ function updateTable() {
         // Format time as HH:MM
         const formatTime = (timeStr) => {
             if (!timeStr) return '-';
+            
+            // If it's a full timestamp (contains 'T'), extract time
+            if (timeStr.includes('T')) {
+                const date = new Date(timeStr);
+                const hours = String(date.getUTCHours()).padStart(2, '0');
+                const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+                return `${hours}:${minutes}`;
+            }
+            
             // If already in HH:MM format, return as is
-            if (timeStr.includes(':') && timeStr.length <= 5) return timeStr;
-            // Otherwise try to parse and format
+            if (timeStr.includes(':') && timeStr.length <= 5) {
+                return timeStr;
+            }
+            
+            // Otherwise return as is
             return timeStr;
         };
         
