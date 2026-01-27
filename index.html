@@ -277,6 +277,23 @@
             border-bottom: 2px solid #4d9fff;
             white-space: nowrap;
             font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+        
+        th[onclick] {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        th[onclick]:hover {
+            background: rgba(77, 159, 255, 0.15);
+            color: #6db3ff;
+        }
+        
+        th span {
+            font-size: 0.8em;
+            margin-left: 4px;
+            color: #00cc88;
         }
 
         td {
@@ -761,24 +778,58 @@
                 <table id="tradesTable">
                     <thead>
                         <tr>
-                            <th>Month</th>
-                            <th>Date</th>
-                            <th>Day</th>
-                            <th>Pair</th>
-                            <th>Session</th>
-                            <th>Long/Short</th>
-                            <th>Status</th>
-                            <th>Lot Size</th>
-                            <th>R</th>
-                            <th>Risk</th>
-                            <th>Profit</th>
+                            <th onclick="sortTable('luna')" style="cursor: pointer; user-select: none;">
+                                Month <span id="sort-luna"></span>
+                            </th>
+                            <th onclick="sortTable('data')" style="cursor: pointer; user-select: none;">
+                                Date <span id="sort-data">▼</span>
+                            </th>
+                            <th onclick="sortTable('zi')" style="cursor: pointer; user-select: none;">
+                                Day <span id="sort-zi"></span>
+                            </th>
+                            <th onclick="sortTable('pereche')" style="cursor: pointer; user-select: none;">
+                                Pair <span id="sort-pereche"></span>
+                            </th>
+                            <th onclick="sortTable('sesiune')" style="cursor: pointer; user-select: none;">
+                                Session <span id="sort-sesiune"></span>
+                            </th>
+                            <th onclick="sortTable('position')" style="cursor: pointer; user-select: none;">
+                                Long/Short <span id="sort-position"></span>
+                            </th>
+                            <th onclick="sortTable('wl')" style="cursor: pointer; user-select: none;">
+                                Status <span id="sort-wl"></span>
+                            </th>
+                            <th onclick="sortTable('lotSize')" style="cursor: pointer; user-select: none;">
+                                Lot Size <span id="sort-lotSize"></span>
+                            </th>
+                            <th onclick="sortTable('r')" style="cursor: pointer; user-select: none;">
+                                R <span id="sort-r"></span>
+                            </th>
+                            <th onclick="sortTable('risk')" style="cursor: pointer; user-select: none;">
+                                Risk <span id="sort-risk"></span>
+                            </th>
+                            <th onclick="sortTable('profit')" style="cursor: pointer; user-select: none;">
+                                Profit <span id="sort-profit"></span>
+                            </th>
                             <th>Partial Closes</th>
-                            <th>Entry</th>
-                            <th>Entry Hour</th>
-                            <th>Exit Hour</th>
-                            <th>Duration</th>
-                            <th>SL</th>
-                            <th>EXIT</th>
+                            <th onclick="sortTable('entry')" style="cursor: pointer; user-select: none;">
+                                Entry <span id="sort-entry"></span>
+                            </th>
+                            <th onclick="sortTable('entryHour')" style="cursor: pointer; user-select: none;">
+                                Entry Hour <span id="sort-entryHour"></span>
+                            </th>
+                            <th onclick="sortTable('exitHour')" style="cursor: pointer; user-select: none;">
+                                Exit Hour <span id="sort-exitHour"></span>
+                            </th>
+                            <th onclick="sortTable('duration')" style="cursor: pointer; user-select: none;">
+                                Duration <span id="sort-duration"></span>
+                            </th>
+                            <th onclick="sortTable('sl')" style="cursor: pointer; user-select: none;">
+                                SL <span id="sort-sl"></span>
+                            </th>
+                            <th onclick="sortTable('tp')" style="cursor: pointer; user-select: none;">
+                                EXIT <span id="sort-tp"></span>
+                            </th>
                             <th>Screenshot</th>
                             <th>Acțiuni</th>
                         </tr>
@@ -818,6 +869,10 @@ let activeFilters = {
     position: '',
     status: ''
 };
+
+// Sorting state
+let sortColumn = 'data'; // Default sort by date
+let sortDirection = 'desc'; // Default newest first
 
 // DOM
 const formPage = document.getElementById('formPage');
@@ -982,9 +1037,67 @@ function applyFilters() {
         return true;
     });
     
+    // Apply current sort
+    sortFilteredTrades();
+    
     // Update display
     updateTable();
     updateDashboard();
+}
+
+function sortTable(column) {
+    // Toggle sort direction if clicking same column
+    if (sortColumn === column) {
+        sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+        sortColumn = column;
+        sortDirection = 'asc';
+    }
+    
+    sortFilteredTrades();
+    updateTable();
+    updateSortIndicators();
+}
+
+function sortFilteredTrades() {
+    filteredTrades.sort((a, b) => {
+        let aVal = a[sortColumn];
+        let bVal = b[sortColumn];
+        
+        // Handle empty values
+        if (!aVal && !bVal) return 0;
+        if (!aVal) return 1;
+        if (!bVal) return -1;
+        
+        // Convert to appropriate types for comparison
+        if (sortColumn === 'data') {
+            aVal = new Date(aVal);
+            bVal = new Date(bVal);
+        } else if (['r', 'risk', 'profit', 'entry', 'sl', 'tp', 'lotSize'].includes(sortColumn)) {
+            aVal = parseFloat(aVal) || 0;
+            bVal = parseFloat(bVal) || 0;
+        } else {
+            aVal = String(aVal).toLowerCase();
+            bVal = String(bVal).toLowerCase();
+        }
+        
+        // Compare
+        if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
+        if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
+        return 0;
+    });
+}
+
+function updateSortIndicators() {
+    // Clear all indicators
+    const allSortSpans = document.querySelectorAll('[id^="sort-"]');
+    allSortSpans.forEach(span => span.textContent = '');
+    
+    // Set current indicator
+    const currentIndicator = document.getElementById(`sort-${sortColumn}`);
+    if (currentIndicator) {
+        currentIndicator.textContent = sortDirection === 'asc' ? '▲' : '▼';
+    }
 }
 
 function resetFilters() {
@@ -1008,6 +1121,7 @@ function resetFilters() {
     
     // Show all trades
     filteredTrades = [...trades];
+    sortFilteredTrades();
     updateTable();
     updateDashboard();
 }
@@ -1225,8 +1339,10 @@ function loadTradesFromSheet() {
             isLoading = false;
             if (res.result === 'success') {
                 trades = res.data || [];
-                filteredTrades = [...trades]; // Initialize filtered trades
-                populateFilterDropdowns(); // Populate filter dropdowns
+                filteredTrades = [...trades];
+                populateFilterDropdowns();
+                sortFilteredTrades();
+                updateSortIndicators();
                 updateTable();
                 updateDashboard();
             } else {
