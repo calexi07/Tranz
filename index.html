@@ -1468,9 +1468,46 @@ function editTrade(i) {
         document.getElementById(`${prefix}_profit`).value = '';
     });
     
+    // Helper function to convert timestamp to time format (HH:MM)
+    const convertToTimeFormat = (timeStr) => {
+        if (!timeStr) return '';
+        
+        // If it's a full timestamp (contains 'T'), extract time
+        if (timeStr.includes('T')) {
+            const date = new Date(timeStr);
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            return `${hours}:${minutes}`;
+        }
+        
+        // If already in HH:MM format, return as is
+        return timeStr;
+    };
+    
+    // Helper function to ensure date is in YYYY-MM-DD format for input[type="date"]
+    const convertToDateFormat = (dateStr) => {
+        if (!dateStr) return '';
+        
+        // If already in YYYY-MM-DD format, return as is
+        if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+            return dateStr;
+        }
+        
+        // Try to parse and convert
+        const date = new Date(dateStr);
+        if (!isNaN(date.getTime())) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        
+        return dateStr;
+    };
+    
     // Populate all standard fields
     document.getElementById('luna').value = trade.luna || '';
-    document.getElementById('data').value = trade.data || '';
+    document.getElementById('data').value = convertToDateFormat(trade.data) || '';
     document.getElementById('zi').value = trade.zi || '';
     document.getElementById('pereche').value = trade.pereche || '';
     document.getElementById('sesiune').value = trade.sesiune || '';
@@ -1480,8 +1517,8 @@ function editTrade(i) {
     document.getElementById('lotSize').value = trade.lotSize || '';
     document.getElementById('tv').value = trade.tv || '';
     document.getElementById('entry').value = trade.entry || '';
-    document.getElementById('entryHour').value = trade.entryHour || '';
-    document.getElementById('exitHour').value = trade.exitHour || '';
+    document.getElementById('entryHour').value = convertToTimeFormat(trade.entryHour) || '';
+    document.getElementById('exitHour').value = convertToTimeFormat(trade.exitHour) || '';
     document.getElementById('sl').value = trade.sl || '';
     document.getElementById('tp').value = trade.tp || '';
     
