@@ -1182,22 +1182,42 @@ function updateTable() {
 // EDIT / DELETE
 function editTrade(i) {
     editingIndex = i;
-    Object.keys(trades[i]).forEach(k => {
-        if (document.getElementById(k)) {
-            document.getElementById(k).value = trades[i][k];
-        }
+    const trade = trades[i];
+    
+    // Clear all partial closes fields first
+    ['pc1', 'pc2', 'pc3'].forEach(prefix => {
+        document.getElementById(`${prefix}_lot`).value = '';
+        document.getElementById(`${prefix}_price`).value = '';
+        document.getElementById(`${prefix}_profit`).value = '';
     });
     
+    // Populate all standard fields
+    document.getElementById('luna').value = trade.luna || '';
+    document.getElementById('data').value = trade.data || '';
+    document.getElementById('zi').value = trade.zi || '';
+    document.getElementById('pereche').value = trade.pereche || '';
+    document.getElementById('sesiune').value = trade.sesiune || '';
+    document.getElementById('position').value = trade.position || '';
+    document.getElementById('wl').value = trade.wl || '';
+    document.getElementById('risk').value = trade.risk || '';
+    document.getElementById('lotSize').value = trade.lotSize || '';
+    document.getElementById('tv').value = trade.tv || '';
+    document.getElementById('entry').value = trade.entry || '';
+    document.getElementById('entryHour').value = trade.entryHour || '';
+    document.getElementById('exitHour').value = trade.exitHour || '';
+    document.getElementById('sl').value = trade.sl || '';
+    document.getElementById('tp').value = trade.tp || '';
+    
     // Populate partial closes if they exist
-    if (trades[i].partialCloses) {
+    if (trade.partialCloses) {
         try {
-            const pcs = JSON.parse(trades[i].partialCloses);
+            const pcs = JSON.parse(trade.partialCloses);
             pcs.forEach((pc, idx) => {
                 const prefix = `pc${idx + 1}`;
                 if (document.getElementById(`${prefix}_lot`)) {
-                    document.getElementById(`${prefix}_lot`).value = pc.lot;
-                    document.getElementById(`${prefix}_price`).value = pc.price;
-                    document.getElementById(`${prefix}_profit`).value = pc.profit;
+                    document.getElementById(`${prefix}_lot`).value = pc.lot || '';
+                    document.getElementById(`${prefix}_price`).value = pc.price || '';
+                    document.getElementById(`${prefix}_profit`).value = pc.profit || '';
                 }
             });
         } catch (e) {
@@ -1206,7 +1226,9 @@ function editTrade(i) {
     }
     
     // Recalculate partial closes display
-    calculatePartialCloses();
+    setTimeout(() => {
+        calculatePartialCloses();
+    }, 100);
     
     showPage('form');
 }
@@ -1264,7 +1286,22 @@ function updateTradeInSheet(trade) {
 
 // UTILS
 function clearForm() {
-    document.querySelectorAll('input, select').forEach(i => i.value = '');
+    // Clear standard fields
+    document.querySelectorAll('input:not([readonly]), select').forEach(i => i.value = '');
+    
+    // Clear partial closes
+    ['pc1', 'pc2', 'pc3'].forEach(prefix => {
+        document.getElementById(`${prefix}_lot`).value = '';
+        document.getElementById(`${prefix}_price`).value = '';
+        document.getElementById(`${prefix}_profit`).value = '';
+    });
+    
+    // Reset totals
+    document.getElementById('totalPartialProfit').textContent = '$0.00';
+    document.getElementById('lotRemaining').textContent = '0.00';
+    
+    // Reset editing index
+    editingIndex = -1;
 }
 
 // INIT
