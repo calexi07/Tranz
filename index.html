@@ -425,6 +425,14 @@
             font-size: 1.3em;
             font-weight: bold;
         }
+
+        .partial-close-group {
+            background: rgba(0, 204, 136, 0.05);
+            border: 1px solid rgba(0, 204, 136, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -511,8 +519,92 @@
                         <input type="number" step="0.01" id="risk" placeholder="ex: 100">
                     </div>
                     <div class="form-group">
+                        <label for="lotSize">Lot Size *</label>
+                        <input type="number" step="0.01" id="lotSize" placeholder="ex: 0.02">
+                    </div>
+                    <div class="form-group">
                         <label for="tv">TV</label>
                         <input type="text" id="tv" placeholder="ex: 1000">
+                    </div>
+                </div>
+
+                <!-- Partial Closes Section -->
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #4d9fff; margin-bottom: 20px; font-size: 1.3em;">🎯 Partial Closes (Opțional)</h3>
+                    
+                    <!-- Partial Close 1 -->
+                    <div class="partial-close-group">
+                        <h4 style="color: #00cc88; margin-bottom: 15px; font-size: 1.1em;">Exit 1</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="pc1_lot">Lot</label>
+                                <input type="number" step="0.01" id="pc1_lot" placeholder="ex: 0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="pc1_price">Exit Price</label>
+                                <input type="number" step="0.00001" id="pc1_price" placeholder="ex: 5120.50">
+                            </div>
+                            <div class="form-group">
+                                <label for="pc1_profit">Profit ($)</label>
+                                <input type="number" step="0.01" id="pc1_profit" placeholder="Calculat automat" readonly style="background: rgba(0, 204, 136, 0.1);">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Partial Close 2 -->
+                    <div class="partial-close-group">
+                        <h4 style="color: #00cc88; margin-bottom: 15px; font-size: 1.1em;">Exit 2</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="pc2_lot">Lot</label>
+                                <input type="number" step="0.01" id="pc2_lot" placeholder="ex: 0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="pc2_price">Exit Price</label>
+                                <input type="number" step="0.00001" id="pc2_price" placeholder="ex: 5140.00">
+                            </div>
+                            <div class="form-group">
+                                <label for="pc2_profit">Profit ($)</label>
+                                <input type="number" step="0.01" id="pc2_profit" placeholder="Calculat automat" readonly style="background: rgba(0, 204, 136, 0.1);">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Partial Close 3 -->
+                    <div class="partial-close-group">
+                        <h4 style="color: #00cc88; margin-bottom: 15px; font-size: 1.1em;">Exit 3</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="pc3_lot">Lot</label>
+                                <input type="number" step="0.01" id="pc3_lot" placeholder="ex: 0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="pc3_price">Exit Price</label>
+                                <input type="number" step="0.00001" id="pc3_price" placeholder="ex: 5161.90">
+                            </div>
+                            <div class="form-group">
+                                <label for="pc3_profit">Profit ($)</label>
+                                <input type="number" step="0.01" id="pc3_profit" placeholder="Calculat automat" readonly style="background: rgba(0, 204, 136, 0.1);">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(77, 159, 255, 0.1); border: 1px solid rgba(77, 159, 255, 0.3); border-radius: 10px; padding: 15px; margin-top: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #aaa;">Total Partial Profit:</span>
+                            <span style="color: #00cc88; font-size: 1.3em; font-weight: bold;" id="totalPartialProfit">$0.00</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                            <span style="color: #aaa;">Lot Remaining:</span>
+                            <span style="color: #4d9fff; font-size: 1.3em; font-weight: bold;" id="lotRemaining">0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-grid" style="margin-top: 20px;">
+                    <div class="form-group">
+                        <label for="tv">TV</label>
+                        <input type="text" id="tv" placeholder="ex: 1000" style="display:none;">
                     </div>
                 </div>
                 <button class="save-btn" id="saveBtn">Salvează</button>
@@ -570,10 +662,11 @@
                             <th>Session</th>
                             <th>Long/Short</th>
                             <th>Status</th>
+                            <th>Lot Size</th>
                             <th>R</th>
                             <th>Risk</th>
                             <th>Profit</th>
-                            <th>TV</th>
+                            <th>Partial Closes</th>
                             <th>Entry</th>
                             <th>Entry Hour</th>
                             <th>Exit Hour</th>
@@ -644,6 +737,84 @@ function showPage(page) {
 // Auto-calculate Duration when Entry Hour or Exit Hour changes
 document.getElementById('entryHour').addEventListener('change', calculateDuration);
 document.getElementById('exitHour').addEventListener('change', calculateDuration);
+
+// Auto-calculate Partial Close profits
+['pc1', 'pc2', 'pc3'].forEach(prefix => {
+    document.getElementById(`${prefix}_lot`).addEventListener('input', calculatePartialCloses);
+    document.getElementById(`${prefix}_price`).addEventListener('input', calculatePartialCloses);
+});
+document.getElementById('entry').addEventListener('input', calculatePartialCloses);
+document.getElementById('position').addEventListener('change', calculatePartialCloses);
+document.getElementById('pereche').addEventListener('input', calculatePartialCloses);
+document.getElementById('lotSize').addEventListener('input', calculatePartialCloses);
+
+function calculatePartialCloses() {
+    const entry = parseFloat(document.getElementById('entry').value) || 0;
+    const position = document.getElementById('position').value;
+    const pereche = document.getElementById('pereche').value;
+    const lotSize = parseFloat(document.getElementById('lotSize').value) || 0;
+    
+    let totalPartialProfit = 0;
+    let totalLotsExited = 0;
+    
+    ['pc1', 'pc2', 'pc3'].forEach(prefix => {
+        const lot = parseFloat(document.getElementById(`${prefix}_lot`).value) || 0;
+        const price = parseFloat(document.getElementById(`${prefix}_price`).value) || 0;
+        
+        if (lot > 0 && price > 0 && entry > 0) {
+            // Calculate profit for this partial close
+            const profit = calculatePartialProfit(entry, price, lot, position, pereche);
+            document.getElementById(`${prefix}_profit`).value = profit.toFixed(2);
+            totalPartialProfit += profit;
+            totalLotsExited += lot;
+        } else {
+            document.getElementById(`${prefix}_profit`).value = '';
+        }
+    });
+    
+    // Update totals
+    document.getElementById('totalPartialProfit').textContent = `$${totalPartialProfit.toFixed(2)}`;
+    document.getElementById('lotRemaining').textContent = (lotSize - totalLotsExited).toFixed(2);
+}
+
+function calculatePartialProfit(entry, exitPrice, lot, position, pair) {
+    if (!entry || !exitPrice || !lot) return 0;
+    
+    const entryPrice = parseFloat(entry);
+    const exit = parseFloat(exitPrice);
+    const lotAmount = parseFloat(lot);
+    
+    // Get pip value for the pair
+    const pipValue = getPipValue(pair || '');
+    
+    // Calculate pips
+    let pips = 0;
+    if (position === 'Long') {
+        pips = (exit - entryPrice) / pipValue;
+    } else if (position === 'Short') {
+        pips = (entryPrice - exit) / pipValue;
+    }
+    
+    // Calculate profit based on instrument type
+    let profitPerLot = 0;
+    const pairUpper = (pair || '').toUpperCase();
+    
+    if (pairUpper.includes('XAU') || pairUpper.includes('GOLD')) {
+        // Gold: $1 per 0.01 lot per $1 move
+        profitPerLot = pips * 0.10 * (lotAmount / 0.01);
+    } else if (pairUpper.includes('XAG') || pairUpper.includes('SILVER')) {
+        // Silver: Similar to gold
+        profitPerLot = pips * 0.01 * (lotAmount / 0.01);
+    } else if (pairUpper.includes('US30') || pairUpper.includes('NAS100') || pairUpper.includes('SPX500')) {
+        // Indices: $1 per point per lot
+        profitPerLot = pips * lotAmount;
+    } else {
+        // Forex: Standard calculation - $10 per pip per standard lot (1.0)
+        profitPerLot = pips * 10 * lotAmount;
+    }
+    
+    return profitPerLot;
+}
 
 function calculateDuration() {
     const entryHour = document.getElementById('entryHour').value;
@@ -773,11 +944,11 @@ saveBtn.onclick = () => {
 };
 
 function getFormData() {
-    const required = ['luna','data','zi','pereche','sesiune','position','wl','risk','entry','sl'];
+    const required = ['luna','data','zi','pereche','sesiune','position','wl','risk','entry','sl','lotSize'];
     for (const id of required) {
         const value = document.getElementById(id).value;
         if (!value || value === '') {
-            alert('Completează toate câmpurile obligatorii (*): Month, Date, Day, Pair, Session, Long/Short, Status, Risk, Entry, SL');
+            alert('Completează toate câmpurile obligatorii (*): Month, Date, Day, Pair, Session, Long/Short, Status, Risk, Entry, SL, Lot Size');
             return null;
         }
     }
@@ -789,11 +960,31 @@ function getFormData() {
     const wl = document.getElementById('wl').value;
     const risk = document.getElementById('risk').value;
     const pereche = document.getElementById('pereche').value;
+    const lotSize = document.getElementById('lotSize').value;
     const entryHour = document.getElementById('entryHour').value;
     const exitHour = document.getElementById('exitHour').value;
     
     // Calculate duration
     const duration = calculateDuration();
+    
+    // Get partial closes data
+    const partialCloses = [];
+    let totalPartialProfit = 0;
+    
+    ['pc1', 'pc2', 'pc3'].forEach(prefix => {
+        const lot = document.getElementById(`${prefix}_lot`).value;
+        const price = document.getElementById(`${prefix}_price`).value;
+        const profit = document.getElementById(`${prefix}_profit`).value;
+        
+        if (lot && price) {
+            partialCloses.push({
+                lot: lot,
+                price: price,
+                profit: profit
+            });
+            totalPartialProfit += parseFloat(profit) || 0;
+        }
+    });
     
     // Calculate pips (use EXIT if available, otherwise use SL)
     const exitPrice = tp || sl;
@@ -802,8 +993,27 @@ function getFormData() {
     // Calculate R if TP is provided
     const r = tp ? calculateR(entry, sl, tp, position) : 0;
     
-    // Calculate profit
-    const profit = calculateProfit(r, risk, wl);
+    // Calculate final profit
+    let finalProfit = 0;
+    
+    if (wl === 'Win' || wl === 'Loss') {
+        // Calculate profit from remaining position
+        const lotRemaining = parseFloat(lotSize) - partialCloses.reduce((sum, pc) => sum + parseFloat(pc.lot), 0);
+        
+        if (tp && lotRemaining > 0) {
+            // Calculate profit for remaining lots at final exit
+            const remainingProfit = calculatePartialProfit(entry, tp, lotRemaining, position, pereche);
+            finalProfit = totalPartialProfit + remainingProfit;
+        } else if (wl === 'Loss') {
+            // If loss, calculate based on risk and remaining lots
+            const lotRatio = lotRemaining / parseFloat(lotSize);
+            finalProfit = totalPartialProfit - (parseFloat(risk) * lotRatio);
+        } else {
+            finalProfit = totalPartialProfit;
+        }
+    } else if (wl === 'Open') {
+        finalProfit = totalPartialProfit; // Only count partial closes for open trades
+    }
 
     return {
         luna: document.getElementById('luna').value,
@@ -813,9 +1023,11 @@ function getFormData() {
         sesiune: document.getElementById('sesiune').value,
         position: position,
         wl: wl,
+        lotSize: lotSize,
         r: r,
         risk: risk,
-        profit: profit,
+        profit: finalProfit.toFixed(2),
+        partialCloses: JSON.stringify(partialCloses),
         tv: document.getElementById('tv').value,
         entry: entry,
         entryHour: entryHour,
@@ -833,7 +1045,7 @@ function loadTradesFromSheet() {
     isLoading = true;
 
     tradesBody.innerHTML =
-        '<tr><td colspan="19" class="loading">Se încarcă datele...</td></tr>';
+        '<tr><td colspan="20" class="loading">Se încarcă datele...</td></tr>';
 
     fetch(GOOGLE_SCRIPT_URL + '?action=get')
         .then(r => r.json())
@@ -896,7 +1108,7 @@ function updateDashboard() {
 function updateTable() {
     if (!trades.length) {
         tradesBody.innerHTML =
-            '<tr><td colspan="19" class="no-data">Nu există tranzacții</td></tr>';
+            '<tr><td colspan="20" class="no-data">Nu există tranzacții</td></tr>';
         return;
     }
 
@@ -904,6 +1116,21 @@ function updateTable() {
 
     trades.forEach((t, i) => {
         const tr = document.createElement('tr');
+        
+        // Parse partial closes
+        let partialClosesDisplay = '-';
+        if (t.partialCloses) {
+            try {
+                const pcs = JSON.parse(t.partialCloses);
+                if (pcs.length > 0) {
+                    partialClosesDisplay = pcs.map(pc => 
+                        `${pc.lot}L @ ${pc.price} ($${parseFloat(pc.profit).toFixed(2)})`
+                    ).join('<br>');
+                }
+            } catch (e) {
+                partialClosesDisplay = '-';
+            }
+        }
         
         // Create cells with appropriate styling
         const cells = [
@@ -914,10 +1141,11 @@ function updateTable() {
             { value: t.sesiune, class: '' },
             { value: t.position, class: t.position === 'Long' ? 'long' : 'short' },
             { value: t.wl || '-', class: t.wl === 'Win' ? 'win' : t.wl === 'Loss' ? 'loss' : t.wl === 'Open' ? 'open' : '' },
+            { value: t.lotSize || '-', class: '' },
             { value: t.r || '-', class: '' },
             { value: t.risk, class: '' },
             { value: t.profit || '-', class: '' },
-            { value: t.tv || '-', class: '' },
+            { value: partialClosesDisplay, class: '', html: true },
             { value: t.entry || '-', class: '' },
             { value: t.entryHour || '-', class: '' },
             { value: t.exitHour || '-', class: '' },
@@ -929,7 +1157,11 @@ function updateTable() {
 
         cells.forEach(cell => {
             const td = document.createElement('td');
-            td.textContent = cell.value;
+            if (cell.html) {
+                td.innerHTML = cell.value;
+            } else {
+                td.textContent = cell.value;
+            }
             if (cell.class) td.className = cell.class;
             tr.appendChild(td);
         });
@@ -955,6 +1187,27 @@ function editTrade(i) {
             document.getElementById(k).value = trades[i][k];
         }
     });
+    
+    // Populate partial closes if they exist
+    if (trades[i].partialCloses) {
+        try {
+            const pcs = JSON.parse(trades[i].partialCloses);
+            pcs.forEach((pc, idx) => {
+                const prefix = `pc${idx + 1}`;
+                if (document.getElementById(`${prefix}_lot`)) {
+                    document.getElementById(`${prefix}_lot`).value = pc.lot;
+                    document.getElementById(`${prefix}_price`).value = pc.price;
+                    document.getElementById(`${prefix}_profit`).value = pc.profit;
+                }
+            });
+        } catch (e) {
+            console.error('Error parsing partial closes:', e);
+        }
+    }
+    
+    // Recalculate partial closes display
+    calculatePartialCloses();
+    
     showPage('form');
 }
 
