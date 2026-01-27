@@ -382,6 +382,49 @@
             font-size: 1.2em;
             padding: 20px;
         }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .loading-spinner {
+            text-align: center;
+        }
+
+        .spinner {
+            border: 5px solid rgba(77, 159, 255, 0.2);
+            border-top: 5px solid #4d9fff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #4d9fff;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -444,24 +487,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="r">R</label>
-                        <input type="number" step="0.01" id="r" placeholder="ex: 2.5">
-                    </div>
-                    <div class="form-group">
-                        <label for="risk">Risk *</label>
-                        <input type="number" step="0.01" id="risk" placeholder="ex: 100">
-                    </div>
-                    <div class="form-group">
-                        <label for="profit">Profit</label>
-                        <input type="number" step="0.01" id="profit" placeholder="ex: 250">
-                    </div>
-                    <div class="form-group">
-                        <label for="tv">TV</label>
-                        <input type="text" id="tv" placeholder="ex: 1000">
-                    </div>
-                    <div class="form-group">
-                        <label for="entry">Entry</label>
-                        <input type="number" step="0.00001" id="entry" placeholder="ex: 1.08500">
+                        <label for="entry">Entry *</label>
+                        <input type="number" step="0.00001" id="entry" placeholder="ex: 1.08500" required>
                     </div>
                     <div class="form-group">
                         <label for="entryHour">Entry Hour</label>
@@ -472,20 +499,20 @@
                         <input type="time" id="exitHour">
                     </div>
                     <div class="form-group">
-                        <label for="duration">Duration</label>
-                        <input type="text" id="duration" placeholder="ex: 2h 30m">
-                    </div>
-                    <div class="form-group">
-                        <label for="sl">SL</label>
-                        <input type="number" step="0.00001" id="sl" placeholder="ex: 1.08400">
+                        <label for="sl">SL *</label>
+                        <input type="number" step="0.00001" id="sl" placeholder="ex: 1.08400" required>
                     </div>
                     <div class="form-group">
                         <label for="tp">EXIT</label>
                         <input type="number" step="0.00001" id="tp" placeholder="ex: 1.08700">
                     </div>
                     <div class="form-group">
-                        <label for="pips">Pips</label>
-                        <input type="number" step="0.1" id="pips" placeholder="ex: 25.5">
+                        <label for="risk">Risk *</label>
+                        <input type="number" step="0.01" id="risk" placeholder="ex: 100">
+                    </div>
+                    <div class="form-group">
+                        <label for="tv">TV</label>
+                        <input type="text" id="tv" placeholder="ex: 1000">
                     </div>
                 </div>
                 <button class="save-btn" id="saveBtn">Salvează</button>
@@ -512,11 +539,6 @@
                         <div class="stat-label">Win Rate</div>
                         <div class="stat-value" id="statWinRate">0%</div>
                         <div class="stat-subtext">Rata de succes</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Profit Factor</div>
-                        <div class="stat-value" id="statProfitFactor">0.00</div>
-                        <div class="stat-subtext">Wins / Losses</div>
                     </div>
                     <div class="stat-card positive">
                         <div class="stat-label">Wins</div>
@@ -572,6 +594,14 @@
         </div>
     </div>
 
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <div class="loading-text">Se procesează...</div>
+        </div>
+    </div>
+
     <script>
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgfjNnriUwOF_A3HFkfSHhpuO1cwHqArZE1hQVj536GPKlfw1bQAUkm4l6YeAROfhoYQ/exec';
 
@@ -586,6 +616,16 @@ const btnForm = document.getElementById('btnForm');
 const btnTable = document.getElementById('btnTable');
 const saveBtn = document.getElementById('saveBtn');
 const tradesBody = document.getElementById('tradesBody');
+const loadingOverlay = document.getElementById('loadingOverlay');
+
+// Show/Hide Loading
+function showLoading() {
+    loadingOverlay.classList.add('active');
+}
+
+function hideLoading() {
+    loadingOverlay.classList.remove('active');
+}
 
 // NAV
 btnForm.onclick = () => showPage('form');
@@ -599,6 +639,95 @@ function showPage(page) {
     tablePage.classList.toggle('active', page === 'table');
     btnForm.classList.toggle('active', page === 'form');
     btnTable.classList.toggle('active', page === 'table');
+}
+
+// Auto-calculate Duration when Entry Hour or Exit Hour changes
+document.getElementById('entryHour').addEventListener('change', calculateDuration);
+document.getElementById('exitHour').addEventListener('change', calculateDuration);
+
+function calculateDuration() {
+    const entryHour = document.getElementById('entryHour').value;
+    const exitHour = document.getElementById('exitHour').value;
+    
+    if (entryHour && exitHour) {
+        const [entryH, entryM] = entryHour.split(':').map(Number);
+        const [exitH, exitM] = exitHour.split(':').map(Number);
+        
+        let totalMinutes = (exitH * 60 + exitM) - (entryH * 60 + entryM);
+        
+        // Handle negative duration (overnight trades)
+        if (totalMinutes < 0) {
+            totalMinutes += 24 * 60;
+        }
+        
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+        
+        return `${hours}h ${minutes}m`;
+    }
+    return '';
+}
+
+// Calculate Pips based on Entry, Exit/SL, and Position
+function calculatePips(entry, exit, position) {
+    if (!entry || !exit) return 0;
+    
+    const entryPrice = parseFloat(entry);
+    const exitPrice = parseFloat(exit);
+    
+    let pips = 0;
+    
+    // For most pairs (4 decimal places), 1 pip = 0.0001
+    // For JPY pairs (2 decimal places), 1 pip = 0.01
+    const pipValue = entryPrice > 100 ? 0.01 : 0.0001;
+    
+    if (position === 'Long') {
+        pips = (exitPrice - entryPrice) / pipValue;
+    } else if (position === 'Short') {
+        pips = (entryPrice - exitPrice) / pipValue;
+    }
+    
+    return Math.round(pips * 10) / 10; // Round to 1 decimal
+}
+
+// Calculate R (Risk/Reward Ratio)
+function calculateR(entry, sl, tp, position) {
+    if (!entry || !sl || !tp) return 0;
+    
+    const entryPrice = parseFloat(entry);
+    const slPrice = parseFloat(sl);
+    const tpPrice = parseFloat(tp);
+    
+    let risk = 0;
+    let reward = 0;
+    
+    if (position === 'Long') {
+        risk = entryPrice - slPrice;
+        reward = tpPrice - entryPrice;
+    } else if (position === 'Short') {
+        risk = slPrice - entryPrice;
+        reward = entryPrice - tpPrice;
+    }
+    
+    if (risk === 0) return 0;
+    
+    return Math.round((reward / risk) * 100) / 100; // Round to 2 decimals
+}
+
+// Calculate Profit based on R and Risk
+function calculateProfit(r, risk, wl) {
+    if (!risk || wl === 'Open') return 0;
+    
+    const riskAmount = parseFloat(risk);
+    const rValue = parseFloat(r) || 0;
+    
+    if (wl === 'Win') {
+        return Math.round(riskAmount * rValue * 100) / 100;
+    } else if (wl === 'Loss') {
+        return Math.round(-riskAmount * 100) / 100;
+    }
+    
+    return 0;
 }
 
 // SAVE
@@ -617,33 +746,56 @@ saveBtn.onclick = () => {
 };
 
 function getFormData() {
-    const required = ['luna','data','zi','pereche','sesiune','position','wl','risk'];
+    const required = ['luna','data','zi','pereche','sesiune','position','wl','risk','entry','sl'];
     for (const id of required) {
-        if (!document.getElementById(id).value) {
-            alert('Completează toate câmpurile obligatorii (*)');
+        const value = document.getElementById(id).value;
+        if (!value || value === '') {
+            alert('Completează toate câmpurile obligatorii (*): Month, Date, Day, Pair, Session, Long/Short, Status, Risk, Entry, SL');
             return null;
         }
     }
 
+    const entry = document.getElementById('entry').value;
+    const sl = document.getElementById('sl').value;
+    const tp = document.getElementById('tp').value;
+    const position = document.getElementById('position').value;
+    const wl = document.getElementById('wl').value;
+    const risk = document.getElementById('risk').value;
+    const entryHour = document.getElementById('entryHour').value;
+    const exitHour = document.getElementById('exitHour').value;
+    
+    // Calculate duration
+    const duration = calculateDuration();
+    
+    // Calculate pips (use EXIT if available, otherwise use SL)
+    const exitPrice = tp || sl;
+    const pips = calculatePips(entry, exitPrice, position);
+    
+    // Calculate R if TP is provided
+    const r = tp ? calculateR(entry, sl, tp, position) : 0;
+    
+    // Calculate profit
+    const profit = calculateProfit(r, risk, wl);
+
     return {
-        luna: luna.value,
-        data: data.value,
-        zi: zi.value,
-        pereche: pereche.value,
-        sesiune: sesiune.value,
-        position: position.value,
-        wl: wl.value,
-        r: r.value,
-        risk: risk.value,
-        profit: profit.value,
-        tv: tv.value,
-        entry: entry.value,
-        entryHour: entryHour.value,
-        exitHour: exitHour.value,
-        duration: duration.value,
-        sl: sl.value,
-        tp: tp.value,
-        pips: pips.value
+        luna: document.getElementById('luna').value,
+        data: document.getElementById('data').value,
+        zi: document.getElementById('zi').value,
+        pereche: document.getElementById('pereche').value,
+        sesiune: document.getElementById('sesiune').value,
+        position: position,
+        wl: wl,
+        r: r,
+        risk: risk,
+        profit: profit,
+        tv: document.getElementById('tv').value,
+        entry: entry,
+        entryHour: entryHour,
+        exitHour: exitHour,
+        duration: duration,
+        sl: sl,
+        tp: tp,
+        pips: pips
     };
 }
 
@@ -694,18 +846,10 @@ function updateDashboard() {
         ? ((wins.length / closedTrades.length) * 100).toFixed(1)
         : 0;
     
-    // Calculate profit factor (total wins / total losses)
-    const totalWinProfit = wins.reduce((sum, t) => sum + (parseFloat(t.profit) || 0), 0);
-    const totalLossProfit = Math.abs(losses.reduce((sum, t) => sum + (parseFloat(t.profit) || 0), 0));
-    const profitFactor = totalLossProfit > 0 
-        ? (totalWinProfit / totalLossProfit).toFixed(2)
-        : totalWinProfit > 0 ? '∞' : '0.00';
-    
     // Update dashboard
     document.getElementById('statProfitValue').textContent = `$${totalProfit.toFixed(2)}`;
     document.getElementById('statTotalTrades').textContent = closedTrades.length;
     document.getElementById('statWinRate').textContent = `${winRate}%`;
-    document.getElementById('statProfitFactor').textContent = profitFactor;
     document.getElementById('statWins').textContent = wins.length;
     document.getElementById('statLosses').textContent = losses.length;
     document.getElementById('statOpen').textContent = openTrades.length;
@@ -788,29 +932,52 @@ function editTrade(i) {
 
 function deleteTrade(i) {
     if (!confirm('Ștergi tranzacția?')) return;
+    showLoading();
     fetch(`${GOOGLE_SCRIPT_URL}?action=delete&id=${trades[i].id}`)
-        .then(() => loadTradesFromSheet());
+        .then(() => {
+            hideLoading();
+            loadTradesFromSheet();
+        })
+        .catch(err => {
+            console.error(err);
+            hideLoading();
+            alert('Eroare la ștergere');
+        });
 }
 
 // ADD / UPDATE
 function addTradeToSheet(trade) {
+    showLoading();
     const qs = new URLSearchParams({ action: 'add', ...trade });
     fetch(GOOGLE_SCRIPT_URL + '?' + qs)
         .then(() => {
+            hideLoading();
             clearForm();
             showPage('table');
             loadTradesFromSheet();
+        })
+        .catch(err => {
+            console.error(err);
+            hideLoading();
+            alert('Eroare la salvare');
         });
 }
 
 function updateTradeInSheet(trade) {
+    showLoading();
     const qs = new URLSearchParams({ action: 'update', ...trade });
     fetch(GOOGLE_SCRIPT_URL + '?' + qs)
         .then(() => {
+            hideLoading();
             editingIndex = -1;
             clearForm();
             showPage('table');
             loadTradesFromSheet();
+        })
+        .catch(err => {
+            console.error(err);
+            hideLoading();
+            alert('Eroare la actualizare');
         });
 }
 
