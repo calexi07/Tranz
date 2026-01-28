@@ -478,6 +478,11 @@
         <div class="nav-buttons">
             <button class="nav-btn active" id="btnTable">Jurnal de Tranzacționare</button>
             <button class="nav-btn" id="btnForm">Adaugă Tranzacție</button>
+            <a href="backtest_strategie.html" style="text-decoration: none;">
+                <button class="nav-btn" style="background: linear-gradient(135deg, #9c27b0, #7b1fa2); border-color: rgba(156, 39, 176, 0.3);">
+                    📈 Backtest Strategie
+                </button>
+            </a>
         </div>
 
         <!-- Form Page -->
@@ -907,8 +912,11 @@ const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgfjNnriUwOF
 
 let trades = [];
 let filteredTrades = [];
+let backtestTrades = [];
+let filteredBacktestTrades = [];
 let editingIndex = -1;
 let isLoading = false;
+let currentSheet = 'Sheet1'; // 'Sheet1' or 'Backtest'
 
 // Active filters
 let activeFilters = {
@@ -1425,14 +1433,19 @@ function loadTradesFromSheet() {
     // Show loading overlay
     showLoading();
 
-    fetch(GOOGLE_SCRIPT_URL + '?action=get')
+    fetch(GOOGLE_SCRIPT_URL + `?action=get&sheet=${currentSheet}`)
         .then(r => r.json())
         .then(res => {
             isLoading = false;
             hideLoading();
             if (res.result === 'success') {
-                trades = res.data || [];
-                filteredTrades = [...trades];
+                if (currentSheet === 'Backtest') {
+                    backtestTrades = res.data || [];
+                    filteredBacktestTrades = [...backtestTrades];
+                } else {
+                    trades = res.data || [];
+                    filteredTrades = [...trades];
+                }
                 populateFilterDropdowns();
                 sortFilteredTrades();
                 updateSortIndicators();
