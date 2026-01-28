@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jurnal de Tranzactionare</title>
+    <title>Trading Journal - Live</title>
     <style>
         * {
             margin: 0;
@@ -471,16 +471,25 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Jurnal de Tranzactionare</h1>
-            <p>Scoala de Tranzactionare</p>
+            <a href="index.html" style="text-decoration: none; display: flex; align-items: center; gap: 15px;">
+                <div style="font-size: 3em; line-height: 1; cursor: pointer; transition: transform 0.3s ease;" 
+                     onmouseover="this.style.transform='scale(1.1) rotate(5deg)'" 
+                     onmouseout="this.style.transform='scale(1) rotate(0deg)'">
+                    📈
+                </div>
+                <div>
+                    <h1 style="margin: 0;">Trading Journal</h1>
+                    <p style="margin: 0;">Powered by Alessio</p>
+                </div>
+            </a>
         </div>
 
         <div class="nav-buttons">
-            <button class="nav-btn active" id="btnTable">Jurnal de Tranzacționare</button>
-            <button class="nav-btn" id="btnForm">Adaugă Tranzacție</button>
+            <button class="nav-btn active" id="btnTable">Trading Journal</button>
+            <button class="nav-btn" id="btnForm">Add Trade</button>
             <a href="backtest_strategie.html" style="text-decoration: none;">
                 <button class="nav-btn" style="background: linear-gradient(135deg, #9c27b0, #7b1fa2); border-color: rgba(156, 39, 176, 0.3);">
-                    📈 Backtest Strategie
+                    📈 Backtest Strategy
                 </button>
             </a>
         </div>
@@ -493,7 +502,7 @@
                     <div class="form-group">
                         <label for="luna">Month *</label>
                         <select id="luna">
-                            <option value="">Selectează</option>
+                            <option value="">Select</option>
                             <option value="January">January</option>
                             <option value="February">February</option>
                             <option value="March">March</option>
@@ -515,7 +524,7 @@
                     <div class="form-group">
                         <label for="zi">Day *</label>
                         <select id="zi">
-                            <option value="">Selectează</option>
+                            <option value="">Select</option>
                             <option value="Monday">Monday</option>
                             <option value="Tuesday">Tuesday</option>
                             <option value="Wednesday">Wednesday</option>
@@ -526,24 +535,24 @@
                     <div class="form-group">
                         <label for="pereche">Pair *</label>
                         <select id="pereche" onchange="handlePairChange()">
-                            <option value="">Selectează</option>
+                            <option value="">Select</option>
                             <option value="EUR/USD">EUR/USD</option>
                             <option value="GBP/USD">GBP/USD</option>
                             <option value="XAU/USD">XAU/USD</option>
                             <option value="USD/JPY">USD/JPY</option>
                             <option value="US100">US100</option>
                             <option value="GER40">GER40</option>
-                            <option value="Alta">Alta...</option>
+                            <option value="Alta">Other...</option>
                         </select>
                     </div>
                     <div class="form-group" id="customPairGroup" style="display: none;">
-                        <label for="customPair">Introduce Perechea</label>
+                        <label for="customPair">Enter Pair</label>
                         <input type="text" id="customPair" placeholder="ex: AUD/USD">
                     </div>
                     <div class="form-group">
                         <label for="sesiune">Session *</label>
                         <select id="sesiune">
-                            <option value="">Selectează sesiunea</option>
+                            <option value="">Select sesiunea</option>
                             <option value="Asia">Asia</option>
                             <option value="London">London</option>
                             <option value="New York">New York</option>
@@ -552,7 +561,7 @@
                     <div class="form-group">
                         <label for="position">Long/Short *</label>
                         <select id="position">
-                            <option value="">Selectează poziția</option>
+                            <option value="">Select poziția</option>
                             <option value="Long">Long</option>
                             <option value="Short">Short</option>
                         </select>
@@ -560,7 +569,7 @@
                     <div class="form-group">
                         <label for="wl">Status *</label>
                         <select id="wl">
-                            <option value="">Selectează</option>
+                            <option value="">Select</option>
                             <option value="Win">Win</option>
                             <option value="Loss">Loss</option>
                             <option value="Break Even">Break Even</option>
@@ -593,7 +602,7 @@
                     </div>
                     <div class="form-group">
                         <label for="profitOverride">Profit ($ - Optional Override)</label>
-                        <input type="number" step="0.01" id="profitOverride" placeholder="Lasă gol pentru calcul automat">
+                        <input type="number" step="0.01" id="profitOverride" placeholder="Leave empty for auto-calculation">
                     </div>
                     <div class="form-group">
                         <label for="lotSize">Lot Size *</label>
@@ -684,7 +693,7 @@
                         <input type="text" id="tv" placeholder="ex: 1000" style="display:none;">
                     </div>
                 </div>
-                <button class="save-btn" id="saveBtn">Salvează</button>
+                <button class="save-btn" id="saveBtn">Save</button>
             </div>
         </div>
 
@@ -694,10 +703,10 @@
             <div style="background: linear-gradient(135deg, rgba(77, 159, 255, 0.08), rgba(61, 127, 255, 0.03)); backdrop-filter: blur(10px); border: 1px solid rgba(77, 159, 255, 0.25); border-radius: 20px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
                     <h2 style="color: #4d9fff; margin: 0; font-size: 1.5em; display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 1.2em;">🔍</span> Filtre
+                        <span style="font-size: 1.2em;">🔍</span> Filters
                     </h2>
                     <button onclick="resetFilters()" style="background: linear-gradient(135deg, #ff6b6b, #ee5a6f); color: #fff; border: none; padding: 12px 28px; border-radius: 25px; cursor: pointer; font-size: 0.95em; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3); display: flex; align-items: center; gap: 8px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 107, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 107, 0.3)'">
-                        <span>🔄</span> Resetează Filtre
+                        <span>🔄</span> Resetează Filters
                     </button>
                 </div>
                 <div class="form-grid" style="margin-bottom: 0; gap: 20px;">
@@ -706,7 +715,7 @@
                             <span>📅</span> Lună
                         </label>
                         <select id="filterMonth" onchange="applyFilters()" style="background: rgba(77, 159, 255, 0.1); border: 1.5px solid rgba(77, 159, 255, 0.3); border-radius: 12px; padding: 14px; color: #fff; font-size: 1em; transition: all 0.3s ease; cursor: pointer;">
-                            <option value="">Toate lunile</option>
+                            <option value="">All months</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -714,7 +723,7 @@
                             <span>📆</span> Zi
                         </label>
                         <select id="filterDay" onchange="applyFilters()" style="background: rgba(77, 159, 255, 0.1); border: 1.5px solid rgba(77, 159, 255, 0.3); border-radius: 12px; padding: 14px; color: #fff; font-size: 1em; transition: all 0.3s ease; cursor: pointer;">
-                            <option value="">Toate zilele</option>
+                            <option value="">All days</option>
                             <option value="Monday">Monday</option>
                             <option value="Tuesday">Tuesday</option>
                             <option value="Wednesday">Wednesday</option>
@@ -727,7 +736,7 @@
                             <span>🌍</span> Sesiune
                         </label>
                         <select id="filterSession" onchange="applyFilters()" style="background: rgba(77, 159, 255, 0.1); border: 1.5px solid rgba(77, 159, 255, 0.3); border-radius: 12px; padding: 14px; color: #fff; font-size: 1em; transition: all 0.3s ease; cursor: pointer;">
-                            <option value="">Toate sesiunile</option>
+                            <option value="">All sessions</option>
                             <option value="Asia">Asia</option>
                             <option value="London">London</option>
                             <option value="New York">New York</option>
@@ -738,7 +747,7 @@
                             <span>💱</span> Pereche
                         </label>
                         <select id="filterPair" onchange="applyFilters()" style="background: rgba(77, 159, 255, 0.1); border: 1.5px solid rgba(77, 159, 255, 0.3); border-radius: 12px; padding: 14px; color: #fff; font-size: 1em; transition: all 0.3s ease; cursor: pointer;">
-                            <option value="">Toate perechile</option>
+                            <option value="">All pairs</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -746,7 +755,7 @@
                             <span>📊</span> Long/Short
                         </label>
                         <select id="filterPosition" onchange="applyFilters()" style="background: rgba(77, 159, 255, 0.1); border: 1.5px solid rgba(77, 159, 255, 0.3); border-radius: 12px; padding: 14px; color: #fff; font-size: 1em; transition: all 0.3s ease; cursor: pointer;">
-                            <option value="">Toate pozițiile</option>
+                            <option value="">All positions</option>
                             <option value="Long">Long</option>
                             <option value="Short">Short</option>
                         </select>
@@ -756,7 +765,7 @@
                             <span>✅</span> Status
                         </label>
                         <select id="filterStatus" onchange="applyFilters()" style="background: rgba(77, 159, 255, 0.1); border: 1.5px solid rgba(77, 159, 255, 0.3); border-radius: 12px; padding: 14px; color: #fff; font-size: 1em; transition: all 0.3s ease; cursor: pointer;">
-                            <option value="">Toate statusurile</option>
+                            <option value="">All statuses</option>
                             <option value="Win">Win</option>
                             <option value="Loss">Loss</option>
                             <option value="Break Even">Break Even</option>
@@ -769,12 +778,12 @@
             <!-- Initial Balance Settings -->
             <div style="background: linear-gradient(135deg, rgba(77, 159, 255, 0.08), rgba(61, 127, 255, 0.03)); backdrop-filter: blur(10px); border: 1px solid rgba(77, 159, 255, 0.25); border-radius: 20px; padding: 25px; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);">
                 <h3 style="color: #4d9fff; margin-bottom: 20px; font-size: 1.3em; display: flex; align-items: center; gap: 10px;">
-                    <span>💰</span> Setare Balanță Inițială
+                    <span>💰</span> Setare Initial Balance
                 </h3>
                 <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
                     <div style="flex: 1; min-width: 250px;">
                         <label for="initialBalanceInput" style="display: block; color: #4d9fff; margin-bottom: 8px; font-weight: 600; font-size: 0.95em;">
-                            Balanță Inițială ($)
+                            Initial Balance ($)
                         </label>
                         <input type="number" id="initialBalanceInput" step="0.01" placeholder="600" 
                                style="width: 100%; padding: 14px; background: rgba(77, 159, 255, 0.1); border: 1.5px solid rgba(77, 159, 255, 0.3); border-radius: 12px; color: #fff; font-size: 1.1em; font-weight: bold; transition: all 0.3s ease;"
@@ -786,42 +795,42 @@
                             style="background: linear-gradient(135deg, #00cc88, #00aa72); color: #fff; border: none; padding: 14px 30px; border-radius: 12px; cursor: pointer; font-size: 1em; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0, 204, 136, 0.3); margin-top: 28px;"
                             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0, 204, 136, 0.4)'"
                             onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 204, 136, 0.3)'">
-                        💾 Salvează
+                        💾 Save
                     </button>
                 </div>
                 <p style="color: rgba(255, 255, 255, 0.6); margin-top: 12px; font-size: 0.9em; margin-bottom: 0;">
-                    Setează valoarea inițială a contului tău de trading. Această valoare va fi folosită pentru calculul balanței actuale.
+                    Set the initial value of your trading account. This value will be used to calculate the current balance.
                 </p>
             </div>
 
             <!-- Dashboard Statistics -->
             <div class="dashboard">
-                <h2>📊 Statistici Trading</h2>
+                <h2>📊 Trading Statistics</h2>
                 <div class="stats-grid">
                     <div class="stat-card" style="background: linear-gradient(135deg, rgba(77, 159, 255, 0.1), rgba(61, 127, 255, 0.05)); border-color: rgba(77, 159, 255, 0.3);">
-                        <div class="stat-label">Balanță Inițială</div>
+                        <div class="stat-label">Initial Balance</div>
                         <div class="stat-value" id="statInitialBalance" style="color: #4d9fff;">$600.00</div>
-                        <div class="stat-subtext">Capital de start</div>
+                        <div class="stat-subtext">Starting capital</div>
                     </div>
                     <div class="stat-card" id="statCurrentBalanceCard">
-                        <div class="stat-label">Balanță Actuală</div>
+                        <div class="stat-label">Current Balance</div>
                         <div class="stat-value" id="statCurrentBalance">$600.00</div>
-                        <div class="stat-subtext">Capital curent</div>
+                        <div class="stat-subtext">Current capital</div>
                     </div>
                     <div class="stat-card" id="statProfit">
-                        <div class="stat-label">Profit Total</div>
+                        <div class="stat-label">Total Profit</div>
                         <div class="stat-value" id="statProfitValue">$0.00</div>
                         <div class="stat-subtext">Net P&L</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">Total Trades</div>
                         <div class="stat-value" id="statTotalTrades">0</div>
-                        <div class="stat-subtext">Tranzacții închise</div>
+                        <div class="stat-subtext">Closed trades</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">Win Rate</div>
                         <div class="stat-value" id="statWinRate">0%</div>
-                        <div class="stat-subtext">Rata de succes</div>
+                        <div class="stat-subtext">Win rate</div>
                     </div>
                     <div class="stat-card" style="background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 160, 0, 0.05)); border-color: rgba(255, 193, 7, 0.3);">
                         <div class="stat-label">R Mediu</div>
@@ -841,7 +850,7 @@
                     <div class="stat-card positive">
                         <div class="stat-label">Wins</div>
                         <div class="stat-value" id="statWins">0</div>
-                        <div class="stat-subtext">Tranzacții câștigătoare</div>
+                        <div class="stat-subtext">Winning trades</div>
                     </div>
                     <div class="stat-card" style="background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 160, 0, 0.05)); border-color: rgba(255, 193, 7, 0.3);">
                         <div class="stat-label">Break Even</div>
@@ -851,13 +860,13 @@
                     <div class="stat-card negative">
                         <div class="stat-label">Losses</div>
                         <div class="stat-value" id="statLosses">0</div>
-                        <div class="stat-subtext">Tranzacții pierzătoare</div>
+                        <div class="stat-subtext">Losing trades</div>
                     </div>
                 </div>
             </div>
 
             <div class="table-container">
-                <h2 style="margin-bottom: 20px; color: #4d9fff;">Istoricul Tranzacțiilor</h2>
+                <h2 style="margin-bottom: 20px; color: #4d9fff;">Trade History</h2>
                 <table id="tradesTable">
                     <thead>
                         <tr>
@@ -914,12 +923,12 @@
                                 EXIT <span id="sort-tp"></span>
                             </th>
                             <th>Screenshot</th>
-                            <th>Acțiuni</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="tradesBody">
                         <tr>
-                            <td colspan="19" class="no-data">Se încarcă datele...</td>
+                            <td colspan="19" class="no-data">Loading data...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -931,7 +940,7 @@
     <div class="loading-overlay active" id="loadingOverlay">
         <div class="loading-spinner">
             <div class="spinner"></div>
-            <div class="loading-text">Se încarcă datele...</div>
+            <div class="loading-text">Loading data...</div>
         </div>
     </div>
 
@@ -1118,7 +1127,7 @@ function populateFilterDropdowns() {
     // Get unique months
     const months = [...new Set(trades.map(t => t.luna))].filter(Boolean).sort();
     const monthSelect = document.getElementById('filterMonth');
-    monthSelect.innerHTML = '<option value="">Toate lunile</option>';
+    monthSelect.innerHTML = '<option value="">All months</option>';
     months.forEach(month => {
         const option = document.createElement('option');
         option.value = month;
@@ -1129,7 +1138,7 @@ function populateFilterDropdowns() {
     // Get unique pairs
     const pairs = [...new Set(trades.map(t => t.pereche))].filter(Boolean).sort();
     const pairSelect = document.getElementById('filterPair');
-    pairSelect.innerHTML = '<option value="">Toate perechile</option>';
+    pairSelect.innerHTML = '<option value="">All pairs</option>';
     pairs.forEach(pair => {
         const option = document.createElement('option');
         option.value = pair;
@@ -1356,7 +1365,7 @@ function getFormData() {
     for (const id of required) {
         const value = document.getElementById(id).value;
         if (!value || value === '') {
-            alert('Completează toate câmpurile obligatorii (*): Month, Date, Day, Pair, Session, Long/Short, Status, Risk, Entry, SL, Lot Size');
+            alert('Fill in all required fields obligatorii (*): Month, Date, Day, Pair, Session, Long/Short, Status, Risk, Entry, SL, Lot Size');
             return null;
         }
     }
@@ -1364,7 +1373,7 @@ function getFormData() {
     // Validate lot size is positive
     const lotSizeValue = parseFloat(document.getElementById('lotSize').value);
     if (lotSizeValue <= 0) {
-        alert('Lot Size trebuie să fie un număr pozitiv (ex: 0.01, 0.1, 1.0)');
+        alert('Lot Size must be a positive number (ex: 0.01, 0.1, 1.0)');
         return null;
     }
 
@@ -1488,7 +1497,7 @@ function loadTradesFromSheet() {
             isLoading = false;
             hideLoading();
             tradesBody.innerHTML =
-                '<tr><td colspan="20" class="no-data">Eroare la încărcare</td></tr>';
+                '<tr><td colspan="20" class="no-data">Loading error</td></tr>';
         });
 }
 
@@ -1591,12 +1600,12 @@ function updateDashboard() {
     
     if (currentBalance > initialBalance) {
         currentBalanceCard.classList.add('positive');
-        currentBalanceSubtext.textContent = `↗ +${percentChange}% de la start`;
+        currentBalanceSubtext.textContent = `↗ +${percentChange}% from start`;
     } else if (currentBalance < initialBalance) {
         currentBalanceCard.classList.add('negative');
-        currentBalanceSubtext.textContent = `↘ ${percentChange}% de la start`;
+        currentBalanceSubtext.textContent = `↘ ${percentChange}% from start`;
     } else {
-        currentBalanceSubtext.textContent = `Capital curent (±0%)`;
+        currentBalanceSubtext.textContent = `Current capital (±0%)`;
     }
 }
 
@@ -1604,7 +1613,7 @@ function updateDashboard() {
 function updateTable() {
     if (!filteredTrades.length) {
         tradesBody.innerHTML =
-            '<tr><td colspan="20" class="no-data">Nu există tranzacții</td></tr>';
+            '<tr><td colspan="20" class="no-data">No trades</td></tr>';
         return;
     }
 
@@ -1701,8 +1710,8 @@ function updateTable() {
 
         const actions = document.createElement('td');
         actions.innerHTML = `
-            <button class="delete-btn">Șterge</button>
-            <button class="edit-btn">Editează</button>
+            <button class="delete-btn">Delete</button>
+            <button class="edit-btn">Edit</button>
         `;
         // Find original index in trades array
         const originalIndex = trades.findIndex(trade => trade.id === t.id);
@@ -1822,7 +1831,7 @@ function editTrade(i) {
 }
 
 function deleteTrade(i) {
-    if (!confirm('Ștergi tranzacția?')) return;
+    if (!confirm('Delete this trade?')) return;
     showLoading();
     fetch(`${GOOGLE_SCRIPT_URL}?action=delete&id=${trades[i].id}`)
         .then(() => {
@@ -1832,7 +1841,7 @@ function deleteTrade(i) {
         .catch(err => {
             console.error(err);
             hideLoading();
-            alert('Eroare la ștergere');
+            alert('Delete error');
         });
 }
 
@@ -1850,7 +1859,7 @@ function addTradeToSheet(trade) {
         .catch(err => {
             console.error(err);
             hideLoading();
-            alert('Eroare la salvare');
+            alert('Save error');
         });
 }
 
@@ -1868,7 +1877,7 @@ function updateTradeInSheet(trade) {
         .catch(err => {
             console.error(err);
             hideLoading();
-            alert('Eroare la actualizare');
+            alert('Update error');
         });
 }
 
@@ -1901,9 +1910,9 @@ function saveInitialBalance() {
     const balance = document.getElementById('initialBalanceInput').value;
     if (balance && parseFloat(balance) > 0) {
         localStorage.setItem('tradingJournalInitialBalance', balance);
-        alert(`Balanță inițială salvată: $${parseFloat(balance).toFixed(2)}`);
+        alert(`Initial balance saved: $${parseFloat(balance).toFixed(2)}`);
     } else {
-        alert('Te rog introduce o valoare validă pentru balanța inițială.');
+        alert('Please enter a valid value pentru balanța inițială.');
     }
 }
 
