@@ -815,12 +815,12 @@
                 <div class="stats-grid">
                     <div class="stat-card" style="background: linear-gradient(135deg, rgba(77, 159, 255, 0.1), rgba(61, 127, 255, 0.05)); border-color: rgba(77, 159, 255, 0.3);">
                         <div class="stat-label">Initial Balance</div>
-                        <div class="stat-value" id="statInitialBalance" style="color: #4d9fff;">$600.00</div>
+                        <div class="stat-value" id="statInitialBalance" style="color: #4d9fff;">$5000.00</div>
                         <div class="stat-subtext">Starting capital</div>
                     </div>
                     <div class="stat-card" id="statCurrentBalanceCard">
                         <div class="stat-label">Current Balance</div>
-                        <div class="stat-value" id="statCurrentBalance">$600.00</div>
+                        <div class="stat-value" id="statCurrentBalance">$5000.00</div>
                         <div class="stat-subtext">Current capital</div>
                     </div>
                     <div class="stat-card" id="statProfit">
@@ -1568,7 +1568,7 @@ function updateDashboard() {
     
     // Get initial balance from input or use default 600
     const initialBalanceInput = document.getElementById('initialBalanceInput');
-    const initialBalance = parseFloat(initialBalanceInput.value) || 600;
+    const initialBalance = parseFloat(initialBalanceInput.value) || 5000;
     
     // Update initial balance display in dashboard
     document.getElementById('statInitialBalance').textContent = `$${initialBalance.toFixed(2)}`;
@@ -2030,7 +2030,7 @@ function loadInitialBalance() {
     if (savedBalance) {
         document.getElementById('initialBalanceInput').value = savedBalance;
     } else {
-        document.getElementById('initialBalanceInput').value = 600; // Default
+        document.getElementById('initialBalanceInput').value = 5000; // Default
     }
 }
 
