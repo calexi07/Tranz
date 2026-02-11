@@ -487,11 +487,6 @@
         <div class="nav-buttons">
             <button class="nav-btn active" id="btnTable">Trading Journal</button>
             <button class="nav-btn" id="btnForm" style="display: none;">Add Trade</button>
-            <a href="backtest_strategie.html" id="btnBacktestLink" style="text-decoration: none; display: none;">
-                <button class="nav-btn" style="background: linear-gradient(135deg, #9c27b0, #7b1fa2); border-color: rgba(156, 39, 176, 0.3);">
-                    📈 Backtest Strategy
-                </button>
-            </a>
             <button class="nav-btn" id="btnLogin" style="background: linear-gradient(135deg, #00cc88, #00aa72); border-color: rgba(0, 204, 136, 0.3);">
                 🔐 Login
             </button>
@@ -562,6 +557,15 @@
                             <option value="Asia">Asia</option>
                             <option value="London">London</option>
                             <option value="New York">New York</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="strategy">Strategy *</label>
+                        <select id="strategy">
+                            <option value="">Select strategy</option>
+                            <option value="Daily S/D">Daily S/D</option>
+                            <option value="4H S/D">4H S/D</option>
+                            <option value="Liquidity">Liquidity</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -693,12 +697,6 @@
                     </div>
                 </div>
 
-                <div class="form-grid" style="margin-top: 20px;">
-                    <div class="form-group">
-                        <label for="tv">TV</label>
-                        <input type="text" id="tv" placeholder="ex: 1000" style="display:none;">
-                    </div>
-                </div>
                 <button class="save-btn" id="saveBtn">Save</button>
             </div>
         </div>
@@ -757,6 +755,17 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="filterStrategy" style="color: #4d9fff; margin-bottom: 10px; font-weight: 600; font-size: 0.9em; display: flex; align-items: center; gap: 6px;">
+                            <span>🎯</span> Strategy
+                        </label>
+                        <select id="filterStrategy" onchange="applyFilters()" style="background: rgba(77, 159, 255, 0.1); border: 1.5px solid rgba(77, 159, 255, 0.3); border-radius: 12px; padding: 14px; color: #fff; font-size: 1em; transition: all 0.3s ease; cursor: pointer;">
+                            <option value="">All strategies</option>
+                            <option value="Daily S/D">Daily S/D</option>
+                            <option value="4H S/D">4H S/D</option>
+                            <option value="Liquidity">Liquidity</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="filterPosition" style="color: #4d9fff; margin-bottom: 10px; font-weight: 600; font-size: 0.9em; display: flex; align-items: center; gap: 6px;">
                             <span>📊</span> Long/Short
                         </label>
@@ -781,46 +790,18 @@
                 </div>
             </div>
 
-            <!-- Initial Balance Settings -->
-            <div id="initialBalanceSection" style="display: none; background: linear-gradient(135deg, rgba(77, 159, 255, 0.08), rgba(61, 127, 255, 0.03)); backdrop-filter: blur(10px); border: 1px solid rgba(77, 159, 255, 0.25); border-radius: 20px; padding: 25px; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);">
-                <h3 style="color: #4d9fff; margin-bottom: 20px; font-size: 1.3em; display: flex; align-items: center; gap: 10px;">
-                    <span>💰</span> Setare Initial Balance
-                </h3>
-                <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 250px;">
-                        <label for="initialBalanceInput" style="display: block; color: #4d9fff; margin-bottom: 8px; font-weight: 600; font-size: 0.95em;">
-                            Initial Balance ($)
-                        </label>
-                        <input type="number" id="initialBalanceInput" step="0.01" placeholder="600" 
-                               style="width: 100%; padding: 14px; background: rgba(77, 159, 255, 0.1); border: 1.5px solid rgba(77, 159, 255, 0.3); border-radius: 12px; color: #fff; font-size: 1.1em; font-weight: bold; transition: all 0.3s ease;"
-                               onchange="saveInitialBalance(); updateDashboard();"
-                               onfocus="this.style.borderColor='#4d9fff'; this.style.background='rgba(77, 159, 255, 0.15)'"
-                               onblur="this.style.borderColor='rgba(77, 159, 255, 0.3)'; this.style.background='rgba(77, 159, 255, 0.1)'">
-                    </div>
-                    <button onclick="saveInitialBalance(); updateDashboard();" 
-                            style="background: linear-gradient(135deg, #00cc88, #00aa72); color: #fff; border: none; padding: 14px 30px; border-radius: 12px; cursor: pointer; font-size: 1em; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0, 204, 136, 0.3); margin-top: 28px;"
-                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0, 204, 136, 0.4)'"
-                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 204, 136, 0.3)'">
-                        💾 Save
-                    </button>
-                </div>
-                <p style="color: rgba(255, 255, 255, 0.6); margin-top: 12px; font-size: 0.9em; margin-bottom: 0;">
-                    Set the initial value of your trading account. This value will be used to calculate the current balance.
-                </p>
-            </div>
-
             <!-- Dashboard Statistics -->
             <div class="dashboard">
                 <h2>📊 Trading Statistics</h2>
                 <div class="stats-grid">
                     <div class="stat-card" style="background: linear-gradient(135deg, rgba(77, 159, 255, 0.1), rgba(61, 127, 255, 0.05)); border-color: rgba(77, 159, 255, 0.3);">
                         <div class="stat-label">Initial Balance</div>
-                        <div class="stat-value" id="statInitialBalance" style="color: #4d9fff;">$5000.00</div>
+                        <div class="stat-value" id="statInitialBalance" style="color: #4d9fff;">$10,000.00</div>
                         <div class="stat-subtext">Starting capital</div>
                     </div>
                     <div class="stat-card" id="statCurrentBalanceCard">
                         <div class="stat-label">Current Balance</div>
-                        <div class="stat-value" id="statCurrentBalance">$5000.00</div>
+                        <div class="stat-value" id="statCurrentBalance">$10,000.00</div>
                         <div class="stat-subtext">Current capital</div>
                     </div>
                     <div class="stat-card" id="statProfit">
@@ -891,6 +872,9 @@
                             <th onclick="sortTable('sesiune')" style="cursor: pointer; user-select: none;">
                                 Session <span id="sort-sesiune"></span>
                             </th>
+                            <th onclick="sortTable('strategy')" style="cursor: pointer; user-select: none;">
+                                Strategy <span id="sort-strategy"></span>
+                            </th>
                             <th onclick="sortTable('position')" style="cursor: pointer; user-select: none;">
                                 Long/Short <span id="sort-position"></span>
                             </th>
@@ -934,7 +918,7 @@
                     </thead>
                     <tbody id="tradesBody">
                         <tr>
-                            <td colspan="19" class="no-data">Loading data...</td>
+                            <td colspan="21" class="no-data">Loading data...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -942,7 +926,6 @@
         </div>
     </div>
 
-    <!-- Loading Overlay -->
     <!-- Login Modal -->
     <div class="loading-overlay" id="loginModal" style="display: none;">
         <div class="loading-spinner" style="background: rgba(255, 255, 255, 0.98); padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); max-width: 400px; width: 90%;">
@@ -972,6 +955,7 @@
         </div>
     </div>
 
+    <!-- Loading Overlay -->
     <div class="loading-overlay active" id="loadingOverlay">
         <div class="loading-spinner">
             <div class="spinner"></div>
@@ -982,14 +966,17 @@
     <script>
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgfjNnriUwOF_A3HFkfSHhpuO1cwHqArZE1hQVj536GPKlfw1bQAUkm4l6YeAROfhoYQ/exec';
 
+// FIXED INITIAL BALANCE
+const FIXED_INITIAL_BALANCE = 10000;
+
 let trades = [];
 let filteredTrades = [];
 let backtestTrades = [];
 let filteredBacktestTrades = [];
 let editingIndex = -1;
 let isLoading = false;
-let currentSheet = 'Sheet1'; // 'Sheet1' or 'Backtest'
-let isLoggedIn = false; // Login state
+let currentSheet = 'Sheet1';
+let isLoggedIn = false;
 
 // Credentials
 const CREDENTIALS = {
@@ -1003,13 +990,14 @@ let activeFilters = {
     day: '',
     session: '',
     pair: '',
+    strategy: '',
     position: '',
     status: ''
 };
 
 // Sorting state
-let sortColumn = 'data'; // Default sort by date
-let sortDirection = 'desc'; // Default newest first
+let sortColumn = 'data';
+let sortDirection = 'desc';
 
 // DOM
 const formPage = document.getElementById('formPage');
@@ -1087,18 +1075,16 @@ function handlePairChange() {
 }
 
 function formatTimeInput(input) {
-    let value = input.value.replace(/[^0-9]/g, ''); // Remove non-digits
+    let value = input.value.replace(/[^0-9]/g, '');
     
     if (value.length >= 2) {
         let hours = value.substring(0, 2);
         let minutes = value.substring(2, 4);
         
-        // Validate hours (00-23)
         if (parseInt(hours) > 23) {
             hours = '23';
         }
         
-        // Validate minutes (00-59)
         if (minutes && parseInt(minutes) > 59) {
             minutes = '59';
         }
@@ -1107,40 +1093,6 @@ function formatTimeInput(input) {
     } else {
         input.value = value;
     }
-}
-
-function calculatePartialProfit(entry, exitPrice, lot, position, pair, totalLotSize, risk) {
-    if (!entry || !exitPrice || !lot || !totalLotSize || !risk) return 0;
-    
-    const entryPrice = parseFloat(entry);
-    const exit = parseFloat(exitPrice);
-    const lotAmount = parseFloat(lot);
-    const totalLot = parseFloat(totalLotSize);
-    const riskAmount = parseFloat(risk);
-    
-    // Calculate R for this specific exit
-    // R = (Exit - Entry) / (Entry - SL) for Long
-    // R = (Entry - Exit) / (SL - Entry) for Short
-    
-    // We need to calculate how many R this exit represents
-    // Simplified: calculate profit ratio based on price movement
-    let priceMove = 0;
-    if (position === 'Long') {
-        priceMove = exit - entryPrice;
-    } else if (position === 'Short') {
-        priceMove = entryPrice - exit;
-    }
-    
-    // For partial close, we need to know the SL distance to calculate R
-    // Since we don't have SL here, we'll use a simplified approach:
-    // Profit = (lot / totalLot) × risk × (price ratio)
-    // This is a simplified calculation - user should enter actual profit in the field
-    
-    const lotRatio = lotAmount / totalLot;
-    
-    // Return an estimated profit based on lot ratio and price movement percentage
-    // This is just a placeholder - the actual profit should be entered by the user
-    return 0; // Return 0, let user manually enter the profit
 }
 
 function calculateDuration() {
@@ -1153,7 +1105,6 @@ function calculateDuration() {
         
         let totalMinutes = (exitH * 60 + exitM) - (entryH * 60 + entryM);
         
-        // Handle negative duration (overnight trades)
         if (totalMinutes < 0) {
             totalMinutes += 24 * 60;
         }
@@ -1192,35 +1143,31 @@ function populateFilterDropdowns() {
 }
 
 function applyFilters() {
-    // Get filter values
     activeFilters.month = document.getElementById('filterMonth').value;
     activeFilters.day = document.getElementById('filterDay').value;
     activeFilters.session = document.getElementById('filterSession').value;
     activeFilters.pair = document.getElementById('filterPair').value;
+    activeFilters.strategy = document.getElementById('filterStrategy').value;
     activeFilters.position = document.getElementById('filterPosition').value;
     activeFilters.status = document.getElementById('filterStatus').value;
     
-    // Filter trades
     filteredTrades = trades.filter(trade => {
         if (activeFilters.month && trade.luna !== activeFilters.month) return false;
         if (activeFilters.day && trade.zi !== activeFilters.day) return false;
         if (activeFilters.session && trade.sesiune !== activeFilters.session) return false;
         if (activeFilters.pair && trade.pereche !== activeFilters.pair) return false;
+        if (activeFilters.strategy && trade.strategy !== activeFilters.strategy) return false;
         if (activeFilters.position && trade.position !== activeFilters.position) return false;
         if (activeFilters.status && trade.wl !== activeFilters.status) return false;
         return true;
     });
     
-    // Apply current sort
     sortFilteredTrades();
-    
-    // Update display
     updateTable();
     updateDashboard();
 }
 
 function sortTable(column) {
-    // Toggle sort direction if clicking same column
     if (sortColumn === column) {
         sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
     } else {
@@ -1238,12 +1185,10 @@ function sortFilteredTrades() {
         let aVal = a[sortColumn];
         let bVal = b[sortColumn];
         
-        // Handle empty values
         if (!aVal && !bVal) return 0;
         if (!aVal) return 1;
         if (!bVal) return -1;
         
-        // Convert to appropriate types for comparison
         if (sortColumn === 'data') {
             aVal = new Date(aVal);
             bVal = new Date(bVal);
@@ -1255,7 +1200,6 @@ function sortFilteredTrades() {
             bVal = String(bVal).toLowerCase();
         }
         
-        // Compare
         if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
         if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
         return 0;
@@ -1263,11 +1207,9 @@ function sortFilteredTrades() {
 }
 
 function updateSortIndicators() {
-    // Clear all indicators
     const allSortSpans = document.querySelectorAll('[id^="sort-"]');
     allSortSpans.forEach(span => span.textContent = '');
     
-    // Set current indicator
     const currentIndicator = document.getElementById(`sort-${sortColumn}`);
     if (currentIndicator) {
         currentIndicator.textContent = sortDirection === 'asc' ? '▲' : '▼';
@@ -1275,61 +1217,52 @@ function updateSortIndicators() {
 }
 
 function resetFilters() {
-    // Reset all filter selects
     document.getElementById('filterMonth').value = '';
     document.getElementById('filterDay').value = '';
     document.getElementById('filterSession').value = '';
     document.getElementById('filterPair').value = '';
+    document.getElementById('filterStrategy').value = '';
     document.getElementById('filterPosition').value = '';
     document.getElementById('filterStatus').value = '';
     
-    // Reset active filters
     activeFilters = {
         month: '',
         day: '',
         session: '',
         pair: '',
+        strategy: '',
         position: '',
         status: ''
     };
     
-    // Show all trades
     filteredTrades = [...trades];
     sortFilteredTrades();
     updateTable();
     updateDashboard();
 }
 
-// Determine pip value based on pair/instrument
 function getPipValue(pair) {
     const pairUpper = pair.toUpperCase();
     
-    // Gold (XAUUSD) - 1 pip = 0.10
     if (pairUpper.includes('XAU') || pairUpper.includes('GOLD')) {
         return 0.10;
     }
-    // Silver (XAGUSD) - 1 pip = 0.01
     if (pairUpper.includes('XAG') || pairUpper.includes('SILVER')) {
         return 0.01;
     }
-    // Oil pairs - 1 pip = 0.01
     if (pairUpper.includes('OIL') || pairUpper.includes('WTI') || pairUpper.includes('BRENT')) {
         return 0.01;
     }
-    // JPY pairs - 1 pip = 0.01
     if (pairUpper.includes('JPY')) {
         return 0.01;
     }
-    // Indices - 1 pip = 1.0
     if (pairUpper.includes('US30') || pairUpper.includes('NAS100') || pairUpper.includes('SPX500') || 
         pairUpper.includes('GER40') || pairUpper.includes('UK100')) {
         return 1.0;
     }
-    // Standard forex pairs - 1 pip = 0.0001
     return 0.0001;
 }
 
-// Calculate Pips based on Entry, Exit/SL, and Position
 function calculatePips(entry, exit, position, pair) {
     if (!entry || !exit) return 0;
     
@@ -1345,10 +1278,9 @@ function calculatePips(entry, exit, position, pair) {
         pips = (entryPrice - exitPrice) / pipValue;
     }
     
-    return Math.round(pips * 10) / 10; // Round to 1 decimal
+    return Math.round(pips * 10) / 10;
 }
 
-// Calculate R (Risk/Reward Ratio)
 function calculateR(entry, sl, tp, position) {
     if (!entry || !sl || !tp) return 0;
     
@@ -1370,10 +1302,9 @@ function calculateR(entry, sl, tp, position) {
     if (risk === 0) return 0;
     
     const rValue = reward / risk;
-    return Math.round(rValue * 100) / 100; // Round to 2 decimals
+    return Math.round(rValue * 100) / 100;
 }
 
-// Calculate Profit based on R and Risk
 function calculateProfit(r, risk, wl) {
     if (!risk || wl === 'Open') return 0;
     
@@ -1405,16 +1336,15 @@ saveBtn.onclick = () => {
 };
 
 function getFormData() {
-    const required = ['luna','data','zi','pereche','sesiune','position','wl','risk','entry','sl','lotSize'];
+    const required = ['luna','data','zi','pereche','sesiune','strategy','position','wl','risk','entry','sl','lotSize'];
     for (const id of required) {
         const value = document.getElementById(id).value;
         if (!value || value === '') {
-            alert('Fill in all required fields obligatorii (*): Month, Date, Day, Pair, Session, Long/Short, Status, Risk, Entry, SL, Lot Size');
+            alert('Fill in all required fields obligatorii (*): Month, Date, Day, Pair, Session, Strategy, Long/Short, Status, Risk, Entry, SL, Lot Size');
             return null;
         }
     }
     
-    // Validate lot size is positive
     const lotSizeValue = parseFloat(document.getElementById('lotSize').value);
     if (lotSizeValue <= 0) {
         alert('Lot Size must be a positive number (ex: 0.01, 0.1, 1.0)');
@@ -1429,14 +1359,13 @@ function getFormData() {
     const risk = document.getElementById('risk').value;
     const perecheSelect = document.getElementById('pereche').value;
     const pereche = perecheSelect === 'Alta' ? document.getElementById('customPair').value : perecheSelect;
+    const strategy = document.getElementById('strategy').value;
     const lotSize = document.getElementById('lotSize').value;
     const entryHour = document.getElementById('entryHour').value;
     const exitHour = document.getElementById('exitHour').value;
     
-    // Calculate duration
     const duration = calculateDuration();
     
-    // Get partial closes data
     const partialCloses = [];
     let totalPartialProfit = 0;
     
@@ -1455,18 +1384,14 @@ function getFormData() {
         }
     });
     
-    // Calculate R if TP is provided
     const r = tp ? calculateR(entry, sl, tp, position) : 0;
     
-    // Check for manual profit override
     const manualProfit = document.getElementById('profitOverride').value;
     let finalProfit = 0;
     
     if (manualProfit && manualProfit !== '') {
-        // Use manual profit override
         finalProfit = parseFloat(manualProfit);
     } else {
-        // Auto-calculate profit based on R
         if (wl === 'Win') {
             const lotRemaining = parseFloat(lotSize) - partialCloses.reduce((sum, pc) => sum + parseFloat(pc.lot), 0);
             const lotRatio = lotRemaining / parseFloat(lotSize);
@@ -1489,6 +1414,7 @@ function getFormData() {
         zi: document.getElementById('zi').value,
         pereche: pereche,
         sesiune: document.getElementById('sesiune').value,
+        strategy: strategy,
         position: position,
         wl: wl,
         lotSize: lotSize,
@@ -1511,7 +1437,6 @@ function loadTradesFromSheet() {
     if (isLoading) return;
     isLoading = true;
 
-    // Show loading overlay
     showLoading();
 
     fetch(GOOGLE_SCRIPT_URL + `?action=get&sheet=${currentSheet}`)
@@ -1541,78 +1466,63 @@ function loadTradesFromSheet() {
             isLoading = false;
             hideLoading();
             tradesBody.innerHTML =
-                '<tr><td colspan="20" class="no-data">Loading error</td></tr>';
+                '<tr><td colspan="21" class="no-data">Loading error</td></tr>';
         });
 }
 
 // DASHBOARD
 function updateDashboard() {
-    // Use filtered trades for statistics
     const closedTrades = filteredTrades.filter(t => t.wl === 'Win' || t.wl === 'Loss' || t.wl === 'Break Even');
     const wins = filteredTrades.filter(t => t.wl === 'Win');
     const losses = filteredTrades.filter(t => t.wl === 'Loss');
     const breakEven = filteredTrades.filter(t => t.wl === 'Break Even');
     const openTrades = filteredTrades.filter(t => t.wl === 'Open');
     
-    // Calculate total profit (sum of all profit values)
     const totalProfit = closedTrades.reduce((sum, t) => {
         const profit = parseFloat(t.profit) || 0;
         return sum + profit;
     }, 0);
     
-    // Calculate win rate (only Win and Loss, exclude Break Even)
     const totalWinLoss = wins.length + losses.length;
     const winRate = totalWinLoss > 0 
         ? ((wins.length / totalWinLoss) * 100).toFixed(1)
         : 0;
     
-    // Get initial balance from input or use default 600
-    const initialBalanceInput = document.getElementById('initialBalanceInput');
-    const initialBalance = parseFloat(initialBalanceInput.value) || 5000;
+    const initialBalance = FIXED_INITIAL_BALANCE;
     
-    // Update initial balance display in dashboard
     document.getElementById('statInitialBalance').textContent = `$${initialBalance.toFixed(2)}`;
     
-    // Calculate current balance
     const currentBalance = initialBalance + totalProfit;
     
-    // Calculate percentage change
     const percentChange = initialBalance > 0 
         ? (((currentBalance - initialBalance) / initialBalance) * 100).toFixed(2)
         : 0;
     
-    // Calculate Average R
     const totalR = closedTrades.reduce((sum, t) => {
         const r = parseFloat(t.r) || 0;
         const wl = t.wl;
-        // For losses, R should be negative
         return sum + (wl === 'Loss' ? -Math.abs(r) : r);
     }, 0);
     const avgR = closedTrades.length > 0 ? (totalR / closedTrades.length).toFixed(2) : 0;
     
-    // Calculate Expectancy (average profit per trade)
     const expectancy = closedTrades.length > 0 
         ? (totalProfit / closedTrades.length).toFixed(2)
         : 0;
     
-    // Calculate Frequency (trades per week)
     let frequency = 0;
     if (closedTrades.length > 0) {
-        // Get date range
         const dates = closedTrades.map(t => new Date(t.data)).filter(d => !isNaN(d));
         if (dates.length > 1) {
             const minDate = new Date(Math.min(...dates));
             const maxDate = new Date(Math.max(...dates));
-            const daysDiff = Math.ceil((maxDate - minDate) / (1000 * 60 * 60 * 24)) + 1; // +1 to include both days
+            const daysDiff = Math.ceil((maxDate - minDate) / (1000 * 60 * 60 * 24)) + 1;
             const weeks = daysDiff / 7;
             frequency = weeks > 0 ? (closedTrades.length / weeks).toFixed(1) : closedTrades.length;
         } else {
-            // Only one trade or all on same day
             frequency = closedTrades.length;
         }
     }
     
-    // Update dashboard
     document.getElementById('statProfitValue').textContent = `$${totalProfit.toFixed(2)}`;
     document.getElementById('statCurrentBalance').textContent = `$${currentBalance.toFixed(2)}`;
     document.getElementById('statTotalTrades').textContent = closedTrades.length;
@@ -1621,12 +1531,10 @@ function updateDashboard() {
     document.getElementById('statLosses').textContent = losses.length;
     document.getElementById('statBreakEven').textContent = breakEven.length;
     
-    // Update new metrics
     document.getElementById('statAvgR').textContent = avgR;
     document.getElementById('statExpectancy').textContent = `$${expectancy}`;
     document.getElementById('statFrequency').textContent = frequency;
     
-    // Update profit card color based on positive/negative
     const profitCard = document.getElementById('statProfit');
     profitCard.classList.remove('positive', 'negative');
     if (totalProfit > 0) {
@@ -1635,11 +1543,9 @@ function updateDashboard() {
         profitCard.classList.add('negative');
     }
     
-    // Update current balance card - show evolution
     const currentBalanceCard = document.getElementById('statCurrentBalanceCard');
     const currentBalanceSubtext = currentBalanceCard.querySelector('.stat-subtext');
     
-    // Reset classes and apply new ones
     currentBalanceCard.classList.remove('positive', 'negative');
     
     if (currentBalance > initialBalance) {
@@ -1657,7 +1563,7 @@ function updateDashboard() {
 function updateTable() {
     if (!filteredTrades.length) {
         tradesBody.innerHTML =
-            '<tr><td colspan="20" class="no-data">No trades</td></tr>';
+            '<tr><td colspan="21" class="no-data">No trades</td></tr>';
         return;
     }
 
@@ -1666,7 +1572,6 @@ function updateTable() {
     filteredTrades.forEach((t, i) => {
         const tr = document.createElement('tr');
         
-        // Parse partial closes
         let partialClosesDisplay = '-';
         if (t.partialCloses) {
             try {
@@ -1681,13 +1586,11 @@ function updateTable() {
             }
         }
         
-        // Format Screenshot/TV as link
         let screenshotDisplay = '-';
         if (t.tv && t.tv.trim() !== '') {
-            screenshotDisplay = `<a href="${t.tv}" target="_blank" style="color: #4d9fff; text-decoration: none;">📸 View</a>`;
+            screenshotDisplay = `<a href="${t.tv}" target="_blank" rel="noopener noreferrer" style="color: #4d9fff; text-decoration: none;">📸 View</a>`;
         }
         
-        // Format date as dd/mm/yyyy
         const formatDate = (dateStr) => {
             if (!dateStr) return '-';
             const date = new Date(dateStr);
@@ -1697,11 +1600,9 @@ function updateTable() {
             return `${day}/${month}/${year}`;
         };
         
-        // Format time as HH:MM
         const formatTime = (timeStr) => {
             if (!timeStr) return '-';
             
-            // If it's a full timestamp (contains 'T'), extract time
             if (timeStr.includes('T')) {
                 const date = new Date(timeStr);
                 const hours = String(date.getHours()).padStart(2, '0');
@@ -1709,22 +1610,20 @@ function updateTable() {
                 return `${hours}:${minutes}`;
             }
             
-            // If already in HH:MM format, return as is
             if (timeStr.includes(':') && timeStr.length <= 5) {
                 return timeStr;
             }
             
-            // Otherwise return as is
             return timeStr;
         };
         
-        // Create cells with appropriate styling
         const cells = [
             { value: t.luna, class: '' },
             { value: formatDate(t.data), class: '' },
             { value: t.zi, class: '' },
             { value: t.pereche, class: '' },
             { value: t.sesiune, class: '' },
+            { value: t.strategy || '-', class: '' },
             { value: t.position, class: t.position === 'Long' ? 'long' : 'short' },
             { value: t.wl || '-', class: t.wl === 'Win' ? 'win' : t.wl === 'Loss' ? 'loss' : t.wl === 'Break Even' ? 'break-even' : t.wl === 'Open' ? 'open' : '' },
             { value: t.lotSize || '-', class: '' },
@@ -1758,7 +1657,6 @@ function updateTable() {
                 <button class="delete-btn">Delete</button>
                 <button class="edit-btn">Edit</button>
             `;
-            // Find original index in trades array
             const originalIndex = trades.findIndex(trade => trade.id === t.id);
             actions.children[0].onclick = () => deleteTrade(originalIndex);
             actions.children[1].onclick = () => editTrade(originalIndex);
@@ -1776,18 +1674,15 @@ function editTrade(i) {
     editingIndex = i;
     const trade = trades[i];
     
-    // Clear all partial closes fields first
     ['pc1', 'pc2', 'pc3'].forEach(prefix => {
         document.getElementById(`${prefix}_lot`).value = '';
         document.getElementById(`${prefix}_price`).value = '';
         document.getElementById(`${prefix}_profit`).value = '';
     });
     
-    // Helper function to convert timestamp to time format (HH:MM)
     const convertToTimeFormat = (timeStr) => {
         if (!timeStr) return '';
         
-        // If it's a full timestamp (contains 'T'), extract time
         if (timeStr.includes('T')) {
             const date = new Date(timeStr);
             const hours = String(date.getHours()).padStart(2, '0');
@@ -1795,20 +1690,16 @@ function editTrade(i) {
             return `${hours}:${minutes}`;
         }
         
-        // If already in HH:MM format, return as is
         return timeStr;
     };
     
-    // Helper function to ensure date is in YYYY-MM-DD format for input[type="date"]
     const convertToDateFormat = (dateStr) => {
         if (!dateStr) return '';
         
-        // If already in YYYY-MM-DD format, return as is
         if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
             return dateStr;
         }
         
-        // Try to parse and convert
         const date = new Date(dateStr);
         if (!isNaN(date.getTime())) {
             const year = date.getFullYear();
@@ -1820,12 +1711,10 @@ function editTrade(i) {
         return dateStr;
     };
     
-    // Populate all standard fields
     document.getElementById('luna').value = trade.luna || '';
     document.getElementById('data').value = convertToDateFormat(trade.data) || '';
     document.getElementById('zi').value = trade.zi || '';
     
-    // Handle pair dropdown - check if it's a predefined option or custom
     const pereche = trade.pereche || '';
     const predefinedPairs = ['EUR/USD', 'GBP/USD', 'XAU/USD', 'USD/JPY', 'US100', 'GER40'];
     if (predefinedPairs.includes(pereche)) {
@@ -1841,6 +1730,7 @@ function editTrade(i) {
     }
     
     document.getElementById('sesiune').value = trade.sesiune || '';
+    document.getElementById('strategy').value = trade.strategy || '';
     document.getElementById('position').value = trade.position || '';
     document.getElementById('wl').value = trade.wl || '';
     document.getElementById('risk').value = trade.risk || '';
@@ -1851,9 +1741,8 @@ function editTrade(i) {
     document.getElementById('exitHour').value = convertToTimeFormat(trade.exitHour) || '';
     document.getElementById('sl').value = trade.sl || '';
     document.getElementById('tp').value = trade.tp || '';
-    document.getElementById('profitOverride').value = ''; // Clear override, will show calculated value
+    document.getElementById('profitOverride').value = '';
     
-    // Populate partial closes if they exist
     if (trade.partialCloses) {
         try {
             const pcs = JSON.parse(trade.partialCloses);
@@ -1870,7 +1759,6 @@ function editTrade(i) {
         }
     }
     
-    // Recalculate partial closes display
     setTimeout(() => {
         calculatePartialCloses();
     }, 100);
@@ -1971,14 +1859,10 @@ function logout() {
 }
 
 function updateUIForLogin() {
-    // Show/hide buttons based on login state
     document.getElementById('btnForm').style.display = isLoggedIn ? 'inline-block' : 'none';
-    document.getElementById('btnBacktestLink').style.display = isLoggedIn ? 'inline-block' : 'none';
     document.getElementById('btnLogin').style.display = isLoggedIn ? 'none' : 'inline-block';
     document.getElementById('btnLogout').style.display = isLoggedIn ? 'inline-block' : 'none';
-    document.getElementById('initialBalanceSection').style.display = isLoggedIn ? 'block' : 'none';
     
-    // Refresh table to show/hide Edit/Delete buttons
     updateTable();
 }
 
@@ -1992,52 +1876,26 @@ function checkAuth() {
 
 // UTILS
 function clearForm() {
-    // Clear standard fields
     document.querySelectorAll('input:not([readonly]), select').forEach(i => i.value = '');
     
-    // Hide custom pair group
     document.getElementById('customPairGroup').style.display = 'none';
     document.getElementById('customPair').value = '';
     
-    // Clear partial closes
     ['pc1', 'pc2', 'pc3'].forEach(prefix => {
         document.getElementById(`${prefix}_lot`).value = '';
         document.getElementById(`${prefix}_price`).value = '';
         document.getElementById(`${prefix}_profit`).value = '';
     });
     
-    // Reset totals
     document.getElementById('totalPartialProfit').textContent = '$0.00';
     document.getElementById('lotRemaining').textContent = '0.00';
     
-    // Reset editing index
     editingIndex = -1;
-}
-
-// Save/Load Initial Balance
-function saveInitialBalance() {
-    const balance = document.getElementById('initialBalanceInput').value;
-    if (balance && parseFloat(balance) > 0) {
-        localStorage.setItem('tradingJournalInitialBalance', balance);
-        alert(`Initial balance saved: $${parseFloat(balance).toFixed(2)}`);
-    } else {
-        alert('Please enter a valid value pentru balanța inițială.');
-    }
-}
-
-function loadInitialBalance() {
-    const savedBalance = localStorage.getItem('tradingJournalInitialBalance');
-    if (savedBalance) {
-        document.getElementById('initialBalanceInput').value = savedBalance;
-    } else {
-        document.getElementById('initialBalanceInput').value = 5000; // Default
-    }
 }
 
 // INIT
 window.onload = () => {
     checkAuth();
-    loadInitialBalance();
     loadTradesFromSheet();
 };
 </script>
