@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The5%ers HighStake - Trading Journal</title>
+    <title>Market Analysis Journal - $225</title>
     <style>
         * {
             margin: 0;
@@ -29,12 +29,12 @@
             text-align: center;
             margin-bottom: 40px;
             padding: 30px 0;
-            border-bottom: 2px solid #4d9fff;
+            border-bottom: 2px solid #ff9500;
         }
 
         .header h1 {
             font-size: 2.5em;
-            background: linear-gradient(90deg, #4d9fff, #3d7fff);
+            background: linear-gradient(90deg, #ff9500, #ff7b00);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -57,7 +57,7 @@
         }
 
         .nav-btn {
-            background: linear-gradient(135deg, #4d9fff, #3d7fff);
+            background: linear-gradient(135deg, #ff9500, #ff7b00);
             color: #fff;
             border: none;
             padding: 12px 30px;
@@ -67,92 +67,17 @@
             font-size: 1em;
             font-weight: bold;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(77, 159, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 149, 0, 0.3);
         }
 
         .nav-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(77, 159, 255, 0.5);
+            box-shadow: 0 6px 20px rgba(255, 149, 0, 0.5);
         }
 
         .nav-btn.active {
             background: linear-gradient(135deg, #fff, #e0e0e0);
             color: #000;
-        }
-
-        .dashboard {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(77, 159, 255, 0.2);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .dashboard h2 {
-            color: #4d9fff;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 1.8em;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, rgba(77, 159, 255, 0.1), rgba(61, 127, 255, 0.05));
-            border: 1px solid rgba(77, 159, 255, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(77, 159, 255, 0.3);
-        }
-
-        .stat-card.positive {
-            background: linear-gradient(135deg, rgba(0, 204, 136, 0.1), rgba(0, 170, 102, 0.05));
-            border-color: rgba(0, 204, 136, 0.3);
-        }
-
-        .stat-card.negative {
-            background: linear-gradient(135deg, rgba(255, 68, 68, 0.1), rgba(204, 0, 0, 0.05));
-            border-color: rgba(255, 68, 68, 0.3);
-        }
-
-        .stat-label {
-            color: #aaa;
-            font-size: 0.9em;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .stat-value {
-            color: #4d9fff;
-            font-size: 2em;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .stat-card.positive .stat-value {
-            color: #00cc88;
-        }
-
-        .stat-card.negative .stat-value {
-            color: #ff4444;
-        }
-
-        .stat-subtext {
-            color: #888;
-            font-size: 0.85em;
         }
 
         .page {
@@ -172,7 +97,7 @@
         .form-container {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(77, 159, 255, 0.2);
+            border: 1px solid rgba(255, 149, 0, 0.2);
             border-radius: 15px;
             padding: 30px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -191,15 +116,15 @@
         }
 
         label {
-            color: #4d9fff;
+            color: #ff9500;
             margin-bottom: 8px;
             font-weight: 500;
             font-size: 0.9em;
         }
 
-        input, select {
+        input, select, textarea {
             background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(77, 159, 255, 0.3);
+            border: 1px solid rgba(255, 149, 0, 0.3);
             border-radius: 8px;
             padding: 12px;
             color: #fff;
@@ -207,26 +132,25 @@
             transition: all 0.3s ease;
         }
 
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #4d9fff;
+            border-color: #ff9500;
             background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 10px rgba(77, 159, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 149, 0, 0.3);
         }
 
         select option {
             background: #1a1a1a;
             color: #fff;
         }
-        
-        select:hover {
-            border-color: #4d9fff;
-            background: rgba(77, 159, 255, 0.15);
-            box-shadow: 0 0 15px rgba(77, 159, 255, 0.2);
+
+        textarea {
+            resize: vertical;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .save-btn {
-            background: linear-gradient(135deg, #4d9fff, #3d7fff);
+            background: linear-gradient(135deg, #ff9500, #ff7b00);
             color: #fff;
             border: none;
             padding: 15px 40px;
@@ -236,24 +160,19 @@
             font-weight: bold;
             width: 100%;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(77, 159, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 149, 0, 0.3);
         }
 
         .save-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(77, 159, 255, 0.5);
-        }
-
-        .save-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+            box-shadow: 0 6px 20px rgba(255, 149, 0, 0.5);
         }
 
         .table-container {
             overflow-x: auto;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(77, 159, 255, 0.2);
+            border: 1px solid rgba(255, 149, 0, 0.2);
             border-radius: 15px;
             padding: 20px;
             max-width: 100%;
@@ -266,46 +185,27 @@
         }
 
         thead {
-            background: linear-gradient(135deg, rgba(77, 159, 255, 0.2), rgba(61, 127, 255, 0.2));
+            background: linear-gradient(135deg, rgba(255, 149, 0, 0.2), rgba(255, 123, 0, 0.2));
         }
 
         th {
             padding: 12px 8px;
             text-align: left;
-            color: #4d9fff;
+            color: #ff9500;
             font-weight: 600;
-            border-bottom: 2px solid #4d9fff;
+            border-bottom: 2px solid #ff9500;
             white-space: nowrap;
-            font-size: 0.9em;
-            transition: all 0.3s ease;
-        }
-        
-        th[onclick] {
-            cursor: pointer;
-            user-select: none;
-        }
-        
-        th[onclick]:hover {
-            background: rgba(77, 159, 255, 0.15);
-            color: #6db3ff;
-        }
-        
-        th span {
-            font-size: 0.8em;
-            margin-left: 4px;
-            color: #00cc88;
         }
 
         td {
             padding: 10px 8px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             color: #ddd;
-            white-space: nowrap;
             font-size: 0.9em;
         }
 
         tr:hover {
-            background: rgba(77, 159, 255, 0.05);
+            background: rgba(255, 149, 0, 0.05);
         }
 
         .no-data {
@@ -315,108 +215,29 @@
             font-size: 1.1em;
         }
 
-        .edit-btn {
-            background: linear-gradient(135deg, #4488ff, #0066cc);
-            color: #fff;
-            border: none;
+        .edit-btn, .delete-btn {
             padding: 5px 10px;
             border-radius: 5px;
             cursor: pointer;
             font-size: 0.8em;
             transition: all 0.3s ease;
+            border: none;
+            color: #fff;
+            margin-right: 5px;
         }
 
-        .edit-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 2px 10px rgba(68, 136, 255, 0.5);
+        .edit-btn {
+            background: linear-gradient(135deg, #4488ff, #0066cc);
         }
 
         .delete-btn {
             background: linear-gradient(135deg, #ff4444, #cc0000);
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.8em;
-            transition: all 0.3s ease;
-            margin-right: 5px;
         }
 
-        .delete-btn:hover {
+        .edit-btn:hover, .delete-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 2px 10px rgba(255, 68, 68, 0.5);
         }
 
-        @media screen and (max-width: 1400px) {
-            table {
-                font-size: 0.75em;
-            }
-            
-            th, td {
-                padding: 8px 6px;
-                font-size: 0.85em;
-            }
-            
-            .edit-btn, .delete-btn {
-                padding: 4px 8px;
-                font-size: 0.75em;
-            }
-        }
-
-        @media screen and (max-width: 1024px) {
-            table {
-                font-size: 0.7em;
-            }
-            
-            th, td {
-                padding: 6px 4px;
-            }
-        }
-
-        .long {
-            color: #4d9fff;
-            font-weight: bold;
-        }
-
-        .short {
-            color: #ff4444;
-            font-weight: bold;
-        }
-
-        .win {
-            color: #00cc88;
-            font-weight: bold;
-        }
-
-        .loss {
-            color: #ff4444;
-            font-weight: bold;
-        }
-        
-        .break-even {
-            color: #ffc107;
-            font-weight: bold;
-        }
-
-        .open {
-            color: #ff9500;
-            font-weight: bold;
-        }
-        
-        .break-even {
-            color: #ffc107;
-            font-weight: bold;
-        }
-
-        .loading {
-            text-align: center;
-            color: #4d9fff;
-            font-size: 1.2em;
-            padding: 20px;
-        }
-
-        /* Loading Overlay */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -434,13 +255,9 @@
             display: flex;
         }
 
-        .loading-spinner {
-            text-align: center;
-        }
-
         .spinner {
-            border: 5px solid rgba(77, 159, 255, 0.2);
-            border-top: 5px solid #4d9fff;
+            border: 5px solid rgba(255, 149, 0, 0.2);
+            border-top: 5px solid #ff9500;
             border-radius: 50%;
             width: 60px;
             height: 60px;
@@ -453,60 +270,181 @@
             100% { transform: rotate(360deg); }
         }
 
-        .loading-text {
-            color: #4d9fff;
-            font-size: 1.3em;
-            font-weight: bold;
-        }
-
-        .partial-close-group {
-            background: rgba(0, 204, 136, 0.05);
-            border: 1px solid rgba(0, 204, 136, 0.2);
-            border-radius: 10px;
+        .analysis-section {
+            background: rgba(255, 149, 0, 0.1);
+            border: 1px solid rgba(255, 149, 0, 0.3);
+            border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
+        }
+
+        .analysis-section h3 {
+            color: #ff9500;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .filter-section {
+            background: linear-gradient(135deg, rgba(255, 149, 0, 0.08), rgba(255, 123, 0, 0.03));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 149, 0, 0.25);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .pair-filter-btn {
+            background: linear-gradient(135deg, rgba(255, 149, 0, 0.2), rgba(255, 123, 0, 0.1));
+            border: 2px solid rgba(255, 149, 0, 0.4);
+            color: #ff9500;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .pair-filter-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 149, 0, 0.3), rgba(255, 123, 0, 0.2));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 149, 0, 0.3);
+        }
+
+        .pair-filter-btn.active {
+            background: linear-gradient(135deg, #ff9500, #ff7b00);
+            border-color: #ff9500;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(255, 149, 0, 0.5);
+        }
+
+        #pairButtonsContainer::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        #pairButtonsContainer::-webkit-scrollbar-track {
+            background: rgba(255, 149, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        #pairButtonsContainer::-webkit-scrollbar-thumb {
+            background: #ff9500;
+            border-radius: 10px;
+        }
+
+        #pairButtonsContainer::-webkit-scrollbar-thumb:hover {
+            background: #ff7b00;
+        }
+
+        #pairButtonsContainer.grabbing {
+            cursor: grabbing;
+        }
+
+        .calendar-day {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 149, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .calendar-day:hover {
+            background: rgba(255, 149, 0, 0.1);
+            border-color: #ff9500;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 149, 0, 0.3);
+        }
+
+        .calendar-day.has-analysis {
+            background: linear-gradient(135deg, rgba(255, 149, 0, 0.2), rgba(255, 123, 0, 0.1));
+            border-color: #ff9500;
+        }
+
+        .calendar-day.selected {
+            background: linear-gradient(135deg, #ff9500, #ff7b00);
+            border-color: #ff9500;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(255, 149, 0, 0.5);
+        }
+
+        .calendar-day.other-month {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .calendar-day-number {
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .calendar-day-count {
+            font-size: 0.8em;
+            color: #ff9500;
+            margin-top: 5px;
+        }
+
+        .calendar-day.selected .calendar-day-count {
+            color: #fff;
+        }
+
+        .calendar-header {
+            background: rgba(255, 149, 0, 0.1);
+            border: 1px solid rgba(255, 149, 0, 0.3);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+            color: #ff9500;
+            font-size: 0.9em;
+        }
+
+        .view-mode-btn.active {
+            background: linear-gradient(135deg, #ff9500, #ff7b00) !important;
+            color: #fff !important;
+            border-color: #ff9500 !important;
+            box-shadow: 0 4px 15px rgba(255, 149, 0, 0.4);
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                <div style="background: linear-gradient(135deg, #4d9fff, #3d7fff); padding: 15px 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(77, 159, 255, 0.4);">
-                    <h2 style="margin: 0; font-size: 2.5em; color: #fff; font-weight: 900; letter-spacing: -1px;">
-                        The<span style="color: #00cc88;">5</span>%ers
-                    </h2>
-                </div>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <div style="font-size: 4em; line-height: 1;">📊</div>
                 <div style="text-align: center;">
-                    <h1 style="margin: 0;">HighStake Challenge</h1>
-                    <p style="margin: 5px 0 0 0; font-size: 1.2em; color: #4d9fff; font-weight: 600;">$10,000 Account</p>
-                    <p style="margin: 3px 0 0 0; font-size: 0.9em;">Professional Trading Journal</p>
+                    <h1>Market Analysis Journal</h1>
+                    <p style="margin: 5px 0 0 0; font-size: 1.2em; color: #ff9500; font-weight: 600;">$225 Personal Account</p>
+                    <p style="margin: 3px 0 0 0; font-size: 0.9em;">Track & Review Your Market Analysis</p>
                 </div>
             </div>
         </div>
 
         <div class="nav-buttons">
-            <button class="nav-btn active" id="btnTable">Trading Journal</button>
-            <button class="nav-btn" id="btnForm" style="display: none;">Add Trade</button>
-            <button class="nav-btn" id="btnStrategy" style="background: linear-gradient(135deg, #9c27b0, #7b1fa2); border-color: rgba(156, 39, 176, 0.3);">
-                📚 Strategy
-            </button>
-            <button class="nav-btn" id="btnLogin" style="background: linear-gradient(135deg, #00cc88, #00aa72); border-color: rgba(0, 204, 136, 0.3);">
-                🔐 Login
-            </button>
-            <button class="nav-btn" id="btnLogout" style="display: none; background: linear-gradient(135deg, #ff6b6b, #ee5a6f); border-color: rgba(255, 107, 107, 0.3);">
-                🚪 Logout
-            </button>
+            <button class="nav-btn active" id="btnList">Analysis History</button>
+            <button class="nav-btn" id="btnForm" style="display: none;">Add Analysis</button>
+            <button class="nav-btn" id="btnLogin" style="background: linear-gradient(135deg, #00cc88, #00aa72);">🔐 Login</button>
+            <button class="nav-btn" id="btnLogout" style="display: none; background: linear-gradient(135deg, #ff6b6b, #ee5a6f);">🚪 Logout</button>
         </div>
 
         <!-- Form Page -->
         <div id="formPage" class="page">
             <div class="form-container">
-                <h2 style="margin-bottom: 25px; color: #4d9fff;">Completează detaliile tranzacției</h2>
+                <h2 style="margin-bottom: 25px; color: #ff9500;">📊 Add Market Analysis</h2>
+                
+                <!-- Basic Info -->
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="luna">Month *</label>
-                        <select id="luna">
+                        <label for="month">Month *</label>
+                        <select id="month" required>
                             <option value="">Select</option>
                             <option value="January">January</option>
                             <option value="February">February</option>
@@ -523,12 +461,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="data">Date *</label>
-                        <input type="date" id="data">
-                    </div>
-                    <div class="form-group">
-                        <label for="zi">Day *</label>
-                        <select id="zi">
+                        <label for="day">Day *</label>
+                        <select id="day" required>
                             <option value="">Select</option>
                             <option value="Monday">Monday</option>
                             <option value="Tuesday">Tuesday</option>
@@ -538,8 +472,22 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="pereche">Pair *</label>
-                        <select id="pereche" onchange="handlePairChange()">
+                        <label for="date">Date *</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Year *</label>
+                        <select id="year" required>
+                            <option value="">Select</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pair">Pair *</label>
+                        <select id="pair" onchange="handlePairChange()" required>
                             <option value="">Select</option>
                             <option value="EUR/USD">EUR/USD</option>
                             <option value="GBP/USD">GBP/USD</option>
@@ -547,181 +495,97 @@
                             <option value="USD/JPY">USD/JPY</option>
                             <option value="US100">US100</option>
                             <option value="GER40">GER40</option>
-                            <option value="Alta">Other...</option>
+                            <option value="Other">Other...</option>
                         </select>
                     </div>
                     <div class="form-group" id="customPairGroup" style="display: none;">
                         <label for="customPair">Enter Pair</label>
-                        <input type="text" id="customPair" placeholder="ex: AUD/USD">
-                    </div>
-                    <div class="form-group">
-                        <label for="sesiune">Session *</label>
-                        <select id="sesiune">
-                            <option value="">Select sesiunea</option>
-                            <option value="Asia">Asia</option>
-                            <option value="London">London</option>
-                            <option value="New York">New York</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="position">Long/Short *</label>
-                        <select id="position">
-                            <option value="">Select poziția</option>
-                            <option value="Long">Long</option>
-                            <option value="Short">Short</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="wl">Status *</label>
-                        <select id="wl">
-                            <option value="">Select</option>
-                            <option value="Win">Win</option>
-                            <option value="Loss">Loss</option>
-                            <option value="Break Even">Break Even</option>
-                            <option value="Open">Open</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="entry">Entry *</label>
-                        <input type="number" step="0.00001" id="entry" placeholder="ex: 1.08500" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="entryHour">Entry Hour (HH:MM - 24h format)</label>
-                        <input type="text" id="entryHour" placeholder="15:30" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" maxlength="5" oninput="formatTimeInput(this)">
-                    </div>
-                    <div class="form-group">
-                        <label for="exitHour">Exit Hour (HH:MM - 24h format)</label>
-                        <input type="text" id="exitHour" placeholder="18:45" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" maxlength="5" oninput="formatTimeInput(this)">
-                    </div>
-                    <div class="form-group">
-                        <label for="sl">SL *</label>
-                        <input type="number" step="0.00001" id="sl" placeholder="ex: 1.08400" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="tp">EXIT</label>
-                        <input type="number" step="0.00001" id="tp" placeholder="ex: 1.08700">
-                    </div>
-                    <div class="form-group">
-                        <label for="risk">Risk *</label>
-                        <input type="number" step="0.01" id="risk" placeholder="ex: 100">
-                    </div>
-                    <div class="form-group">
-                        <label for="profitOverride">Profit ($ - Optional Override)</label>
-                        <input type="number" step="0.01" id="profitOverride" placeholder="Leave empty for auto-calculation">
-                    </div>
-                    <div class="form-group">
-                        <label for="lotSize">Lot Size *</label>
-                        <input type="number" step="0.01" id="lotSize" placeholder="ex: 0.02">
-                    </div>
-                    <div class="form-group">
-                        <label for="tv">Screenshot TradingView (Link)</label>
-                        <input type="url" id="tv" placeholder="https://www.tradingview.com/x/...">
+                        <input type="text" id="customPair" placeholder="ex: AUD/USD, BTC/USD">
                     </div>
                 </div>
 
-                <!-- Partial Closes Section -->
-                <div style="margin-bottom: 30px;">
-                    <h3 style="color: #4d9fff; margin-bottom: 20px; font-size: 1.3em;">🎯 Partial Closes (Opțional)</h3>
-                    
-                    <!-- Partial Close 1 -->
-                    <div class="partial-close-group">
-                        <h4 style="color: #00cc88; margin-bottom: 15px; font-size: 1.1em;">Exit 1</h4>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="pc1_lot">Lot</label>
-                                <input type="number" step="0.01" id="pc1_lot" placeholder="ex: 0.01">
-                            </div>
-                            <div class="form-group">
-                                <label for="pc1_price">Exit Price</label>
-                                <input type="number" step="0.00001" id="pc1_price" placeholder="ex: 5120.50">
-                            </div>
-                            <div class="form-group">
-                                <label for="pc1_profit">Profit ($)</label>
-                                <input type="number" step="0.01" id="pc1_profit" placeholder="ex: 35.00" onchange="calculatePartialCloses()">
-                            </div>
+                <!-- Weekly Analysis -->
+                <div class="analysis-section">
+                    <h3>📅 Weekly Analysis</h3>
+                    <div class="form-grid">
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label for="weeklyAnalysis">Analysis</label>
+                            <textarea id="weeklyAnalysis" rows="4" placeholder="Weekly market overview, key levels, bias..."></textarea>
                         </div>
-                    </div>
-
-                    <!-- Partial Close 2 -->
-                    <div class="partial-close-group">
-                        <h4 style="color: #00cc88; margin-bottom: 15px; font-size: 1.1em;">Exit 2</h4>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="pc2_lot">Lot</label>
-                                <input type="number" step="0.01" id="pc2_lot" placeholder="ex: 0.01">
-                            </div>
-                            <div class="form-group">
-                                <label for="pc2_price">Exit Price</label>
-                                <input type="number" step="0.00001" id="pc2_price" placeholder="ex: 5140.00">
-                            </div>
-                            <div class="form-group">
-                                <label for="pc2_profit">Profit ($)</label>
-                                <input type="number" step="0.01" id="pc2_profit" placeholder="ex: 45.00" onchange="calculatePartialCloses()">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Partial Close 3 -->
-                    <div class="partial-close-group">
-                        <h4 style="color: #00cc88; margin-bottom: 15px; font-size: 1.1em;">Exit 3</h4>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="pc3_lot">Lot</label>
-                                <input type="number" step="0.01" id="pc3_lot" placeholder="ex: 0.01">
-                            </div>
-                            <div class="form-group">
-                                <label for="pc3_price">Exit Price</label>
-                                <input type="number" step="0.00001" id="pc3_price" placeholder="ex: 5161.90">
-                            </div>
-                            <div class="form-group">
-                                <label for="pc3_profit">Profit ($)</label>
-                                <input type="number" step="0.01" id="pc3_profit" placeholder="ex: 50.00" onchange="calculatePartialCloses()">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="background: rgba(77, 159, 255, 0.1); border: 1px solid rgba(77, 159, 255, 0.3); border-radius: 10px; padding: 15px; margin-top: 20px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #aaa;">Total Partial Profit:</span>
-                            <span style="color: #00cc88; font-size: 1.3em; font-weight: bold;" id="totalPartialProfit">$0.00</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                            <span style="color: #aaa;">Lot Remaining:</span>
-                            <span style="color: #4d9fff; font-size: 1.3em; font-weight: bold;" id="lotRemaining">0.00</span>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label for="weeklyPhoto">Photo Link (Imgur, TradingView, etc.)</label>
+                            <input type="url" id="weeklyPhoto" placeholder="https://i.imgur.com/...">
                         </div>
                     </div>
                 </div>
 
-                <button class="save-btn" id="saveBtn">Save</button>
+                <!-- Daily Analysis -->
+                <div class="analysis-section">
+                    <h3>📊 Daily Analysis</h3>
+                    <div class="form-grid">
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label for="dailyAnalysis">Analysis</label>
+                            <textarea id="dailyAnalysis" rows="4" placeholder="Daily zones, supply/demand, daily bias..."></textarea>
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label for="dailyPhoto">Photo Link</label>
+                            <input type="url" id="dailyPhoto" placeholder="https://i.imgur.com/...">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4H Analysis -->
+                <div class="analysis-section">
+                    <h3>⏱️ 4H Analysis</h3>
+                    <div class="form-grid">
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label for="fourHAnalysis">Analysis</label>
+                            <textarea id="fourHAnalysis" rows="4" placeholder="4H structure, fractals, entry zones..."></textarea>
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label for="fourHPhoto">Photo Link</label>
+                            <input type="url" id="fourHPhoto" placeholder="https://i.imgur.com/...">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1H Analysis -->
+                <div class="analysis-section">
+                    <h3>⚡ 1H Analysis</h3>
+                    <div class="form-grid">
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label for="oneHAnalysis">Analysis</label>
+                            <textarea id="oneHAnalysis" rows="4" placeholder="1H entries, liquidity sweeps, timing..."></textarea>
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label for="oneHPhoto">Photo Link</label>
+                            <input type="url" id="oneHPhoto" placeholder="https://i.imgur.com/...">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="save-btn" id="saveBtn">💾 Save Analysis</button>
             </div>
         </div>
 
-        <!-- Table Page -->
-        <div id="tablePage" class="page active">
-            <!-- Filters Section -->
-            <div style="background: linear-gradient(135deg, rgba(77, 159, 255, 0.08), rgba(61, 127, 255, 0.03)); backdrop-filter: blur(10px); border: 1px solid rgba(77, 159, 255, 0.25); border-radius: 20px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);">
+        <!-- List Page -->
+        <div id="listPage" class="page active">
+            <!-- Filters -->
+            <div class="filter-section">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-                    <h2 style="color: #4d9fff; margin: 0; font-size: 1.5em; display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 1.2em;">🔍</span> Filters
-                    </h2>
-                    <button onclick="resetFilters()" style="background: linear-gradient(135deg, #ff6b6b, #ee5a6f); color: #fff; border: none; padding: 12px 28px; border-radius: 25px; cursor: pointer; font-size: 0.95em; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3); display: flex; align-items: center; gap: 8px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 107, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 107, 0.3)'">
-                        <span>🔄</span> Resetează Filters
-                    </button>
+                    <h2 style="color: #ff9500; margin: 0; font-size: 1.5em;">🔍 Filters</h2>
+                    <button onclick="resetFilters()" style="background: linear-gradient(135deg, #ff6b6b, #ee5a6f); color: #fff; border: none; padding: 12px 28px; border-radius: 25px; cursor: pointer; font-weight: 600;">🔄 Reset</button>
                 </div>
-                <div class="form-grid" style="margin-bottom: 0; gap: 20px;">
+                <div class="form-grid">
                     <div class="form-group">
-                        <label for="filterMonth" style="color: #4d9fff; margin-bottom: 10px; font-weight: 600; font-size: 0.9em; display: flex; align-items: center; gap: 6px;">
-                            <span>📅</span> Lună
-                        </label>
-                        <select id="filterMonth" onchange="applyFilters()" style="background: rgba(77, 159, 255, 0.1); border: 1.5px solid rgba(77, 159, 255, 0.3); border-radius: 12px; padding: 14px; color: #fff; font-size: 1em; transition: all 0.3s ease; cursor: pointer;">
+                        <label for="filterMonth">📅 Month</label>
+                        <select id="filterMonth" onchange="applyFilters()">
                             <option value="">All months</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="filterDay" style="color: #4d9fff; margin-bottom: 10px; font-weight: 600; font-size: 0.9em; display: flex; align-items: center; gap: 6px;">
-                            <span>📆</span> Zi
-                        </label>
-                        <select id="filterDay" onchange="applyFilters()" style="background: rgba(77, 159, 255, 0.1); border: 1.5px solid rgba(77, 159, 255, 0.3); border-radius: 12px; padding: 14px; color: #fff; font-size: 1em; transition: all 0.3s ease; cursor: pointer;">
+                        <label for="filterDay">📆 Day</label>
+                        <select id="filterDay" onchange="applyFilters()">
                             <option value="">All days</option>
                             <option value="Monday">Monday</option>
                             <option value="Tuesday">Tuesday</option>
@@ -731,410 +595,181 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="filterSession" style="color: #4d9fff; margin-bottom: 10px; font-weight: 600; font-size: 0.9em; display: flex; align-items: center; gap: 6px;">
-                            <span>🌍</span> Sesiune
-                        </label>
-                        <select id="filterSession" onchange="applyFilters()" style="background: rgba(77, 159, 255, 0.1); border: 1.5px solid rgba(77, 159, 255, 0.3); border-radius: 12px; padding: 14px; color: #fff; font-size: 1em; transition: all 0.3s ease; cursor: pointer;">
-                            <option value="">All sessions</option>
-                            <option value="Asia">Asia</option>
-                            <option value="London">London</option>
-                            <option value="New York">New York</option>
+                        <label for="filterDateFrom">📅 Date From</label>
+                        <input type="date" id="filterDateFrom" onchange="applyFilters()">
+                    </div>
+                    <div class="form-group">
+                        <label for="filterDateTo">📅 Date To</label>
+                        <input type="date" id="filterDateTo" onchange="applyFilters()">
+                    </div>
+                    <div class="form-group">
+                        <label for="filterYear">📅 Year</label>
+                        <select id="filterYear" onchange="applyFilters()">
+                            <option value="">All years</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="filterPair" style="color: #4d9fff; margin-bottom: 10px; font-weight: 600; font-size: 0.9em; display: flex; align-items: center; gap: 6px;">
-                            <span>💱</span> Pereche
-                        </label>
-                        <select id="filterPair" onchange="applyFilters()" style="background: rgba(77, 159, 255, 0.1); border: 1.5px solid rgba(77, 159, 255, 0.3); border-radius: 12px; padding: 14px; color: #fff; font-size: 1em; transition: all 0.3s ease; cursor: pointer;">
+                        <label for="filterPair">💱 Pair</label>
+                        <select id="filterPair" onchange="applyFilters()">
                             <option value="">All pairs</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="filterPosition" style="color: #4d9fff; margin-bottom: 10px; font-weight: 600; font-size: 0.9em; display: flex; align-items: center; gap: 6px;">
-                            <span>📊</span> Long/Short
-                        </label>
-                        <select id="filterPosition" onchange="applyFilters()" style="background: rgba(77, 159, 255, 0.1); border: 1.5px solid rgba(77, 159, 255, 0.3); border-radius: 12px; padding: 14px; color: #fff; font-size: 1em; transition: all 0.3s ease; cursor: pointer;">
-                            <option value="">All positions</option>
-                            <option value="Long">Long</option>
-                            <option value="Short">Short</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="filterStatus" style="color: #4d9fff; margin-bottom: 10px; font-weight: 600; font-size: 0.9em; display: flex; align-items: center; gap: 6px;">
-                            <span>✅</span> Status
-                        </label>
-                        <select id="filterStatus" onchange="applyFilters()" style="background: rgba(77, 159, 255, 0.1); border: 1.5px solid rgba(77, 159, 255, 0.3); border-radius: 12px; padding: 14px; color: #fff; font-size: 1em; transition: all 0.3s ease; cursor: pointer;">
-                            <option value="">All statuses</option>
-                            <option value="Win">Win</option>
-                            <option value="Loss">Loss</option>
-                            <option value="Break Even">Break Even</option>
-                            <option value="Open">Open</option>
-                        </select>
-                    </div>
                 </div>
             </div>
 
-            <!-- Dashboard Statistics -->
-            <div class="dashboard">
-                <h2>📊 Trading Statistics</h2>
-                <div class="stats-grid">
-                    <div class="stat-card" style="background: linear-gradient(135deg, rgba(77, 159, 255, 0.1), rgba(61, 127, 255, 0.05)); border-color: rgba(77, 159, 255, 0.3);">
-                        <div class="stat-label">Initial Balance</div>
-                        <div class="stat-value" id="statInitialBalance" style="color: #4d9fff;">$10,000.00</div>
-                        <div class="stat-subtext">Starting capital</div>
-                    </div>
-                    <div class="stat-card" id="statCurrentBalanceCard">
-                        <div class="stat-label">Current Balance</div>
-                        <div class="stat-value" id="statCurrentBalance">$10,000.00</div>
-                        <div class="stat-subtext">Current capital</div>
-                    </div>
-                    <div class="stat-card" id="statProfit">
-                        <div class="stat-label">Total Profit</div>
-                        <div class="stat-value" id="statProfitValue">$0.00</div>
-                        <div class="stat-subtext">Net P&L</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Total Trades</div>
-                        <div class="stat-value" id="statTotalTrades">0</div>
-                        <div class="stat-subtext">Closed trades</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Win Rate</div>
-                        <div class="stat-value" id="statWinRate">0%</div>
-                        <div class="stat-subtext">Win rate</div>
-                    </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 160, 0, 0.05)); border-color: rgba(255, 193, 7, 0.3);">
-                        <div class="stat-label">R Mediu</div>
-                        <div class="stat-value" style="color: #ffc107;" id="statAvgR">0.00</div>
-                        <div class="stat-subtext">Average R per trade</div>
-                    </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(123, 31, 162, 0.05)); border-color: rgba(156, 39, 176, 0.3);">
-                        <div class="stat-label">Expectancy</div>
-                        <div class="stat-value" style="color: #ab47bc;" id="statExpectancy">$0.00</div>
-                        <div class="stat-subtext">Average profit per trade</div>
-                    </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, rgba(0, 188, 212, 0.1), rgba(0, 172, 193, 0.05)); border-color: rgba(0, 188, 212, 0.3);">
-                        <div class="stat-label">Frequency</div>
-                        <div class="stat-value" style="color: #00bcd4;" id="statFrequency">0</div>
-                        <div class="stat-subtext">Trades per week</div>
-                    </div>
-                    <div class="stat-card positive">
-                        <div class="stat-label">Wins</div>
-                        <div class="stat-value" id="statWins">0</div>
-                        <div class="stat-subtext">Winning trades</div>
-                    </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 160, 0, 0.05)); border-color: rgba(255, 193, 7, 0.3);">
-                        <div class="stat-label">Break Even</div>
-                        <div class="stat-value" style="color: #ffc107;" id="statBreakEven">0</div>
-                        <div class="stat-subtext">Tranzacții la egal</div>
-                    </div>
-                    <div class="stat-card negative">
-                        <div class="stat-label">Losses</div>
-                        <div class="stat-value" id="statLosses">0</div>
-                        <div class="stat-subtext">Losing trades</div>
-                    </div>
+            <!-- Quick Pair Filters -->
+            <div style="background: linear-gradient(135deg, rgba(255, 149, 0, 0.08), rgba(255, 123, 0, 0.03)); backdrop-filter: blur(10px); border: 1px solid rgba(255, 149, 0, 0.25); border-radius: 20px; padding: 25px; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);">
+                <h3 style="color: #ff9500; margin: 0 0 15px 0; font-size: 1.2em; display: flex; align-items: center; gap: 10px;">
+                    <span>⚡</span> Quick Pair Filter
+                </h3>
+                <div id="pairButtonsContainer" style="display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; cursor: grab; user-select: none; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: #ff9500 rgba(255, 149, 0, 0.1);">
+                    <!-- Buttons will be inserted here -->
                 </div>
             </div>
 
-            <div class="table-container">
-                <h2 style="margin-bottom: 20px; color: #4d9fff;">Trade History</h2>
-                <table id="tradesTable">
-                    <thead>
-                        <tr>
-                            <th onclick="sortTable('luna')" style="cursor: pointer; user-select: none;">
-                                Month <span id="sort-luna"></span>
-                            </th>
-                            <th onclick="sortTable('data')" style="cursor: pointer; user-select: none;">
-                                Date <span id="sort-data">▼</span>
-                            </th>
-                            <th onclick="sortTable('zi')" style="cursor: pointer; user-select: none;">
-                                Day <span id="sort-zi"></span>
-                            </th>
-                            <th onclick="sortTable('pereche')" style="cursor: pointer; user-select: none;">
-                                Pair <span id="sort-pereche"></span>
-                            </th>
-                            <th onclick="sortTable('sesiune')" style="cursor: pointer; user-select: none;">
-                                Session <span id="sort-sesiune"></span>
-                            </th>
-                            <th onclick="sortTable('position')" style="cursor: pointer; user-select: none;">
-                                Long/Short <span id="sort-position"></span>
-                            </th>
-                            <th onclick="sortTable('wl')" style="cursor: pointer; user-select: none;">
-                                Status <span id="sort-wl"></span>
-                            </th>
-                            <th onclick="sortTable('lotSize')" style="cursor: pointer; user-select: none;">
-                                Lot Size <span id="sort-lotSize"></span>
-                            </th>
-                            <th onclick="sortTable('r')" style="cursor: pointer; user-select: none;">
-                                R <span id="sort-r"></span>
-                            </th>
-                            <th onclick="sortTable('risk')" style="cursor: pointer; user-select: none;">
-                                Risk <span id="sort-risk"></span>
-                            </th>
-                            <th onclick="sortTable('profit')" style="cursor: pointer; user-select: none;">
-                                Profit <span id="sort-profit"></span>
-                            </th>
-                            <th>Partial Closes</th>
-                            <th onclick="sortTable('entry')" style="cursor: pointer; user-select: none;">
-                                Entry <span id="sort-entry"></span>
-                            </th>
-                            <th onclick="sortTable('entryHour')" style="cursor: pointer; user-select: none;">
-                                Entry Hour <span id="sort-entryHour"></span>
-                            </th>
-                            <th onclick="sortTable('exitHour')" style="cursor: pointer; user-select: none;">
-                                Exit Hour <span id="sort-exitHour"></span>
-                            </th>
-                            <th onclick="sortTable('duration')" style="cursor: pointer; user-select: none;">
-                                Duration <span id="sort-duration"></span>
-                            </th>
-                            <th onclick="sortTable('sl')" style="cursor: pointer; user-select: none;">
-                                SL <span id="sort-sl"></span>
-                            </th>
-                            <th onclick="sortTable('tp')" style="cursor: pointer; user-select: none;">
-                                EXIT <span id="sort-tp"></span>
-                            </th>
-                            <th>Screenshot</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tradesBody">
-                        <tr>
-                            <td colspan="20" class="no-data">Loading data...</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- View Mode Toggle -->
+            <div style="display: flex; gap: 15px; justify-content: center; margin-bottom: 30px;">
+                <button id="btnJournalView" class="view-mode-btn active" onclick="switchView('journal')" style="background: linear-gradient(135deg, #ff9500, #ff7b00); color: #fff; border: none; padding: 14px 40px; border-radius: 25px; cursor: pointer; font-size: 1.1em; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 149, 0, 0.4);">
+                    📋 Journal View
+                </button>
+                <button id="btnCalendarView" class="view-mode-btn" onclick="switchView('calendar')" style="background: rgba(255, 149, 0, 0.2); color: #ff9500; border: 2px solid rgba(255, 149, 0, 0.4); padding: 14px 40px; border-radius: 25px; cursor: pointer; font-size: 1.1em; font-weight: 600; transition: all 0.3s ease;">
+                    📅 Calendar View
+                </button>
+            </div>
+
+            <!-- Journal View -->
+            <!-- Journal View -->
+            <div id="journalView" style="display: block;">
+                <div class="table-container">
+                    <h2 style="margin-bottom: 20px; color: #ff9500;">Analysis History</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th>Day</th>
+                                <th>Date</th>
+                                <th>Year</th>
+                                <th>Pair</th>
+                                <th>Weekly Analysis</th>
+                                <th>Weekly Photo</th>
+                                <th>Daily Analysis</th>
+                                <th>Daily Photo</th>
+                                <th>4H Analysis</th>
+                                <th>4H Photo</th>
+                                <th>1H Analysis</th>
+                                <th>1H Photo</th>
+                                <th>View/Share</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="analysisBody">
+                            <tr>
+                                <td colspan="15" class="no-data">Loading analyses...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Calendar View -->
+            <div id="calendarView" style="display: none;">
+                <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 149, 0, 0.2); border-radius: 15px; padding: 30px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);">
+                    
+                    <!-- Calendar Controls -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                        <button onclick="changeMonth(-1)" style="background: linear-gradient(135deg, #ff9500, #ff7b00); color: #fff; border: none; padding: 12px 24px; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: 600; transition: all 0.3s ease;">
+                            ◄ Previous
+                        </button>
+                        
+                        <div style="display: flex; gap: 15px; align-items: center;">
+                            <select id="calendarMonth" onchange="renderCalendar()" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 149, 0, 0.3); border-radius: 8px; padding: 12px 20px; color: #fff; font-size: 1em; font-weight: 600; cursor: pointer;">
+                                <option value="0">January</option>
+                                <option value="1">February</option>
+                                <option value="2">March</option>
+                                <option value="3">April</option>
+                                <option value="4">May</option>
+                                <option value="5">June</option>
+                                <option value="6">July</option>
+                                <option value="7">August</option>
+                                <option value="8">September</option>
+                                <option value="9">October</option>
+                                <option value="10">November</option>
+                                <option value="11">December</option>
+                            </select>
+                            
+                            <select id="calendarYear" onchange="renderCalendar()" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 149, 0, 0.3); border-radius: 8px; padding: 12px 20px; color: #fff; font-size: 1em; font-weight: 600; cursor: pointer;">
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                                <option value="2027">2027</option>
+                            </select>
+                        </div>
+                        
+                        <button onclick="changeMonth(1)" style="background: linear-gradient(135deg, #ff9500, #ff7b00); color: #fff; border: none; padding: 12px 24px; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: 600; transition: all 0.3s ease;">
+                            Next ►
+                        </button>
+                    </div>
+
+                    <!-- Calendar Grid -->
+                    <div id="calendarGrid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 30px;">
+                        <!-- Calendar will be rendered here -->
+                    </div>
+
+                    <!-- Selected Day Analyses -->
+                    <div id="selectedDayAnalyses" style="display: none; background: rgba(255, 149, 0, 0.05); border: 2px solid rgba(255, 149, 0, 0.3); border-radius: 15px; padding: 25px; margin-top: 30px;">
+                        <h3 id="selectedDayTitle" style="color: #ff9500; margin-bottom: 20px; font-size: 1.5em;"></h3>
+                        <div id="selectedDayContent"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Login Modal -->
-    <div class="loading-overlay" id="loginModal" style="display: none;">
-        <div class="loading-spinner" style="background: rgba(255, 255, 255, 0.98); padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); max-width: 400px; width: 90%;">
-            <h2 style="color: #4d9fff; margin-bottom: 25px; text-align: center;">🔐 Login Required</h2>
+    <div class="loading-overlay" id="loginModal">
+        <div style="background: rgba(255, 255, 255, 0.98); padding: 40px; border-radius: 20px; max-width: 400px; width: 90%;">
+            <h2 style="color: #ff9500; margin-bottom: 25px; text-align: center;">🔐 Login</h2>
             <div style="margin-bottom: 20px;">
                 <label style="display: block; color: #333; margin-bottom: 8px; font-weight: 600;">Username</label>
-                <input type="text" id="loginUsername" placeholder="Enter username" 
-                       style="width: 100%; padding: 12px; border: 2px solid #4d9fff; border-radius: 8px; font-size: 1em; color: #333;">
+                <input type="text" id="loginUsername" placeholder="Enter username" style="width: 100%; padding: 12px; border: 2px solid #ff9500; border-radius: 8px; color: #333;">
             </div>
             <div style="margin-bottom: 25px;">
                 <label style="display: block; color: #333; margin-bottom: 8px; font-weight: 600;">Password</label>
-                <input type="password" id="loginPassword" placeholder="Enter password" 
-                       style="width: 100%; padding: 12px; border: 2px solid #4d9fff; border-radius: 8px; font-size: 1em; color: #333;"
-                       onkeypress="if(event.key==='Enter') attemptLogin()">
+                <input type="password" id="loginPassword" placeholder="Enter password" style="width: 100%; padding: 12px; border: 2px solid #ff9500; border-radius: 8px; color: #333;" onkeypress="if(event.key==='Enter') attemptLogin()">
             </div>
-            <div id="loginError" style="color: #ff4444; margin-bottom: 15px; text-align: center; display: none; font-weight: 600;"></div>
+            <div id="loginError" style="color: #ff4444; margin-bottom: 15px; text-align: center; display: none;"></div>
             <div style="display: flex; gap: 10px;">
-                <button onclick="attemptLogin()" 
-                        style="flex: 1; background: linear-gradient(135deg, #00cc88, #00aa72); color: #fff; border: none; padding: 14px; border-radius: 8px; cursor: pointer; font-size: 1em; font-weight: 600;">
-                    Login
-                </button>
-                <button onclick="closeLoginModal()" 
-                        style="flex: 1; background: linear-gradient(135deg, #ff6b6b, #ee5a6f); color: #fff; border: none; padding: 14px; border-radius: 8px; cursor: pointer; font-size: 1em; font-weight: 600;">
-                    Cancel
-                </button>
+                <button onclick="attemptLogin()" style="flex: 1; background: linear-gradient(135deg, #00cc88, #00aa72); color: #fff; border: none; padding: 14px; border-radius: 8px; cursor: pointer; font-weight: 600;">Login</button>
+                <button onclick="closeLoginModal()" style="flex: 1; background: linear-gradient(135deg, #ff6b6b, #ee5a6f); color: #fff; border: none; padding: 14px; border-radius: 8px; cursor: pointer; font-weight: 600;">Cancel</button>
             </div>
         </div>
     </div>
 
-    <!-- Strategy Modal -->
-    <div class="loading-overlay" id="strategyModal" style="display: none;">
-        <div style="background: linear-gradient(135deg, rgba(26, 26, 42, 0.98), rgba(15, 30, 58, 0.98)); padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); max-width: 800px; width: 90%; max-height: 85vh; overflow-y: auto; border: 2px solid rgba(156, 39, 176, 0.5);">
+    <!-- View Analysis Modal -->
+    <div class="loading-overlay" id="viewModal" style="display: none;">
+        <div style="background: linear-gradient(135deg, rgba(26, 26, 42, 0.98), rgba(15, 30, 58, 0.98)); padding: 40px; border-radius: 20px; max-width: 900px; width: 90%; max-height: 85vh; overflow-y: auto; border: 2px solid rgba(255, 149, 0, 0.5);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <h2 style="color: #9c27b0; margin: 0; font-size: 2em; display: flex; align-items: center; gap: 12px;">
-                    <span style="font-size: 1.2em;">📚</span> My Trading Strategy
-                </h2>
-                <button onclick="closeStrategyModal()" style="background: rgba(255, 107, 107, 0.2); color: #ff6b6b; border: 2px solid #ff6b6b; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.5em; font-weight: bold; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center;" onmouseover="this.style.background='rgba(255, 107, 107, 0.4)'" onmouseout="this.style.background='rgba(255, 107, 107, 0.2)'">
-                    ×
-                </button>
+                <h2 id="viewModalTitle" style="color: #ff9500; margin: 0; font-size: 2em;">Analysis</h2>
+                <button onclick="closeViewModal()" style="background: rgba(255, 107, 107, 0.2); color: #ff6b6b; border: 2px solid #ff6b6b; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.5em; font-weight: bold; transition: all 0.3s ease;">×</button>
             </div>
             
-            <div style="color: #ddd; line-height: 1.8; font-size: 1.05em;">
-                <!-- Strategy Step 1 -->
-                <div style="background: rgba(156, 39, 176, 0.1); border-left: 4px solid #9c27b0; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                    <h3 style="color: #9c27b0; margin-bottom: 15px; font-size: 1.4em; display: flex; align-items: center; gap: 10px;">
-                        <span style="background: #9c27b0; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9em; font-weight: bold;">1</span>
-                        Daily Fractal - Long Term Direction
-                    </h3>
-                    <p style="margin: 0 0 15px 0; color: #ccc;">
-                        Folosesc <strong>Daily Fractal</strong> pentru a identifica direcția long-term a pieței. Dacă fractalul Daily arată o tendință bullish, caut oportunități LONG. Dacă arată bearish, caut oportunități SHORT.
-                    </p>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button onclick="window.open('https://i.imgur.com/your-daily-fractal-image.png', '_blank')" style="background: rgba(77, 159, 255, 0.2); border: 2px solid #4d9fff; color: #4d9fff; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(77, 159, 255, 0.3)'" onmouseout="this.style.background='rgba(77, 159, 255, 0.2)'">
-                            📸 View Example
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Strategy Step 2 -->
-                <div style="background: rgba(156, 39, 176, 0.1); border-left: 4px solid #9c27b0; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                    <h3 style="color: #9c27b0; margin-bottom: 15px; font-size: 1.4em; display: flex; align-items: center; gap: 10px;">
-                        <span style="background: #9c27b0; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9em; font-weight: bold;">2</span>
-                        Daily Supply/Demand Zones
-                    </h3>
-                    <p style="margin: 0 0 15px 0; color: #ccc;">
-                        Identific zonele cheie de <strong>Supply</strong> (vânzători) și <strong>Demand</strong> (cumpărători) pe timeframe-ul Daily. Acestea reprezintă nivelurile importante unde prețul poate reacționa puternic.
-                    </p>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button onclick="window.open('https://i.imgur.com/your-supply-demand-image.png', '_blank')" style="background: rgba(77, 159, 255, 0.2); border: 2px solid #4d9fff; color: #4d9fff; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(77, 159, 255, 0.3)'" onmouseout="this.style.background='rgba(77, 159, 255, 0.2)'">
-                            📸 View Example
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Strategy Step 3 -->
-                <div style="background: rgba(156, 39, 176, 0.1); border-left: 4px solid #9c27b0; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                    <h3 style="color: #9c27b0; margin-bottom: 15px; font-size: 1.4em; display: flex; align-items: center; gap: 10px;">
-                        <span style="background: #9c27b0; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9em; font-weight: bold;">3</span>
-                        4H Fractal - Confirmation
-                    </h3>
-                    <p style="margin: 0 0 15px 0; color: #ccc;">
-                        Aștept confirmarea pe <strong>4H Fractal</strong> înainte de a intra în tranzacție. Acest timeframe oferă confirmarea că mișcarea va continua în direcția identificată pe Daily.
-                    </p>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button onclick="window.open('https://i.imgur.com/your-4h-fractal-image.png', '_blank')" style="background: rgba(77, 159, 255, 0.2); border: 2px solid #4d9fff; color: #4d9fff; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(77, 159, 255, 0.3)'" onmouseout="this.style.background='rgba(77, 159, 255, 0.2)'">
-                            📸 View Example
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Strategy Step 4 -->
-                <div style="background: rgba(156, 39, 176, 0.1); border-left: 4px solid #9c27b0; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                    <h3 style="color: #9c27b0; margin-bottom: 15px; font-size: 1.4em; display: flex; align-items: center; gap: 10px;">
-                        <span style="background: #9c27b0; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9em; font-weight: bold;">4</span>
-                        Liquidity Sweep
-                    </h3>
-                    <p style="margin: 0 0 15px 0; color: #ccc;">
-                        Caut <strong>Liquidity Sweeps</strong> - momentele când prețul elimină liquidity-ul de pe anumite niveluri (stop-loss-uri ale retailului) înainte de a face mișcarea principală. Acesta este semnalul de intrare ideal.
-                    </p>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button onclick="window.open('https://i.imgur.com/your-liquidity-sweep-image.png', '_blank')" style="background: rgba(77, 159, 255, 0.2); border: 2px solid #4d9fff; color: #4d9fff; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(77, 159, 255, 0.3)'" onmouseout="this.style.background='rgba(77, 159, 255, 0.2)'">
-                            📸 View Example
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Risk Management -->
-                <div style="background: rgba(0, 204, 136, 0.1); border-left: 4px solid #00cc88; padding: 20px; border-radius: 10px; margin-bottom: 0;">
-                    <h3 style="color: #00cc88; margin-bottom: 15px; font-size: 1.4em; display: flex; align-items: center; gap: 10px;">
-                        <span>🛡️</span> Risk Management - The5%ers Rules
-                    </h3>
-                    <ul style="margin: 0; padding-left: 25px; color: #ccc;">
-                        <li style="margin-bottom: 10px;"><strong>Daily Loss Limit:</strong> Maximum $500 (5% of account)</li>
-                        <li style="margin-bottom: 10px;"><strong>Total Loss Limit:</strong> Maximum $600 (6% of account)</li>
-                        <li style="margin-bottom: 10px;"><strong>Profit Target:</strong> $600 (6% gain) to pass HighStake</li>
-                        <li style="margin-bottom: 10px;"><strong>Risk per trade:</strong> 1-2% din capital</li>
-                        <li style="margin-bottom: 10px;"><strong>Stop Loss:</strong> Plasat sub/peste zona de Supply/Demand</li>
-                        <li style="margin-bottom: 10px;"><strong>Take Profit:</strong> Minimum 1:2 Risk-Reward Ratio</li>
-                        <li style="margin-bottom: 0;"><strong>Partial Closes:</strong> Exit parțial la niveluri cheie pentru a securiza profit</li>
-                    </ul>
-                </div>
+            <div id="viewModalContent" style="color: #ddd; line-height: 1.8; font-size: 1.05em;">
+                <!-- Content will be inserted here -->
             </div>
 
-            <div style="margin-top: 30px; text-align: center;">
-                <button onclick="closeStrategyModal()" style="background: linear-gradient(135deg, #9c27b0, #7b1fa2); color: #fff; border: none; padding: 14px 40px; border-radius: 25px; cursor: pointer; font-size: 1.1em; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(156, 39, 176, 0.6)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(156, 39, 176, 0.4)'">
-                    Got it! 👍
+            <div style="margin-top: 30px; text-align: center; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <button onclick="copyForTradingViewFromModal()" style="background: linear-gradient(135deg, #2962FF, #1E53E5); color: #fff; border: none; padding: 14px 40px; border-radius: 25px; cursor: pointer; font-size: 1.1em; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(41, 98, 255, 0.4);">
+                    📈 Copy for TradingView
                 </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Strategy Modal -->
-    <div class="loading-overlay" id="strategyModal" style="display: none;">
-        <div style="background: linear-gradient(135deg, rgba(26, 26, 42, 0.98), rgba(15, 30, 58, 0.98)); padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); max-width: 800px; width: 90%; max-height: 85vh; overflow-y: auto; border: 2px solid rgba(156, 39, 176, 0.5);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <h2 style="color: #9c27b0; margin: 0; font-size: 2em; display: flex; align-items: center; gap: 12px;">
-                    <span style="font-size: 1.2em;">📚</span> My Trading Strategy
-                </h2>
-                <button onclick="closeStrategyModal()" style="background: rgba(255, 107, 107, 0.2); color: #ff6b6b; border: 2px solid #ff6b6b; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.5em; font-weight: bold; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center;" onmouseover="this.style.background='rgba(255, 107, 107, 0.4)'" onmouseout="this.style.background='rgba(255, 107, 107, 0.2)'">
-                    ×
+                <button onclick="shareFromModal()" style="background: linear-gradient(135deg, #9c27b0, #7b1fa2); color: #fff; border: none; padding: 14px 40px; border-radius: 25px; cursor: pointer; font-size: 1.1em; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);">
+                    📋 Copy for Discord
                 </button>
-            </div>
-            
-            <div style="color: #ddd; line-height: 1.8; font-size: 1.05em;">
-                <!-- Strategy Step 1 -->
-                <div style="background: rgba(156, 39, 176, 0.1); border-left: 4px solid #9c27b0; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                    <h3 style="color: #9c27b0; margin-bottom: 15px; font-size: 1.4em; display: flex; align-items: center; gap: 10px;">
-                        <span style="background: #9c27b0; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9em; font-weight: bold;">1</span>
-                        Daily Fractal - Long Term Direction
-                    </h3>
-                    <p style="margin: 0 0 15px 0; color: #ccc;">
-                        Folosesc <strong>Daily Fractal</strong> pentru a identifica direcția long-term a pieței. Dacă fractalul Daily arată o tendință bullish, caut oportunități LONG. Dacă arată bearish, caut oportunități SHORT.
-                    </p>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button onclick="window.open('https://i.imgur.com/your-daily-fractal-image.png', '_blank')" style="background: rgba(77, 159, 255, 0.2); border: 2px solid #4d9fff; color: #4d9fff; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(77, 159, 255, 0.3)'" onmouseout="this.style.background='rgba(77, 159, 255, 0.2)'">
-                            📸 View Example
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Strategy Step 2 -->
-                <div style="background: rgba(156, 39, 176, 0.1); border-left: 4px solid #9c27b0; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                    <h3 style="color: #9c27b0; margin-bottom: 15px; font-size: 1.4em; display: flex; align-items: center; gap: 10px;">
-                        <span style="background: #9c27b0; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9em; font-weight: bold;">2</span>
-                        Daily Supply/Demand Zones
-                    </h3>
-                    <p style="margin: 0 0 15px 0; color: #ccc;">
-                        Identific zonele cheie de <strong>Supply</strong> (vânzători) și <strong>Demand</strong> (cumpărători) pe timeframe-ul Daily. Acestea reprezintă nivelurile importante unde prețul poate reacționa puternic.
-                    </p>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button onclick="window.open('https://i.imgur.com/your-supply-demand-image.png', '_blank')" style="background: rgba(77, 159, 255, 0.2); border: 2px solid #4d9fff; color: #4d9fff; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(77, 159, 255, 0.3)'" onmouseout="this.style.background='rgba(77, 159, 255, 0.2)'">
-                            📸 View Example
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Strategy Step 3 -->
-                <div style="background: rgba(156, 39, 176, 0.1); border-left: 4px solid #9c27b0; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                    <h3 style="color: #9c27b0; margin-bottom: 15px; font-size: 1.4em; display: flex; align-items: center; gap: 10px;">
-                        <span style="background: #9c27b0; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9em; font-weight: bold;">3</span>
-                        4H Fractal - Confirmation
-                    </h3>
-                    <p style="margin: 0 0 15px 0; color: #ccc;">
-                        Aștept confirmarea pe <strong>4H Fractal</strong> înainte de a intra în tranzacție. Acest timeframe oferă confirmarea că mișcarea va continua în direcția identificată pe Daily.
-                    </p>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button onclick="window.open('https://i.imgur.com/your-4h-fractal-image.png', '_blank')" style="background: rgba(77, 159, 255, 0.2); border: 2px solid #4d9fff; color: #4d9fff; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(77, 159, 255, 0.3)'" onmouseout="this.style.background='rgba(77, 159, 255, 0.2)'">
-                            📸 View Example
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Strategy Step 4 -->
-                <div style="background: rgba(156, 39, 176, 0.1); border-left: 4px solid #9c27b0; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                    <h3 style="color: #9c27b0; margin-bottom: 15px; font-size: 1.4em; display: flex; align-items: center; gap: 10px;">
-                        <span style="background: #9c27b0; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9em; font-weight: bold;">4</span>
-                        Liquidity Sweep
-                    </h3>
-                    <p style="margin: 0 0 15px 0; color: #ccc;">
-                        Caut <strong>Liquidity Sweeps</strong> - momentele când prețul elimină liquidity-ul de pe anumite niveluri (stop-loss-uri ale retailului) înainte de a face mișcarea principală. Acesta este semnalul de intrare ideal.
-                    </p>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button onclick="window.open('https://i.imgur.com/your-liquidity-sweep-image.png', '_blank')" style="background: rgba(77, 159, 255, 0.2); border: 2px solid #4d9fff; color: #4d9fff; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(77, 159, 255, 0.3)'" onmouseout="this.style.background='rgba(77, 159, 255, 0.2)'">
-                            📸 View Example
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Risk Management -->
-                <div style="background: rgba(0, 204, 136, 0.1); border-left: 4px solid #00cc88; padding: 20px; border-radius: 10px; margin-bottom: 0;">
-                    <h3 style="color: #00cc88; margin-bottom: 15px; font-size: 1.4em; display: flex; align-items: center; gap: 10px;">
-                        <span>🛡️</span> Risk Management - The5%ers Rules
-                    </h3>
-                    <ul style="margin: 0; padding-left: 25px; color: #ccc;">
-                        <li style="margin-bottom: 10px;"><strong>Daily Loss Limit:</strong> Maximum $500 (5% of account)</li>
-                        <li style="margin-bottom: 10px;"><strong>Total Loss Limit:</strong> Maximum $600 (6% of account)</li>
-                        <li style="margin-bottom: 10px;"><strong>Profit Target:</strong> $600 (6% gain) to pass HighStake</li>
-                        <li style="margin-bottom: 10px;"><strong>Risk per trade:</strong> 1-2% din capital</li>
-                        <li style="margin-bottom: 10px;"><strong>Stop Loss:</strong> Plasat sub/peste zona de Supply/Demand</li>
-                        <li style="margin-bottom: 10px;"><strong>Take Profit:</strong> Minimum 1:2 Risk-Reward Ratio</li>
-                        <li style="margin-bottom: 0;"><strong>Partial Closes:</strong> Exit parțial la niveluri cheie pentru a securiza profit</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div style="margin-top: 30px; text-align: center;">
-                <button onclick="closeStrategyModal()" style="background: linear-gradient(135deg, #9c27b0, #7b1fa2); color: #fff; border: none; padding: 14px 40px; border-radius: 25px; cursor: pointer; font-size: 1.1em; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(156, 39, 176, 0.6)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(156, 39, 176, 0.4)'">
-                    Got it! 👍
+                <button onclick="closeViewModal()" style="background: linear-gradient(135deg, #ff9500, #ff7b00); color: #fff; border: none; padding: 14px 40px; border-radius: 25px; cursor: pointer; font-size: 1.1em; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 149, 0, 0.4);">
+                    Close
                 </button>
             </div>
         </div>
@@ -1142,54 +777,34 @@
 
     <!-- Loading Overlay -->
     <div class="loading-overlay active" id="loadingOverlay">
-        <div class="loading-spinner">
+        <div style="text-align: center;">
             <div class="spinner"></div>
-            <div class="loading-text">Loading data...</div>
+            <div style="color: #ff9500; font-size: 1.3em; font-weight: bold;">Loading...</div>
         </div>
     </div>
 
     <script>
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgfjNnriUwOF_A3HFkfSHhpuO1cwHqArZE1hQVj536GPKlfw1bQAUkm4l6YeAROfhoYQ/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby545E0z1U_T4y7Obgp7jbkhjEM-nTQ14zccKu3_WhAWI93028iGy3JHPHk9XJvU1_5/exec';
 
-// FIXED INITIAL BALANCE
-const FIXED_INITIAL_BALANCE = 10000;
-
-let trades = [];
-let filteredTrades = [];
-let backtestTrades = [];
-let filteredBacktestTrades = [];
-let editingIndex = -1;
-let isLoading = false;
-let currentSheet = 'Sheet1';
-let isLoggedIn = false;
-
-// Credentials
 const CREDENTIALS = {
     username: 'calexi07',
     password: '101994acs!'
 };
 
-// Active filters
-let activeFilters = {
-    month: '',
-    day: '',
-    session: '',
-    pair: '',
-    position: '',
-    status: ''
-};
-
-// Sorting state
-let sortColumn = 'data';
-let sortDirection = 'desc';
+let analyses = [];
+let filteredAnalyses = [];
+let editingIndex = -1;
+let isLoggedIn = false;
 
 // DOM
 const formPage = document.getElementById('formPage');
-const tablePage = document.getElementById('tablePage');
+const listPage = document.getElementById('listPage');
 const btnForm = document.getElementById('btnForm');
-const btnTable = document.getElementById('btnTable');
+const btnList = document.getElementById('btnList');
+const btnLogin = document.getElementById('btnLogin');
+const btnLogout = document.getElementById('btnLogout');
 const saveBtn = document.getElementById('saveBtn');
-const tradesBody = document.getElementById('tradesBody');
+const analysisBody = document.getElementById('analysisBody');
 const loadingOverlay = document.getElementById('loadingOverlay');
 
 // Show/Hide Loading
@@ -1201,773 +816,737 @@ function hideLoading() {
     loadingOverlay.classList.remove('active');
 }
 
-// NAV
+// Navigation
 btnLogin.onclick = () => showLoginModal();
 btnLogout.onclick = () => logout();
 btnForm.onclick = () => showPage('form');
-btnTable.onclick = () => {
-    showPage('table');
-    loadTradesFromSheet();
+btnList.onclick = () => {
+    showPage('list');
+    loadAnalyses();
 };
-btnStrategy.onclick = () => showStrategyModal();
-
-function showPage(page) {
-    formPage.classList.toggle('active', page === 'form');
-    tablePage.classList.toggle('active', page === 'table');
-    btnForm.classList.toggle('active', page === 'form');
-    btnTable.classList.toggle('active', page === 'table');
-}
-
-// Auto-calculate Duration when Entry Hour or Exit Hour changes
-document.getElementById('entryHour').addEventListener('change', calculateDuration);
-document.getElementById('exitHour').addEventListener('change', calculateDuration);
-
-// Update partial close totals when lot size changes
-document.getElementById('lotSize').addEventListener('input', calculatePartialCloses);
-
-function calculatePartialCloses() {
-    const lotSize = parseFloat(document.getElementById('lotSize').value) || 0;
-    
-    let totalPartialProfit = 0;
-    let totalLotsExited = 0;
-    
-    ['pc1', 'pc2', 'pc3'].forEach(prefix => {
-        const lot = parseFloat(document.getElementById(`${prefix}_lot`).value) || 0;
-        const price = parseFloat(document.getElementById(`${prefix}_price`).value) || 0;
-        const profit = parseFloat(document.getElementById(`${prefix}_profit`).value) || 0;
-        
-        if (lot > 0) {
-            totalPartialProfit += profit;
-            totalLotsExited += lot;
-        }
-    });
-    
-    // Update totals
-    document.getElementById('totalPartialProfit').textContent = `$${totalPartialProfit.toFixed(2)}`;
-    document.getElementById('lotRemaining').textContent = (lotSize - totalLotsExited).toFixed(2);
-}
 
 function handlePairChange() {
-    const pereche = document.getElementById('pereche').value;
+    const pairSelect = document.getElementById('pair');
     const customPairGroup = document.getElementById('customPairGroup');
     
-    if (pereche === 'Alta') {
+    if (pairSelect.value === 'Other') {
         customPairGroup.style.display = 'block';
+        document.getElementById('customPair').required = true;
     } else {
         customPairGroup.style.display = 'none';
+        document.getElementById('customPair').required = false;
         document.getElementById('customPair').value = '';
     }
 }
 
-function formatTimeInput(input) {
-    let value = input.value.replace(/[^0-9]/g, '');
+function showPage(page) {
+    formPage.classList.toggle('active', page === 'form');
+    listPage.classList.toggle('active', page === 'list');
+    btnForm.classList.toggle('active', page === 'form');
+    btnList.classList.toggle('active', page === 'list');
+}
+
+// Login System
+function showLoginModal() {
+    document.getElementById('loginModal').style.display = 'flex';
+    document.getElementById('loginUsername').value = '';
+    document.getElementById('loginPassword').value = '';
+    document.getElementById('loginError').style.display = 'none';
+}
+
+function closeLoginModal() {
+    document.getElementById('loginModal').style.display = 'none';
+}
+
+function attemptLogin() {
+    const username = document.getElementById('loginUsername').value;
+    const password = document.getElementById('loginPassword').value;
     
-    if (value.length >= 2) {
-        let hours = value.substring(0, 2);
-        let minutes = value.substring(2, 4);
-        
-        if (parseInt(hours) > 23) {
-            hours = '23';
-        }
-        
-        if (minutes && parseInt(minutes) > 59) {
-            minutes = '59';
-        }
-        
-        input.value = hours + (minutes ? ':' + minutes : '');
+    if (username === CREDENTIALS.username && password === CREDENTIALS.password) {
+        isLoggedIn = true;
+        localStorage.setItem('analysisAuth', 'true');
+        closeLoginModal();
+        updateUIForLogin();
+        alert('Login successful!');
     } else {
-        input.value = value;
+        document.getElementById('loginError').textContent = 'Invalid credentials';
+        document.getElementById('loginError').style.display = 'block';
     }
 }
 
-function calculateDuration() {
-    const entryHour = document.getElementById('entryHour').value;
-    const exitHour = document.getElementById('exitHour').value;
-    
-    if (entryHour && exitHour) {
-        const [entryH, entryM] = entryHour.split(':').map(Number);
-        const [exitH, exitM] = exitHour.split(':').map(Number);
-        
-        let totalMinutes = (exitH * 60 + exitM) - (entryH * 60 + entryM);
-        
-        if (totalMinutes < 0) {
-            totalMinutes += 24 * 60;
-        }
-        
-        const hours = Math.floor(totalMinutes / 60);
-        const minutes = totalMinutes % 60;
-        
-        return `${hours}h ${minutes}m`;
+function logout() {
+    if (confirm('Logout?')) {
+        isLoggedIn = false;
+        localStorage.removeItem('analysisAuth');
+        updateUIForLogin();
+        showPage('list');
     }
-    return '';
 }
 
-// FILTERS
-function populateFilterDropdowns() {
-    // Get unique months
-    const months = [...new Set(trades.map(t => t.luna))].filter(Boolean).sort();
-    const monthSelect = document.getElementById('filterMonth');
-    monthSelect.innerHTML = '<option value="">All months</option>';
-    months.forEach(month => {
-        const option = document.createElement('option');
-        option.value = month;
-        option.textContent = month;
-        monthSelect.appendChild(option);
-    });
-    
-    // Get unique pairs
-    const pairs = [...new Set(trades.map(t => t.pereche))].filter(Boolean).sort();
-    const pairSelect = document.getElementById('filterPair');
-    pairSelect.innerHTML = '<option value="">All pairs</option>';
-    pairs.forEach(pair => {
-        const option = document.createElement('option');
-        option.value = pair;
-        option.textContent = pair;
-        pairSelect.appendChild(option);
-    });
-}
-
-function applyFilters() {
-    activeFilters.month = document.getElementById('filterMonth').value;
-    activeFilters.day = document.getElementById('filterDay').value;
-    activeFilters.session = document.getElementById('filterSession').value;
-    activeFilters.pair = document.getElementById('filterPair').value;
-    activeFilters.position = document.getElementById('filterPosition').value;
-    activeFilters.status = document.getElementById('filterStatus').value;
-    
-    filteredTrades = trades.filter(trade => {
-        if (activeFilters.month && trade.luna !== activeFilters.month) return false;
-        if (activeFilters.day && trade.zi !== activeFilters.day) return false;
-        if (activeFilters.session && trade.sesiune !== activeFilters.session) return false;
-        if (activeFilters.pair && trade.pereche !== activeFilters.pair) return false;
-        if (activeFilters.position && trade.position !== activeFilters.position) return false;
-        if (activeFilters.status && trade.wl !== activeFilters.status) return false;
-        return true;
-    });
-    
-    sortFilteredTrades();
+function updateUIForLogin() {
+    btnForm.style.display = isLoggedIn ? 'inline-block' : 'none';
+    btnLogin.style.display = isLoggedIn ? 'none' : 'inline-block';
+    btnLogout.style.display = isLoggedIn ? 'inline-block' : 'none';
     updateTable();
-    updateDashboard();
 }
 
-function sortTable(column) {
-    if (sortColumn === column) {
-        sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
-    } else {
-        sortColumn = column;
-        sortDirection = 'asc';
-    }
-    
-    sortFilteredTrades();
-    updateTable();
-    updateSortIndicators();
-}
-
-function sortFilteredTrades() {
-    filteredTrades.sort((a, b) => {
-        let aVal = a[sortColumn];
-        let bVal = b[sortColumn];
-        
-        if (!aVal && !bVal) return 0;
-        if (!aVal) return 1;
-        if (!bVal) return -1;
-        
-        if (sortColumn === 'data') {
-            aVal = new Date(aVal);
-            bVal = new Date(bVal);
-        } else if (['r', 'risk', 'profit', 'entry', 'sl', 'tp', 'lotSize'].includes(sortColumn)) {
-            aVal = parseFloat(aVal) || 0;
-            bVal = parseFloat(bVal) || 0;
-        } else {
-            aVal = String(aVal).toLowerCase();
-            bVal = String(bVal).toLowerCase();
-        }
-        
-        if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
-        if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
-        return 0;
-    });
-}
-
-function updateSortIndicators() {
-    const allSortSpans = document.querySelectorAll('[id^="sort-"]');
-    allSortSpans.forEach(span => span.textContent = '');
-    
-    const currentIndicator = document.getElementById(`sort-${sortColumn}`);
-    if (currentIndicator) {
-        currentIndicator.textContent = sortDirection === 'asc' ? '▲' : '▼';
+function checkAuth() {
+    if (localStorage.getItem('analysisAuth') === 'true') {
+        isLoggedIn = true;
+        updateUIForLogin();
     }
 }
 
-function resetFilters() {
-    document.getElementById('filterMonth').value = '';
-    document.getElementById('filterDay').value = '';
-    document.getElementById('filterSession').value = '';
-    document.getElementById('filterPair').value = '';
-    document.getElementById('filterPosition').value = '';
-    document.getElementById('filterStatus').value = '';
-    
-    activeFilters = {
-        month: '',
-        day: '',
-        session: '',
-        pair: '',
-        position: '',
-        status: ''
-    };
-    
-    filteredTrades = [...trades];
-    sortFilteredTrades();
-    updateTable();
-    updateDashboard();
-}
-
-function getPipValue(pair) {
-    const pairUpper = pair.toUpperCase();
-    
-    if (pairUpper.includes('XAU') || pairUpper.includes('GOLD')) {
-        return 0.10;
-    }
-    if (pairUpper.includes('XAG') || pairUpper.includes('SILVER')) {
-        return 0.01;
-    }
-    if (pairUpper.includes('OIL') || pairUpper.includes('WTI') || pairUpper.includes('BRENT')) {
-        return 0.01;
-    }
-    if (pairUpper.includes('JPY')) {
-        return 0.01;
-    }
-    if (pairUpper.includes('US30') || pairUpper.includes('NAS100') || pairUpper.includes('SPX500') || 
-        pairUpper.includes('GER40') || pairUpper.includes('UK100')) {
-        return 1.0;
-    }
-    return 0.0001;
-}
-
-function calculatePips(entry, exit, position, pair) {
-    if (!entry || !exit) return 0;
-    
-    const entryPrice = parseFloat(entry);
-    const exitPrice = parseFloat(exit);
-    const pipValue = getPipValue(pair || '');
-    
-    let pips = 0;
-    
-    if (position === 'Long') {
-        pips = (exitPrice - entryPrice) / pipValue;
-    } else if (position === 'Short') {
-        pips = (entryPrice - exitPrice) / pipValue;
-    }
-    
-    return Math.round(pips * 10) / 10;
-}
-
-function calculateR(entry, sl, tp, position) {
-    if (!entry || !sl || !tp) return 0;
-    
-    const entryPrice = parseFloat(entry);
-    const slPrice = parseFloat(sl);
-    const tpPrice = parseFloat(tp);
-    
-    let risk = 0;
-    let reward = 0;
-    
-    if (position === 'Long') {
-        risk = Math.abs(entryPrice - slPrice);
-        reward = tpPrice - entryPrice;
-    } else if (position === 'Short') {
-        risk = Math.abs(slPrice - entryPrice);
-        reward = entryPrice - tpPrice;
-    }
-    
-    if (risk === 0) return 0;
-    
-    const rValue = reward / risk;
-    return Math.round(rValue * 100) / 100;
-}
-
-function calculateProfit(r, risk, wl) {
-    if (!risk || wl === 'Open') return 0;
-    
-    const riskAmount = parseFloat(risk);
-    const rValue = parseFloat(r) || 0;
-    
-    if (wl === 'Win') {
-        return Math.round(riskAmount * rValue * 100) / 100;
-    } else if (wl === 'Loss') {
-        return Math.round(-riskAmount * 100) / 100;
-    }
-    
-    return 0;
-}
-
-// SAVE
-saveBtn.onclick = () => {
-    if (isLoading) return;
-
-    const trade = getFormData();
-    if (!trade) return;
-
-    if (editingIndex >= 0 && trades[editingIndex]?.id) {
-        trade.id = trades[editingIndex].id;
-        updateTradeInSheet(trade);
-    } else {
-        addTradeToSheet(trade);
-    }
-};
-
-function getFormData() {
-    const required = ['luna','data','zi','pereche','sesiune','position','wl','risk','entry','sl','lotSize'];
-    for (const id of required) {
-        const value = document.getElementById(id).value;
-        if (!value || value === '') {
-            alert('Fill in all required fields obligatorii (*): Month, Date, Day, Pair, Session, Long/Short, Status, Risk, Entry, SL, Lot Size');
-            return null;
-        }
-    }
-    
-    const lotSizeValue = parseFloat(document.getElementById('lotSize').value);
-    if (lotSizeValue <= 0) {
-        alert('Lot Size must be a positive number (ex: 0.01, 0.1, 1.0)');
-        return null;
-    }
-
-    const entry = document.getElementById('entry').value;
-    const sl = document.getElementById('sl').value;
-    const tp = document.getElementById('tp').value;
-    const position = document.getElementById('position').value;
-    const wl = document.getElementById('wl').value;
-    const risk = document.getElementById('risk').value;
-    const perecheSelect = document.getElementById('pereche').value;
-    const pereche = perecheSelect === 'Alta' ? document.getElementById('customPair').value : perecheSelect;
-    const lotSize = document.getElementById('lotSize').value;
-    const entryHour = document.getElementById('entryHour').value;
-    const exitHour = document.getElementById('exitHour').value;
-    
-    const duration = calculateDuration();
-    
-    const partialCloses = [];
-    let totalPartialProfit = 0;
-    
-    ['pc1', 'pc2', 'pc3'].forEach(prefix => {
-        const lot = document.getElementById(`${prefix}_lot`).value;
-        const price = document.getElementById(`${prefix}_price`).value;
-        const profit = document.getElementById(`${prefix}_profit`).value;
-        
-        if (lot && price) {
-            partialCloses.push({
-                lot: lot,
-                price: price,
-                profit: profit
-            });
-            totalPartialProfit += parseFloat(profit) || 0;
-        }
-    });
-    
-    const r = tp ? calculateR(entry, sl, tp, position) : 0;
-    
-    const manualProfit = document.getElementById('profitOverride').value;
-    let finalProfit = 0;
-    
-    if (manualProfit && manualProfit !== '') {
-        finalProfit = parseFloat(manualProfit);
-    } else {
-        if (wl === 'Win') {
-            const lotRemaining = parseFloat(lotSize) - partialCloses.reduce((sum, pc) => sum + parseFloat(pc.lot), 0);
-            const lotRatio = lotRemaining / parseFloat(lotSize);
-            const remainingProfit = parseFloat(risk) * r * lotRatio;
-            finalProfit = totalPartialProfit + remainingProfit;
-        } else if (wl === 'Loss') {
-            const lotRemaining = parseFloat(lotSize) - partialCloses.reduce((sum, pc) => sum + parseFloat(pc.lot), 0);
-            const lotRatio = lotRemaining / parseFloat(lotSize);
-            finalProfit = totalPartialProfit - (parseFloat(risk) * lotRatio);
-        } else if (wl === 'Break Even') {
-            finalProfit = totalPartialProfit;
-        } else if (wl === 'Open') {
-            finalProfit = totalPartialProfit;
-        }
-    }
-
-    return {
-        luna: document.getElementById('luna').value,
-        data: document.getElementById('data').value,
-        zi: document.getElementById('zi').value,
-        pereche: pereche,
-        sesiune: document.getElementById('sesiune').value,
-        position: position,
-        wl: wl,
-        lotSize: lotSize,
-        r: r,
-        risk: risk,
-        profit: finalProfit.toFixed(2),
-        partialCloses: JSON.stringify(partialCloses),
-        tv: document.getElementById('tv').value,
-        entry: entry,
-        entryHour: entryHour,
-        exitHour: exitHour,
-        duration: duration,
-        sl: sl,
-        tp: tp
-    };
-}
-
-// LOAD
-function loadTradesFromSheet() {
-    if (isLoading) return;
-    isLoading = true;
-
+// Load Analyses
+function loadAnalyses() {
     showLoading();
-
-    fetch(GOOGLE_SCRIPT_URL + `?action=get&sheet=${currentSheet}`)
+    fetch(GOOGLE_SCRIPT_URL + '?action=get&sheet=Sheet1')
         .then(r => r.json())
         .then(res => {
-            isLoading = false;
             hideLoading();
             if (res.result === 'success') {
-                if (currentSheet === 'Backtest') {
-                    backtestTrades = res.data || [];
-                    filteredBacktestTrades = [...backtestTrades];
-                } else {
-                    trades = res.data || [];
-                    filteredTrades = [...trades];
-                }
+                analyses = res.data || [];
+                filteredAnalyses = [...analyses];
                 populateFilterDropdowns();
-                sortFilteredTrades();
-                updateSortIndicators();
                 updateTable();
-                updateDashboard();
             } else {
                 throw new Error(res.message);
             }
         })
         .catch(err => {
             console.error(err);
-            isLoading = false;
             hideLoading();
-            tradesBody.innerHTML =
-                '<tr><td colspan="20" class="no-data">Loading error</td></tr>';
+            analysisBody.innerHTML = '<tr><td colspan="14" class="no-data">Loading error</td></tr>';
         });
 }
 
-// DASHBOARD
-function updateDashboard() {
-    const closedTrades = filteredTrades.filter(t => t.wl === 'Win' || t.wl === 'Loss' || t.wl === 'Break Even');
-    const wins = filteredTrades.filter(t => t.wl === 'Win');
-    const losses = filteredTrades.filter(t => t.wl === 'Loss');
-    const breakEven = filteredTrades.filter(t => t.wl === 'Break Even');
-    const openTrades = filteredTrades.filter(t => t.wl === 'Open');
+// Filters
+function populateFilterDropdowns() {
+    const months = [...new Set(analyses.map(a => a.month))].filter(Boolean).sort();
+    const monthSelect = document.getElementById('filterMonth');
+    monthSelect.innerHTML = '<option value="">All months</option>';
+    months.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m;
+        opt.textContent = m;
+        monthSelect.appendChild(opt);
+    });
     
-    const totalProfit = closedTrades.reduce((sum, t) => {
-        const profit = parseFloat(t.profit) || 0;
-        return sum + profit;
-    }, 0);
+    const pairs = [...new Set(analyses.map(a => a.pair))].filter(Boolean).sort();
+    const pairSelect = document.getElementById('filterPair');
+    pairSelect.innerHTML = '<option value="">All pairs</option>';
+    pairs.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p;
+        opt.textContent = p;
+        pairSelect.appendChild(opt);
+    });
     
-    const totalWinLoss = wins.length + losses.length;
-    const winRate = totalWinLoss > 0 
-        ? ((wins.length / totalWinLoss) * 100).toFixed(1)
-        : 0;
-    
-    const initialBalance = FIXED_INITIAL_BALANCE;
-    
-    document.getElementById('statInitialBalance').textContent = `$${initialBalance.toFixed(2)}`;
-    
-    const currentBalance = initialBalance + totalProfit;
-    
-    const percentChange = initialBalance > 0 
-        ? (((currentBalance - initialBalance) / initialBalance) * 100).toFixed(2)
-        : 0;
-    
-    const totalR = closedTrades.reduce((sum, t) => {
-        const r = parseFloat(t.r) || 0;
-        const wl = t.wl;
-        return sum + (wl === 'Loss' ? -Math.abs(r) : r);
-    }, 0);
-    const avgR = closedTrades.length > 0 ? (totalR / closedTrades.length).toFixed(2) : 0;
-    
-    const expectancy = closedTrades.length > 0 
-        ? (totalProfit / closedTrades.length).toFixed(2)
-        : 0;
-    
-    let frequency = 0;
-    if (closedTrades.length > 0) {
-        const dates = closedTrades.map(t => new Date(t.data)).filter(d => !isNaN(d));
-        if (dates.length > 1) {
-            const minDate = new Date(Math.min(...dates));
-            const maxDate = new Date(Math.max(...dates));
-            const daysDiff = Math.ceil((maxDate - minDate) / (1000 * 60 * 60 * 24)) + 1;
-            const weeks = daysDiff / 7;
-            frequency = weeks > 0 ? (closedTrades.length / weeks).toFixed(1) : closedTrades.length;
-        } else {
-            frequency = closedTrades.length;
-        }
-    }
-    
-    document.getElementById('statProfitValue').textContent = `$${totalProfit.toFixed(2)}`;
-    document.getElementById('statCurrentBalance').textContent = `$${currentBalance.toFixed(2)}`;
-    document.getElementById('statTotalTrades').textContent = closedTrades.length;
-    document.getElementById('statWinRate').textContent = `${winRate}%`;
-    document.getElementById('statWins').textContent = wins.length;
-    document.getElementById('statLosses').textContent = losses.length;
-    document.getElementById('statBreakEven').textContent = breakEven.length;
-    
-    document.getElementById('statAvgR').textContent = avgR;
-    document.getElementById('statExpectancy').textContent = `$${expectancy}`;
-    document.getElementById('statFrequency').textContent = frequency;
-    
-    const profitCard = document.getElementById('statProfit');
-    profitCard.classList.remove('positive', 'negative');
-    if (totalProfit > 0) {
-        profitCard.classList.add('positive');
-    } else if (totalProfit < 0) {
-        profitCard.classList.add('negative');
-    }
-    
-    const currentBalanceCard = document.getElementById('statCurrentBalanceCard');
-    const currentBalanceSubtext = currentBalanceCard.querySelector('.stat-subtext');
-    
-    currentBalanceCard.classList.remove('positive', 'negative');
-    
-    if (currentBalance > initialBalance) {
-        currentBalanceCard.classList.add('positive');
-        currentBalanceSubtext.textContent = `↗ +${percentChange}% from start`;
-    } else if (currentBalance < initialBalance) {
-        currentBalanceCard.classList.add('negative');
-        currentBalanceSubtext.textContent = `↘ ${percentChange}% from start`;
-    } else {
-        currentBalanceSubtext.textContent = `Current capital (±0%)`;
-    }
+    // Populate pair filter buttons
+    populatePairButtons(pairs);
 }
 
-// TABLE
+let activePairFilter = '';
+
+function populatePairButtons(pairs) {
+    const container = document.getElementById('pairButtonsContainer');
+    container.innerHTML = '';
+    
+    // Add "All" button
+    const allBtn = document.createElement('button');
+    allBtn.className = 'pair-filter-btn active';
+    allBtn.textContent = '🌐 All Pairs';
+    allBtn.onclick = () => filterByPair('');
+    container.appendChild(allBtn);
+    
+    // Add button for each pair
+    pairs.forEach(pair => {
+        const btn = document.createElement('button');
+        btn.className = 'pair-filter-btn';
+        btn.textContent = pair;
+        btn.onclick = () => filterByPair(pair);
+        container.appendChild(btn);
+    });
+    
+    // Add drag scroll functionality
+    setupDragScroll(container);
+}
+
+function filterByPair(pair) {
+    activePairFilter = pair;
+    
+    // Update button states
+    const buttons = document.querySelectorAll('.pair-filter-btn');
+    buttons.forEach(btn => {
+        if ((pair === '' && btn.textContent === '🌐 All Pairs') || btn.textContent === pair) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+    
+    // Update dropdown to match
+    document.getElementById('filterPair').value = pair;
+    
+    // Apply filters
+    applyFilters();
+}
+
+function setupDragScroll(container) {
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    
+    container.addEventListener('mousedown', (e) => {
+        isDown = true;
+        container.classList.add('grabbing');
+        startX = e.pageX - container.offsetLeft;
+        scrollLeft = container.scrollLeft;
+    });
+    
+    container.addEventListener('mouseleave', () => {
+        isDown = false;
+        container.classList.remove('grabbing');
+    });
+    
+    container.addEventListener('mouseup', () => {
+        isDown = false;
+        container.classList.remove('grabbing');
+    });
+    
+    container.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - container.offsetLeft;
+        const walk = (x - startX) * 2;
+        container.scrollLeft = scrollLeft - walk;
+    });
+    
+    // Touch support for mobile
+    container.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].pageX - container.offsetLeft;
+        scrollLeft = container.scrollLeft;
+    });
+    
+    container.addEventListener('touchmove', (e) => {
+        const x = e.touches[0].pageX - container.offsetLeft;
+        const walk = (x - startX) * 2;
+        container.scrollLeft = scrollLeft - walk;
+    });
+}
+
+function applyFilters() {
+    const month = document.getElementById('filterMonth').value;
+    const day = document.getElementById('filterDay').value;
+    const dateFrom = document.getElementById('filterDateFrom').value;
+    const dateTo = document.getElementById('filterDateTo').value;
+    const year = document.getElementById('filterYear').value;
+    const pair = document.getElementById('filterPair').value;
+    
+    filteredAnalyses = analyses.filter(a => {
+        if (month && a.month !== month) return false;
+        if (day && a.day !== day) return false;
+        if (year && a.year !== year) return false;
+        if (pair && a.pair !== pair) return false;
+        
+        // Date range filter
+        if (dateFrom && a.date) {
+            const analysisDate = new Date(a.date);
+            const fromDate = new Date(dateFrom);
+            if (analysisDate < fromDate) return false;
+        }
+        if (dateTo && a.date) {
+            const analysisDate = new Date(a.date);
+            const toDate = new Date(dateTo);
+            if (analysisDate > toDate) return false;
+        }
+        
+        return true;
+    });
+    
+    updateTable();
+}
+
+function resetFilters() {
+    document.getElementById('filterMonth').value = '';
+    document.getElementById('filterDay').value = '';
+    document.getElementById('filterDateFrom').value = '';
+    document.getElementById('filterDateTo').value = '';
+    document.getElementById('filterYear').value = '';
+    document.getElementById('filterPair').value = '';
+    filteredAnalyses = [...analyses];
+    updateTable();
+}
+
+// Table
 function updateTable() {
-    if (!filteredTrades.length) {
-        tradesBody.innerHTML =
-            '<tr><td colspan="20" class="no-data">No trades</td></tr>';
+    if (!filteredAnalyses.length) {
+        analysisBody.innerHTML = '<tr><td colspan="15" class="no-data">No analyses yet</td></tr>';
         return;
     }
-
-    tradesBody.innerHTML = '';
-
-    filteredTrades.forEach((t, i) => {
+    
+    analysisBody.innerHTML = '';
+    
+    filteredAnalyses.forEach((a, i) => {
         const tr = document.createElement('tr');
         
-        let partialClosesDisplay = '-';
-        if (t.partialCloses) {
-            try {
-                const pcs = JSON.parse(t.partialCloses);
-                if (pcs.length > 0) {
-                    partialClosesDisplay = pcs.map(pc => 
-                        `${pc.lot}L @ ${pc.price} ($${parseFloat(pc.profit).toFixed(2)})`
-                    ).join('<br>');
-                }
-            } catch (e) {
-                partialClosesDisplay = '-';
-            }
-        }
-        
-        let screenshotDisplay = '-';
-        if (t.tv && typeof t.tv === 'string' && t.tv.trim() !== '') {
-            screenshotDisplay = `<a href="${t.tv}" target="_blank" rel="noopener noreferrer" style="color: #4d9fff; text-decoration: none;">📸 View</a>`;
-        }
-        
-        const formatDate = (dateStr) => {
-            if (!dateStr) return '-';
-            const date = new Date(dateStr);
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const year = date.getFullYear();
-            return `${day}/${month}/${year}`;
+        const formatPhoto = (url) => {
+            if (!url) return '-';
+            return `<a href="${url}" target="_blank" style="color: #ff9500; text-decoration: none;">📸 View</a>`;
         };
         
-        const formatTime = (timeStr) => {
-            if (!timeStr) return '-';
-            
-            if (timeStr.includes('T')) {
-                const date = new Date(timeStr);
-                const hours = String(date.getHours()).padStart(2, '0');
-                const minutes = String(date.getMinutes()).padStart(2, '0');
-                return `${hours}:${minutes}`;
-            }
-            
-            if (timeStr.includes(':') && timeStr.length <= 5) {
-                return timeStr;
-            }
-            
-            return timeStr;
+        const truncate = (text) => {
+            if (!text) return '-';
+            return text.length > 50 ? text.substring(0, 47) + '...' : text;
         };
         
-        const cells = [
-            { value: t.luna, class: '' },
-            { value: formatDate(t.data), class: '' },
-            { value: t.zi, class: '' },
-            { value: t.pereche, class: '' },
-            { value: t.sesiune, class: '' },
-            { value: t.position, class: t.position === 'Long' ? 'long' : 'short' },
-            { value: t.wl || '-', class: t.wl === 'Win' ? 'win' : t.wl === 'Loss' ? 'loss' : t.wl === 'Break Even' ? 'break-even' : t.wl === 'Open' ? 'open' : '' },
-            { value: t.lotSize || '-', class: '' },
-            { value: t.r || '-', class: '' },
-            { value: t.risk, class: '' },
-            { value: t.profit || '-', class: '' },
-            { value: partialClosesDisplay, class: '', html: true },
-            { value: t.entry || '-', class: '' },
-            { value: formatTime(t.entryHour), class: '' },
-            { value: formatTime(t.exitHour), class: '' },
-            { value: t.duration || '-', class: '' },
-            { value: t.sl || '-', class: '' },
-            { value: t.tp || '-', class: '' },
-            { value: screenshotDisplay, class: '', html: true }
-        ];
-
-        cells.forEach(cell => {
-            const td = document.createElement('td');
-            if (cell.html) {
-                td.innerHTML = cell.value;
-            } else {
-                td.textContent = cell.value;
-            }
-            if (cell.class) td.className = cell.class;
-            tr.appendChild(td);
-        });
-
-        const actions = document.createElement('td');
-        if (isLoggedIn) {
-            actions.innerHTML = `
-                <button class="delete-btn">Delete</button>
-                <button class="edit-btn">Edit</button>
-            `;
-            const originalIndex = trades.findIndex(trade => trade.id === t.id);
-            actions.children[0].onclick = () => deleteTrade(originalIndex);
-            actions.children[1].onclick = () => editTrade(originalIndex);
-        } else {
-            actions.innerHTML = `<span style="color: rgba(255,255,255,0.5);">-</span>`;
-        }
-        tr.appendChild(actions);
-
-        tradesBody.appendChild(tr);
+        tr.innerHTML = `
+            <td>${a.month}</td>
+            <td>${a.day}</td>
+            <td>${a.date ? new Date(a.date).toLocaleDateString('ro-RO') : '-'}</td>
+            <td>${a.year}</td>
+            <td>${a.pair}</td>
+            <td title="${a.weeklyAnalysis || ''}">${truncate(a.weeklyAnalysis)}</td>
+            <td>${formatPhoto(a.weeklyPhoto)}</td>
+            <td title="${a.dailyAnalysis || ''}">${truncate(a.dailyAnalysis)}</td>
+            <td>${formatPhoto(a.dailyPhoto)}</td>
+            <td title="${a.fourHAnalysis || ''}">${truncate(a.fourHAnalysis)}</td>
+            <td>${formatPhoto(a.fourHPhoto)}</td>
+            <td title="${a.oneHAnalysis || ''}">${truncate(a.oneHAnalysis)}</td>
+            <td>${formatPhoto(a.oneHPhoto)}</td>
+            <td>
+                <button onclick="viewAnalysis(${analyses.indexOf(a)})" style="background: linear-gradient(135deg, #4d9fff, #3d7fff); color: #fff; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 0.8em; font-weight: 600; transition: all 0.3s ease; margin-right: 5px;">
+                    👁️ View
+                </button>
+                <button onclick="shareToTradingView(${analyses.indexOf(a)}, event)" style="background: linear-gradient(135deg, #2962FF, #1E53E5); color: #fff; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 0.8em; font-weight: 600; transition: all 0.3s ease; margin-right: 5px;">
+                    📈 TV
+                </button>
+                <button onclick="shareToDiscord(${analyses.indexOf(a)}, event)" style="background: linear-gradient(135deg, #9c27b0, #7b1fa2); color: #fff; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 0.8em; font-weight: 600; transition: all 0.3s ease;">
+                    📋 Discord
+                </button>
+            </td>
+            <td>
+                ${isLoggedIn ? `
+                    <button class="delete-btn" onclick="deleteAnalysis(${analyses.indexOf(a)})">Delete</button>
+                    <button class="edit-btn" onclick="editAnalysis(${analyses.indexOf(a)})">Edit</button>
+                ` : '-'}
+            </td>
+        `;
+        
+        analysisBody.appendChild(tr);
     });
 }
 
-// EDIT / DELETE
-function editTrade(i) {
-    editingIndex = i;
-    const trade = trades[i];
+// View Analysis Modal
+let currentViewIndex = -1;
+
+function viewAnalysis(index) {
+    currentViewIndex = index;
+    const a = analyses[index];
     
-    ['pc1', 'pc2', 'pc3'].forEach(prefix => {
-        document.getElementById(`${prefix}_lot`).value = '';
-        document.getElementById(`${prefix}_price`).value = '';
-        document.getElementById(`${prefix}_profit`).value = '';
+    // Format date
+    const dateStr = a.date ? new Date(a.date).toLocaleDateString('ro-RO', { day: '2-digit', month: '2-digit', year: 'numeric' }) : `${a.day}, ${a.month} ${a.year}`;
+    
+    // Set title
+    document.getElementById('viewModalTitle').textContent = `📊 ${dateStr} - ${a.pair}`;
+    
+    // Build content
+    let content = '';
+    
+    // Weekly
+    if (a.weeklyAnalysis || a.weeklyPhoto) {
+        content += `
+            <div style="background: rgba(255, 149, 0, 0.1); border-left: 4px solid #ff9500; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                <h3 style="color: #ff9500; margin-bottom: 15px; font-size: 1.4em; display: flex; align-items: center; gap: 10px;">
+                    <span>📅</span> Weekly Timeframe
+                </h3>
+                ${a.weeklyAnalysis ? `<p style="margin-bottom: 15px; white-space: pre-wrap;">${a.weeklyAnalysis}</p>` : ''}
+                ${a.weeklyPhoto ? `
+                    <div style="margin-top: 15px;">
+                        <img src="${a.weeklyPhoto}" alt="Weekly Chart" style="width: 100%; max-width: 100%; border-radius: 10px; border: 2px solid #ff9500; cursor: pointer;" onclick="window.open('${a.weeklyPhoto}', '_blank')" title="Click to open in new tab">
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }
+    
+    // Daily
+    if (a.dailyAnalysis || a.dailyPhoto) {
+        content += `
+            <div style="background: rgba(77, 159, 255, 0.1); border-left: 4px solid #4d9fff; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                <h3 style="color: #4d9fff; margin-bottom: 15px; font-size: 1.4em; display: flex; align-items: center; gap: 10px;">
+                    <span>📊</span> Daily Timeframe
+                </h3>
+                ${a.dailyAnalysis ? `<p style="margin-bottom: 15px; white-space: pre-wrap;">${a.dailyAnalysis}</p>` : ''}
+                ${a.dailyPhoto ? `
+                    <div style="margin-top: 15px;">
+                        <img src="${a.dailyPhoto}" alt="Daily Chart" style="width: 100%; max-width: 100%; border-radius: 10px; border: 2px solid #4d9fff; cursor: pointer;" onclick="window.open('${a.dailyPhoto}', '_blank')" title="Click to open in new tab">
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }
+    
+    // 4H
+    if (a.fourHAnalysis || a.fourHPhoto) {
+        content += `
+            <div style="background: rgba(156, 39, 176, 0.1); border-left: 4px solid #9c27b0; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                <h3 style="color: #9c27b0; margin-bottom: 15px; font-size: 1.4em; display: flex; align-items: center; gap: 10px;">
+                    <span>⏱️</span> 4H Timeframe
+                </h3>
+                ${a.fourHAnalysis ? `<p style="margin-bottom: 15px; white-space: pre-wrap;">${a.fourHAnalysis}</p>` : ''}
+                ${a.fourHPhoto ? `
+                    <div style="margin-top: 15px;">
+                        <img src="${a.fourHPhoto}" alt="4H Chart" style="width: 100%; max-width: 100%; border-radius: 10px; border: 2px solid #9c27b0; cursor: pointer;" onclick="window.open('${a.fourHPhoto}', '_blank')" title="Click to open in new tab">
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }
+    
+    // 1H
+    if (a.oneHAnalysis || a.oneHPhoto) {
+        content += `
+            <div style="background: rgba(0, 204, 136, 0.1); border-left: 4px solid #00cc88; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                <h3 style="color: #00cc88; margin-bottom: 15px; font-size: 1.4em; display: flex; align-items: center; gap: 10px;">
+                    <span>⚡</span> 1H Timeframe
+                </h3>
+                ${a.oneHAnalysis ? `<p style="margin-bottom: 15px; white-space: pre-wrap;">${a.oneHAnalysis}</p>` : ''}
+                ${a.oneHPhoto ? `
+                    <div style="margin-top: 15px;">
+                        <img src="${a.oneHPhoto}" alt="1H Chart" style="width: 100%; max-width: 100%; border-radius: 10px; border: 2px solid #00cc88; cursor: pointer;" onclick="window.open('${a.oneHPhoto}', '_blank')" title="Click to open in new tab">
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }
+    
+    if (!content) {
+        content = '<p style="text-align: center; color: #888;">No analysis data available</p>';
+    }
+    
+    document.getElementById('viewModalContent').innerHTML = content;
+    document.getElementById('viewModal').style.display = 'flex';
+}
+
+function closeViewModal() {
+    document.getElementById('viewModal').style.display = 'none';
+    currentViewIndex = -1;
+}
+
+function shareFromModal() {
+    if (currentViewIndex >= 0) {
+        const a = analyses[currentViewIndex];
+        const dateStr = a.date ? new Date(a.date).toLocaleDateString('ro-RO', { day: '2-digit', month: '2-digit', year: 'numeric' }) : `${a.day}, ${a.month} ${a.year}`;
+        let template = `**📊 ${dateStr} - ${a.pair} Analysis**\n\n`;
+        
+        if (a.weeklyAnalysis || a.weeklyPhoto) {
+            template += `**📅 WEEKLY TIMEFRAME**\n`;
+            if (a.weeklyAnalysis) template += `${a.weeklyAnalysis}\n`;
+            if (a.weeklyPhoto) template += `📸 Chart: ${a.weeklyPhoto}\n`;
+            template += `\n`;
+        }
+        
+        if (a.dailyAnalysis || a.dailyPhoto) {
+            template += `**📊 DAILY TIMEFRAME**\n`;
+            if (a.dailyAnalysis) template += `${a.dailyAnalysis}\n`;
+            if (a.dailyPhoto) template += `📸 Chart: ${a.dailyPhoto}\n`;
+            template += `\n`;
+        }
+        
+        if (a.fourHAnalysis || a.fourHPhoto) {
+            template += `**⏱️ 4H TIMEFRAME**\n`;
+            if (a.fourHAnalysis) template += `${a.fourHAnalysis}\n`;
+            if (a.fourHPhoto) template += `📸 Chart: ${a.fourHPhoto}\n`;
+            template += `\n`;
+        }
+        
+        if (a.oneHAnalysis || a.oneHPhoto) {
+            template += `**⚡ 1H TIMEFRAME**\n`;
+            if (a.oneHAnalysis) template += `${a.oneHAnalysis}\n`;
+            if (a.oneHPhoto) template += `📸 Chart: ${a.oneHPhoto}\n`;
+        }
+        
+        navigator.clipboard.writeText(template).then(() => {
+            alert('✅ Copied to clipboard! Paste in Discord.');
+        }).catch(err => {
+            alert('Copy failed! Please try again.');
+        });
+    }
+}
+
+function copyForTradingViewFromModal() {
+    if (currentViewIndex >= 0) {
+        const a = analyses[currentViewIndex];
+        const dateStr = a.date ? new Date(a.date).toLocaleDateString('ro-RO', { day: '2-digit', month: '2-digit', year: 'numeric' }) : `${a.day}, ${a.month} ${a.year}`;
+        
+        let template = `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+        template += `📊 ${a.pair} ANALYSIS - ${dateStr}\n`;
+        template += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+        
+        if (a.weeklyAnalysis || a.weeklyPhoto) {
+            template += `📅 WEEKLY TIMEFRAME\n`;
+            template += `${'─'.repeat(50)}\n`;
+            if (a.weeklyAnalysis) template += `${a.weeklyAnalysis}\n`;
+            if (a.weeklyPhoto) template += `\n📸 Chart: ${a.weeklyPhoto}\n`;
+            template += `\n`;
+        }
+        
+        if (a.dailyAnalysis || a.dailyPhoto) {
+            template += `📊 DAILY TIMEFRAME\n`;
+            template += `${'─'.repeat(50)}\n`;
+            if (a.dailyAnalysis) template += `${a.dailyAnalysis}\n`;
+            if (a.dailyPhoto) template += `\n📸 Chart: ${a.dailyPhoto}\n`;
+            template += `\n`;
+        }
+        
+        if (a.fourHAnalysis || a.fourHPhoto) {
+            template += `⏱️ 4H TIMEFRAME\n`;
+            template += `${'─'.repeat(50)}\n`;
+            if (a.fourHAnalysis) template += `${a.fourHAnalysis}\n`;
+            if (a.fourHPhoto) template += `\n📸 Chart: ${a.fourHPhoto}\n`;
+            template += `\n`;
+        }
+        
+        if (a.oneHAnalysis || a.oneHPhoto) {
+            template += `⚡ 1H TIMEFRAME\n`;
+            template += `${'─'.repeat(50)}\n`;
+            if (a.oneHAnalysis) template += `${a.oneHAnalysis}\n`;
+            if (a.oneHPhoto) template += `\n📸 Chart: ${a.oneHPhoto}\n`;
+            template += `\n`;
+        }
+        
+        template += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+        template += `💡 Analysis by @YourUsername | ${dateStr}\n`;
+        template += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+        
+        navigator.clipboard.writeText(template).then(() => {
+            alert('✅ Copied to clipboard! Paste in TradingView comments.');
+        }).catch(err => {
+            alert('Copy failed! Please try again.');
+        });
+    }
+}
+
+// Share to Discord
+function shareToDiscord(index, event) {
+    const a = analyses[index];
+    
+    // Format date
+    const dateStr = a.date ? new Date(a.date).toLocaleDateString('ro-RO', { day: '2-digit', month: '2-digit', year: 'numeric' }) : `${a.day}, ${a.month} ${a.year}`;
+    
+    // Build Discord-formatted template
+    let template = `**📊 ${dateStr} - ${a.pair} Analysis**\n\n`;
+    
+    // Weekly
+    if (a.weeklyAnalysis || a.weeklyPhoto) {
+        template += `**📅 WEEKLY TIMEFRAME**\n`;
+        if (a.weeklyAnalysis) {
+            template += `${a.weeklyAnalysis}\n`;
+        }
+        if (a.weeklyPhoto) {
+            template += `📸 Chart: ${a.weeklyPhoto}\n`;
+        }
+        template += `\n`;
+    }
+    
+    // Daily
+    if (a.dailyAnalysis || a.dailyPhoto) {
+        template += `**📊 DAILY TIMEFRAME**\n`;
+        if (a.dailyAnalysis) {
+            template += `${a.dailyAnalysis}\n`;
+        }
+        if (a.dailyPhoto) {
+            template += `📸 Chart: ${a.dailyPhoto}\n`;
+        }
+        template += `\n`;
+    }
+    
+    // 4H
+    if (a.fourHAnalysis || a.fourHPhoto) {
+        template += `**⏱️ 4H TIMEFRAME**\n`;
+        if (a.fourHAnalysis) {
+            template += `${a.fourHAnalysis}\n`;
+        }
+        if (a.fourHPhoto) {
+            template += `📸 Chart: ${a.fourHPhoto}\n`;
+        }
+        template += `\n`;
+    }
+    
+    // 1H
+    if (a.oneHAnalysis || a.oneHPhoto) {
+        template += `**⚡ 1H TIMEFRAME**\n`;
+        if (a.oneHAnalysis) {
+            template += `${a.oneHAnalysis}\n`;
+        }
+        if (a.oneHPhoto) {
+            template += `📸 Chart: ${a.oneHPhoto}\n`;
+        }
+    }
+    
+    // Copy to clipboard
+    navigator.clipboard.writeText(template).then(() => {
+        // Show success message
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = '✅ Copied!';
+        btn.style.background = 'linear-gradient(135deg, #00cc88, #00aa72)';
+        
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = 'linear-gradient(135deg, #9c27b0, #7b1fa2)';
+        }, 2000);
+    }).catch(err => {
+        alert('Copy failed! Please try again.');
+        console.error(err);
     });
+}
+
+// Share to TradingView
+function shareToTradingView(index, event) {
+    const a = analyses[index];
     
-    const convertToTimeFormat = (timeStr) => {
-        if (!timeStr) return '';
-        
-        if (timeStr.includes('T')) {
-            const date = new Date(timeStr);
-            const hours = String(date.getHours()).padStart(2, '0');
-            const minutes = String(date.getMinutes()).padStart(2, '0');
-            return `${hours}:${minutes}`;
+    // Format date
+    const dateStr = a.date ? new Date(a.date).toLocaleDateString('ro-RO', { day: '2-digit', month: '2-digit', year: 'numeric' }) : `${a.day}, ${a.month} ${a.year}`;
+    
+    // Build TradingView-formatted template
+    let template = `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+    template += `📊 ${a.pair} ANALYSIS - ${dateStr}\n`;
+    template += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    
+    // Weekly
+    if (a.weeklyAnalysis || a.weeklyPhoto) {
+        template += `📅 WEEKLY TIMEFRAME\n`;
+        template += `${'─'.repeat(50)}\n`;
+        if (a.weeklyAnalysis) {
+            template += `${a.weeklyAnalysis}\n`;
         }
-        
-        return timeStr;
-    };
-    
-    const convertToDateFormat = (dateStr) => {
-        if (!dateStr) return '';
-        
-        if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
-            return dateStr;
+        if (a.weeklyPhoto) {
+            template += `\n📸 Chart: ${a.weeklyPhoto}\n`;
         }
-        
-        const date = new Date(dateStr);
-        if (!isNaN(date.getTime())) {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
+        template += `\n`;
+    }
+    
+    // Daily
+    if (a.dailyAnalysis || a.dailyPhoto) {
+        template += `📊 DAILY TIMEFRAME\n`;
+        template += `${'─'.repeat(50)}\n`;
+        if (a.dailyAnalysis) {
+            template += `${a.dailyAnalysis}\n`;
         }
+        if (a.dailyPhoto) {
+            template += `\n📸 Chart: ${a.dailyPhoto}\n`;
+        }
+        template += `\n`;
+    }
+    
+    // 4H
+    if (a.fourHAnalysis || a.fourHPhoto) {
+        template += `⏱️ 4H TIMEFRAME\n`;
+        template += `${'─'.repeat(50)}\n`;
+        if (a.fourHAnalysis) {
+            template += `${a.fourHAnalysis}\n`;
+        }
+        if (a.fourHPhoto) {
+            template += `\n📸 Chart: ${a.fourHPhoto}\n`;
+        }
+        template += `\n`;
+    }
+    
+    // 1H
+    if (a.oneHAnalysis || a.oneHPhoto) {
+        template += `⚡ 1H TIMEFRAME\n`;
+        template += `${'─'.repeat(50)}\n`;
+        if (a.oneHAnalysis) {
+            template += `${a.oneHAnalysis}\n`;
+        }
+        if (a.oneHPhoto) {
+            template += `\n📸 Chart: ${a.oneHPhoto}\n`;
+        }
+        template += `\n`;
+    }
+    
+    template += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+    template += `💡 Analysis by @YourUsername | ${dateStr}\n`;
+    template += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+    
+    // Copy to clipboard
+    navigator.clipboard.writeText(template).then(() => {
+        // Show success message
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = '✅ Copied!';
+        btn.style.background = 'linear-gradient(135deg, #00cc88, #00aa72)';
         
-        return dateStr;
-    };
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = 'linear-gradient(135deg, #2962FF, #1E53E5)';
+        }, 2000);
+    }).catch(err => {
+        alert('Copy failed! Please try again.');
+        console.error(err);
+    });
+}
+
+// Save
+saveBtn.onclick = () => {
+    const analysis = getFormData();
+    if (!analysis) return;
     
-    document.getElementById('luna').value = trade.luna || '';
-    document.getElementById('data').value = convertToDateFormat(trade.data) || '';
-    document.getElementById('zi').value = trade.zi || '';
-    
-    const pereche = trade.pereche || '';
-    const predefinedPairs = ['EUR/USD', 'GBP/USD', 'XAU/USD', 'USD/JPY', 'US100', 'GER40'];
-    if (predefinedPairs.includes(pereche)) {
-        document.getElementById('pereche').value = pereche;
-        document.getElementById('customPairGroup').style.display = 'none';
-    } else if (pereche) {
-        document.getElementById('pereche').value = 'Alta';
-        document.getElementById('customPair').value = pereche;
-        document.getElementById('customPairGroup').style.display = 'block';
+    if (editingIndex >= 0 && analyses[editingIndex]?.id) {
+        analysis.id = analyses[editingIndex].id;
+        updateAnalysis(analysis);
     } else {
-        document.getElementById('pereche').value = '';
-        document.getElementById('customPairGroup').style.display = 'none';
+        addAnalysis(analysis);
     }
-    
-    document.getElementById('sesiune').value = trade.sesiune || '';
-    document.getElementById('position').value = trade.position || '';
-    document.getElementById('wl').value = trade.wl || '';
-    document.getElementById('risk').value = trade.risk || '';
-    document.getElementById('lotSize').value = trade.lotSize || '';
-    document.getElementById('tv').value = trade.tv || '';
-    document.getElementById('entry').value = trade.entry || '';
-    document.getElementById('entryHour').value = convertToTimeFormat(trade.entryHour) || '';
-    document.getElementById('exitHour').value = convertToTimeFormat(trade.exitHour) || '';
-    document.getElementById('sl').value = trade.sl || '';
-    document.getElementById('tp').value = trade.tp || '';
-    document.getElementById('profitOverride').value = '';
-    
-    if (trade.partialCloses) {
-        try {
-            const pcs = JSON.parse(trade.partialCloses);
-            pcs.forEach((pc, idx) => {
-                const prefix = `pc${idx + 1}`;
-                if (document.getElementById(`${prefix}_lot`)) {
-                    document.getElementById(`${prefix}_lot`).value = pc.lot || '';
-                    document.getElementById(`${prefix}_price`).value = pc.price || '';
-                    document.getElementById(`${prefix}_profit`).value = pc.profit || '';
-                }
-            });
-        } catch (e) {
-            console.error('Error parsing partial closes:', e);
+};
+
+function getFormData() {
+    const required = ['month', 'day', 'date', 'year', 'pair'];
+    for (const id of required) {
+        if (!document.getElementById(id).value) {
+            alert('Please fill Month, Day, Date, Year, and Pair');
+            return null;
         }
     }
     
-    setTimeout(() => {
-        calculatePartialCloses();
-    }, 100);
+    // Get pair value (handle "Other" option)
+    let pairValue = document.getElementById('pair').value;
+    if (pairValue === 'Other') {
+        pairValue = document.getElementById('customPair').value;
+        if (!pairValue || pairValue.trim() === '') {
+            alert('Please enter a custom pair');
+            return null;
+        }
+    }
     
-    showPage('form');
+    return {
+        month: document.getElementById('month').value,
+        day: document.getElementById('day').value,
+        date: document.getElementById('date').value,
+        year: document.getElementById('year').value,
+        pair: pairValue,
+        weeklyAnalysis: document.getElementById('weeklyAnalysis').value,
+        weeklyPhoto: document.getElementById('weeklyPhoto').value,
+        dailyAnalysis: document.getElementById('dailyAnalysis').value,
+        dailyPhoto: document.getElementById('dailyPhoto').value,
+        fourHAnalysis: document.getElementById('fourHAnalysis').value,
+        fourHPhoto: document.getElementById('fourHPhoto').value,
+        oneHAnalysis: document.getElementById('oneHAnalysis').value,
+        oneHPhoto: document.getElementById('oneHPhoto').value
+    };
 }
 
-function deleteTrade(i) {
-    if (!confirm('Delete this trade?')) return;
+function addAnalysis(analysis) {
     showLoading();
-    fetch(`${GOOGLE_SCRIPT_URL}?action=delete&id=${trades[i].id}`)
-        .then(() => {
-            hideLoading();
-            loadTradesFromSheet();
-        })
-        .catch(err => {
-            console.error(err);
-            hideLoading();
-            alert('Delete error');
-        });
-}
-
-// ADD / UPDATE
-function addTradeToSheet(trade) {
-    showLoading();
-    const qs = new URLSearchParams({ action: 'add', ...trade });
+    const qs = new URLSearchParams({ action: 'add', ...analysis });
     fetch(GOOGLE_SCRIPT_URL + '?' + qs)
         .then(() => {
             hideLoading();
             clearForm();
-            showPage('table');
-            loadTradesFromSheet();
+            showPage('list');
+            loadAnalyses();
         })
         .catch(err => {
             console.error(err);
@@ -1976,16 +1555,16 @@ function addTradeToSheet(trade) {
         });
 }
 
-function updateTradeInSheet(trade) {
+function updateAnalysis(analysis) {
     showLoading();
-    const qs = new URLSearchParams({ action: 'update', ...trade });
+    const qs = new URLSearchParams({ action: 'update', ...analysis });
     fetch(GOOGLE_SCRIPT_URL + '?' + qs)
         .then(() => {
             hideLoading();
             editingIndex = -1;
             clearForm();
-            showPage('table');
-            loadTradesFromSheet();
+            showPage('list');
+            loadAnalyses();
         })
         .catch(err => {
             console.error(err);
@@ -1994,97 +1573,260 @@ function updateTradeInSheet(trade) {
         });
 }
 
-// LOGIN SYSTEM
-function showLoginModal() {
-    document.getElementById('loginModal').style.display = 'flex';
-    document.getElementById('loginUsername').value = '';
-    document.getElementById('loginPassword').value = '';
-    document.getElementById('loginError').style.display = 'none';
-    document.getElementById('loginUsername').focus();
-}
-
-function closeLoginModal() {
-    document.getElementById('loginModal').style.display = 'none';
-}
-
-// STRATEGY MODAL
-function showStrategyModal() {
-    document.getElementById('strategyModal').style.display = 'flex';
-}
-
-function closeStrategyModal() {
-    document.getElementById('strategyModal').style.display = 'none';
-}
-
-function attemptLogin() {
-    const username = document.getElementById('loginUsername').value;
-    const password = document.getElementById('loginPassword').value;
-    const errorDiv = document.getElementById('loginError');
+function editAnalysis(i) {
+    editingIndex = i;
+    const a = analyses[i];
     
-    if (username === CREDENTIALS.username && password === CREDENTIALS.password) {
-        isLoggedIn = true;
-        localStorage.setItem('tradingJournalAuth', 'true');
-        closeLoginModal();
-        updateUIForLogin();
-        alert('Login successful! Welcome, ' + username);
+    // Handle pair selection (check if it's a predefined pair or custom)
+    const predefinedPairs = ['EUR/USD', 'GBP/USD', 'XAU/USD', 'USD/JPY', 'US100', 'GER40'];
+    if (predefinedPairs.includes(a.pair)) {
+        document.getElementById('pair').value = a.pair;
+        document.getElementById('customPairGroup').style.display = 'none';
     } else {
-        errorDiv.textContent = 'Invalid username or password';
-        errorDiv.style.display = 'block';
-        document.getElementById('loginPassword').value = '';
+        document.getElementById('pair').value = 'Other';
+        document.getElementById('customPair').value = a.pair;
+        document.getElementById('customPairGroup').style.display = 'block';
     }
-}
-
-function logout() {
-    if (confirm('Are you sure you want to logout?')) {
-        isLoggedIn = false;
-        localStorage.removeItem('tradingJournalAuth');
-        updateUIForLogin();
-        showPage('table');
-        alert('Logged out successfully');
-    }
-}
-
-function updateUIForLogin() {
-    document.getElementById('btnForm').style.display = isLoggedIn ? 'inline-block' : 'none';
-    document.getElementById('btnLogin').style.display = isLoggedIn ? 'none' : 'inline-block';
-    document.getElementById('btnLogout').style.display = isLoggedIn ? 'inline-block' : 'none';
     
-    updateTable();
+    document.getElementById('month').value = a.month || '';
+    document.getElementById('day').value = a.day || '';
+    document.getElementById('date').value = a.date || '';
+    document.getElementById('year').value = a.year || '';
+    document.getElementById('weeklyAnalysis').value = a.weeklyAnalysis || '';
+    document.getElementById('weeklyPhoto').value = a.weeklyPhoto || '';
+    document.getElementById('dailyAnalysis').value = a.dailyAnalysis || '';
+    document.getElementById('dailyPhoto').value = a.dailyPhoto || '';
+    document.getElementById('fourHAnalysis').value = a.fourHAnalysis || '';
+    document.getElementById('fourHPhoto').value = a.fourHPhoto || '';
+    document.getElementById('oneHAnalysis').value = a.oneHAnalysis || '';
+    document.getElementById('oneHPhoto').value = a.oneHPhoto || '';
+    
+    showPage('form');
 }
 
-function checkAuth() {
-    const auth = localStorage.getItem('tradingJournalAuth');
-    if (auth === 'true') {
-        isLoggedIn = true;
-        updateUIForLogin();
-    }
+function deleteAnalysis(i) {
+    if (!confirm('Delete this analysis?')) return;
+    showLoading();
+    fetch(`${GOOGLE_SCRIPT_URL}?action=delete&id=${analyses[i].id}`)
+        .then(() => {
+            hideLoading();
+            loadAnalyses();
+        })
+        .catch(err => {
+            console.error(err);
+            hideLoading();
+            alert('Delete error');
+        });
 }
 
-// UTILS
 function clearForm() {
-    document.querySelectorAll('input:not([readonly]), select').forEach(i => i.value = '');
-    
-    document.getElementById('customPairGroup').style.display = 'none';
-    document.getElementById('customPair').value = '';
-    
-    ['pc1', 'pc2', 'pc3'].forEach(prefix => {
-        document.getElementById(`${prefix}_lot`).value = '';
-        document.getElementById(`${prefix}_price`).value = '';
-        document.getElementById(`${prefix}_profit`).value = '';
+    ['month', 'day', 'date', 'year', 'pair', 'weeklyAnalysis', 'weeklyPhoto',
+     'dailyAnalysis', 'dailyPhoto', 'fourHAnalysis', 'fourHPhoto',
+     'oneHAnalysis', 'oneHPhoto'].forEach(id => {
+        document.getElementById(id).value = '';
     });
-    
-    document.getElementById('totalPartialProfit').textContent = '$0.00';
-    document.getElementById('lotRemaining').textContent = '0.00';
-    
     editingIndex = -1;
 }
 
-// INIT
+// View Mode Switch
+function switchView(mode) {
+    const journalView = document.getElementById('journalView');
+    const calendarView = document.getElementById('calendarView');
+    const btnJournal = document.getElementById('btnJournalView');
+    const btnCalendar = document.getElementById('btnCalendarView');
+    
+    if (mode === 'journal') {
+        journalView.style.display = 'block';
+        calendarView.style.display = 'none';
+        btnJournal.classList.add('active');
+        btnCalendar.classList.remove('active');
+    } else {
+        journalView.style.display = 'none';
+        calendarView.style.display = 'block';
+        btnJournal.classList.remove('active');
+        btnCalendar.classList.add('active');
+        renderCalendar();
+    }
+}
+
+// Calendar Functions
+let currentSelectedDate = null;
+
+function changeMonth(delta) {
+    const monthSelect = document.getElementById('calendarMonth');
+    const yearSelect = document.getElementById('calendarYear');
+    
+    let month = parseInt(monthSelect.value);
+    let year = parseInt(yearSelect.value);
+    
+    month += delta;
+    
+    if (month < 0) {
+        month = 11;
+        year--;
+    } else if (month > 11) {
+        month = 0;
+        year++;
+    }
+    
+    monthSelect.value = month;
+    yearSelect.value = year;
+    renderCalendar();
+}
+
+function renderCalendar() {
+    const month = parseInt(document.getElementById('calendarMonth').value);
+    const year = parseInt(document.getElementById('calendarYear').value);
+    const grid = document.getElementById('calendarGrid');
+    
+    grid.innerHTML = '';
+    
+    // Add day headers
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    days.forEach(day => {
+        const header = document.createElement('div');
+        header.className = 'calendar-header';
+        header.textContent = day;
+        grid.appendChild(header);
+    });
+    
+    // Get first day of month
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const daysInPrevMonth = new Date(year, month, 0).getDate();
+    
+    // Adjust first day (make Monday = 0)
+    const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1;
+    
+    // Add previous month's days
+    for (let i = adjustedFirstDay - 1; i >= 0; i--) {
+        const dayDiv = createDayCell(daysInPrevMonth - i, month - 1, year, true);
+        grid.appendChild(dayDiv);
+    }
+    
+    // Add current month's days
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayDiv = createDayCell(day, month, year, false);
+        grid.appendChild(dayDiv);
+    }
+    
+    // Add next month's days to fill grid
+    const totalCells = grid.children.length - 7;
+    const remainingCells = 42 - totalCells - 7;
+    for (let day = 1; day <= remainingCells; day++) {
+        const dayDiv = createDayCell(day, month + 1, year, true);
+        grid.appendChild(dayDiv);
+    }
+}
+
+function createDayCell(day, month, year, isOtherMonth) {
+    const dayDiv = document.createElement('div');
+    dayDiv.className = 'calendar-day';
+    
+    if (isOtherMonth) {
+        dayDiv.classList.add('other-month');
+    }
+    
+    // Adjust month for proper date creation
+    let actualMonth = month;
+    let actualYear = year;
+    if (month < 0) {
+        actualMonth = 11;
+        actualYear = year - 1;
+    } else if (month > 11) {
+        actualMonth = 0;
+        actualYear = year + 1;
+    }
+    
+    const dateStr = `${actualYear}-${String(actualMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    
+    // Count analyses for this day
+    const analysesForDay = analyses.filter(a => a.date === dateStr);
+    
+    if (analysesForDay.length > 0 && !isOtherMonth) {
+        dayDiv.classList.add('has-analysis');
+    }
+    
+    // Check if selected
+    if (currentSelectedDate === dateStr && !isOtherMonth) {
+        dayDiv.classList.add('selected');
+    }
+    
+    const dayNumber = document.createElement('div');
+    dayNumber.className = 'calendar-day-number';
+    dayNumber.textContent = day;
+    dayDiv.appendChild(dayNumber);
+    
+    if (analysesForDay.length > 0 && !isOtherMonth) {
+        const count = document.createElement('div');
+        count.className = 'calendar-day-count';
+        count.textContent = `${analysesForDay.length} ${analysesForDay.length === 1 ? 'analysis' : 'analyses'}`;
+        dayDiv.appendChild(count);
+    }
+    
+    if (!isOtherMonth) {
+        dayDiv.onclick = () => showAnalysesForDay(dateStr, day, actualMonth, actualYear);
+    }
+    
+    return dayDiv;
+}
+
+function showAnalysesForDay(dateStr, day, month, year) {
+    currentSelectedDate = dateStr;
+    renderCalendar();
+    
+    const analysesForDay = analyses.filter(a => a.date === dateStr);
+    const container = document.getElementById('selectedDayAnalyses');
+    const title = document.getElementById('selectedDayTitle');
+    const content = document.getElementById('selectedDayContent');
+    
+    if (analysesForDay.length === 0) {
+        container.style.display = 'none';
+        return;
+    }
+    
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    title.textContent = `📅 ${day} ${monthNames[month]} ${year} - ${analysesForDay.length} ${analysesForDay.length === 1 ? 'Analysis' : 'Analyses'}`;
+    
+    content.innerHTML = '';
+    
+    analysesForDay.forEach((a, index) => {
+        const card = document.createElement('div');
+        card.style.cssText = 'background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 149, 0, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 15px;';
+        
+        card.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h4 style="color: #ff9500; margin: 0; font-size: 1.3em;">${a.pair}</h4>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="viewAnalysis(${analyses.indexOf(a)})" style="background: linear-gradient(135deg, #4d9fff, #3d7fff); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9em; font-weight: 600;">
+                        👁️ View Full Analysis
+                    </button>
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; color: #ddd; font-size: 0.95em;">
+                ${a.weeklyAnalysis ? `<div><strong style="color: #ff9500;">📅 Weekly:</strong><br>${a.weeklyAnalysis.substring(0, 100)}${a.weeklyAnalysis.length > 100 ? '...' : ''}</div>` : ''}
+                ${a.dailyAnalysis ? `<div><strong style="color: #4d9fff;">📊 Daily:</strong><br>${a.dailyAnalysis.substring(0, 100)}${a.dailyAnalysis.length > 100 ? '...' : ''}</div>` : ''}
+                ${a.fourHAnalysis ? `<div><strong style="color: #9c27b0;">⏱️ 4H:</strong><br>${a.fourHAnalysis.substring(0, 100)}${a.fourHAnalysis.length > 100 ? '...' : ''}</div>` : ''}
+                ${a.oneHAnalysis ? `<div><strong style="color: #00cc88;">⚡ 1H:</strong><br>${a.oneHAnalysis.substring(0, 100)}${a.oneHAnalysis.length > 100 ? '...' : ''}</div>` : ''}
+            </div>
+        `;
+        
+        content.appendChild(card);
+    });
+    
+    container.style.display = 'block';
+}
+
+// Init
 window.onload = () => {
     checkAuth();
-    loadTradesFromSheet();
+    loadAnalyses();
+    
+    // Set calendar to current month/year
+    const now = new Date();
+    document.getElementById('calendarMonth').value = now.getMonth();
+    document.getElementById('calendarYear').value = now.getFullYear();
 };
-</script>
-
+    </script>
 </body>
 </html>
